@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
@@ -56,8 +58,8 @@ public class htmlOutput {
     
     public static void main(String[] args) throws IOException {
         ArrayList<Event> allEvents = new ArrayList<Event>();
-        allEvents.add(new Event("Madonna", "Cat's Cradle", "Her Big Summer Show", "021312", "021312"));
-        allEvents.add(new Event("Weezer", "Griffith", "blah blah blah...", "041412", "041412"));
+        allEvents.add(new Event("Madonna", "Cat's Cradle", "Her Big Summer Show", new DateTime("021312"), new DateTime("021312")));
+        allEvents.add(new Event("Weezer", "Griffith", "blah blah blah...", new DateTime("041412"), new DateTime("041412")));
         makeOutput(allEvents);
     }
 }

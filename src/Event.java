@@ -1,12 +1,14 @@
+import org.joda.time.DateTime;
+
 
 public class Event {
     public String myName;
     public String myLocation;
     public String myDescription;
-    public String myStartTime;
-    public String myEndTime;
+    public DateTime myStartTime;
+    public DateTime myEndTime;
     
-    public Event(String name, String location, String description, String startTime, String endTime) {
+    public Event(String name, String location, String description, DateTime startTime, DateTime endTime) {
         myName = name;
         myLocation = location;
         myDescription = description;

@@ -31,7 +31,7 @@ public class xmlParse {
 			if (nEvent.getNodeType() == Node.ELEMENT_NODE){
 				DateTime start=createTime(nEvent, "start");
 				DateTime end=createTime(nEvent, "end");
-				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start.getHourOfDay()+":"+start.getMinuteOfHour() , end.getHourOfDay()+":"+end.getMinuteOfHour()));
+				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start, end)) ;
 			}
 			
 		}
