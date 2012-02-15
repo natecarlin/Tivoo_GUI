@@ -47,5 +47,34 @@ public class Event {
     public String getURL() {
         return myURL;
     }
-    
+    public String getStartYear(){
+    	return "myStartTime.getYear()";
+    }
+    public String getStartMonth(){
+    	return "myStartTime.getMonthOfYear()";
+    }
+    public String getStartDayOfMonth(){
+    	return "myStartTime.getDayOfMonth()";
+    }
+    public String getStartHourOfDay(){
+    	return "myStartTime.getHourOfDay()";    	
+    }
+    public String getStartMinuteOfHour(){
+    	return "myStartTime.getMinuteOfHour()";
+    }
+    public String getEndYear(){
+    	return "myEndTime.getYear()";
+    }
+    public String getEndMonth(){
+    	return "myEndTime.getMonthOfYear()";
+    }
+    public String getEndDayOfMonth(){
+    	return "myEndTime.getDayOfMonth()";
+    }
+    public String getEndHourOfDay(){
+    	return "myEndTime.getHourOfDay()";    	
+    }
+    public String getEndMinuteOfHour(){
+    	return "myEndTime.getMinuteOfHour()";
+    }
 }

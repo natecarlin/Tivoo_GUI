@@ -24,7 +24,7 @@ public class TimeParser extends xmlParse{
 		}
 		if(myTime==null)
 			throw new IOException("No time on this event");
-		DateTime dt =new DateTime(getIntOfTime(myTime, "hour"), getIntOfTime(myTime, "month"),getIntOfTime(myTime, "day"),getIntOfTime(myTime, "hour24"),getIntOfTime(myTime, "minute"),0,0);
+		DateTime dt =new DateTime(getIntOfTime(myTime, "year"), getIntOfTime(myTime, "month"),getIntOfTime(myTime, "day"),getIntOfTime(myTime, "hour24"),getIntOfTime(myTime, "minute"),0,0);
 	   return dt;
 	}
 	

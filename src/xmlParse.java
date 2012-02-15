@@ -33,7 +33,7 @@ public class xmlParse {
 			if (nEvent.getNodeType() == Node.ELEMENT_NODE){
 				DateTime start=TimeParser.createTime(nEvent, "start");
 				DateTime end=TimeParser.createTime(nEvent, "end");
-				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start, end)) ;
+				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start, end, "")) ;
 			}
 			
 		}
