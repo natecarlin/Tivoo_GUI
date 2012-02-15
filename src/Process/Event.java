@@ -49,34 +49,37 @@ public class Event {
 	        return myURL;
 	    }
 	    public String getStartYear(){
-	    	return "myStartTime.getYear()";
+	    	return Integer.toString(myStartTime.getYear());
 	    }
 	    public String getStartMonth(){
-	    	return "myStartTime.getMonthOfYear()";
+	    	return Integer.toString(myStartTime.getMonthOfYear());
 	    }
 	    public String getStartDayOfMonth(){
-	    	return "myStartTime.getDayOfMonth()";
+	    	return Integer.toString(myStartTime.getDayOfMonth());
+	    }
+	    public String getDayOfWee() {
+	        return Integer.toString(myStartTime.getDayOfWeek());
 	    }
 	    public String getStartHourOfDay(){
-	    	return "myStartTime.getHourOfDay()";    	
+	    	return Integer.toString(myStartTime.getHourOfDay());    	
 	    }
 	    public String getStartMinuteOfHour(){
-	    	return "myStartTime.getMinuteOfHour()";
+	    	return Integer.toString(myStartTime.getMinuteOfHour());
 	    }
 	    public String getEndYear(){
-	    	return "myEndTime.getYear()";
+	    	return Integer.toString(myEndTime.getYear());
 	    }
 	    public String getEndMonth(){
-	    	return "myEndTime.getMonthOfYear()";
+	    	return Integer.toString(myEndTime.getMonthOfYear());
 	    }
 	    public String getEndDayOfMonth(){
-	    	return "myEndTime.getDayOfMonth()";
+	    	return Integer.toString(myEndTime.getDayOfMonth());
 	    }
 	    public String getEndHourOfDay(){
-	    	return "myEndTime.getHourOfDay()";    	
+	    	return Integer.toString(myEndTime.getHourOfDay());    	
 	    }
 	    public String getEndMinuteOfHour(){
-	    	return "myEndTime.getMinuteOfHour()";
+	    	return Integer.toString(myEndTime.getMinuteOfHour());
 	    }
     
 }
