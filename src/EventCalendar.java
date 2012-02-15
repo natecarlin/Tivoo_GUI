@@ -2,6 +2,8 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
+import Process.Event;
+
 public class EventCalendar {
 	private List<Event> myList;
 	

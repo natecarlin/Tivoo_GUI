@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
+import Process.Event;
+
 public class xmlParse {
 
 	
