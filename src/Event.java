@@ -11,13 +11,13 @@ public class Event {
     public DateTime myEndTime;
     public  Interval myInterval;
     
-    public Event(String name, String location, String description, DateTime starttime, DateTime endtime) {
+    public Event(String name, String location, String description, DateTime startTime, DateTime endTime) {
         myName = name;
         myLocation = location;
         myDescription = description;
-        myStartTime=starttime;
-        myEndTime=endtime;
-        myInterval = new Interval(starttime,endtime);
+        myStartTime=startTime;
+        myEndTime=endTime;
+        myInterval = new Interval(startTime,endTime);
     }
     
     public String toString(){
