@@ -29,8 +29,8 @@ public class xmlParse {
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
 			if (nEvent.getNodeType() == Node.ELEMENT_NODE){
-				DateTime start=createTime(nEvent, "start");
-				DateTime end=createTime(nEvent, "end");
+				DateTime start=TimeParser.createTime(nEvent, "start");
+				DateTime end=TimeParser.createTime(nEvent, "end");
 				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start, end)) ;
 			}
 			
@@ -38,32 +38,7 @@ public class xmlParse {
 		return toReturnEvents;
 	}
 
-	/*
-	 * create Joda Time from a specific period (a subnode of an event like 'start' or 'end')
-	 * in an event
-	 */
-	private static DateTime createTime(Node nEvent, String period) throws IOException {
-		NodeList children = nEvent.getChildNodes();
-		Node myTime = null;
-		for(int j = 0; j < children.getLength(); j++){
-			Node child = children.item(j);
-			if(child.getNodeName().equals(period) ){
-				myTime=child;
-				break;
-			}					
-		}
-		if(myTime==null)
-			throw new IOException("No time on this event");
-		DateTime dt =new DateTime(getIntOfTime(myTime, "hour"), getIntOfTime(myTime, "month"),getIntOfTime(myTime, "day"),getIntOfTime(myTime, "hour24"),getIntOfTime(myTime, "minute"),0,0);
-	   return dt;
-	}
-	
-	/*
-	 * return an integer of specific time scale
-	 */
-	private static int getIntOfTime(Node myTime, String scale) {
-		return Integer.parseInt(extractNodeText(myTime, scale));
-	}
+
 	
 	/*
 	 * Load file from URI, and parse XML Tree
