@@ -57,7 +57,7 @@ public class Event {
 	    public String getStartDayOfMonth(){
 	    	return Integer.toString(myStartTime.getDayOfMonth());
 	    }
-	    public String getDayOfWee() {
+	    public String getStartDayOfWeek() {
 	        return Integer.toString(myStartTime.getDayOfWeek());
 	    }
 	    public String getStartHourOfDay(){
@@ -66,11 +66,15 @@ public class Event {
 	    public String getStartMinuteOfHour(){
 	    	return Integer.toString(myStartTime.getMinuteOfHour());
 	    }
+	    
 	    public String getEndYear(){
 	    	return Integer.toString(myEndTime.getYear());
 	    }
 	    public String getEndMonth(){
 	    	return Integer.toString(myEndTime.getMonthOfYear());
+	    }
+	    public String getEndDayOfWeek() {
+            return Integer.toString(myEndTime.getDayOfWeek());
 	    }
 	    public String getEndDayOfMonth(){
 	    	return Integer.toString(myEndTime.getDayOfMonth());
