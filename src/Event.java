@@ -7,17 +7,19 @@ public class Event {
     public String myName;
     public String myLocation;
     public String myDescription;
+    public String myURL;
     public DateTime myStartTime;
     public DateTime myEndTime;
-    public  Interval myInterval;
+    public Interval myInterval;
     
-    public Event(String name, String location, String description, DateTime startTime, DateTime endTime) {
+    public Event(String name, String location, String description, DateTime startTime, DateTime endTime, String URL) {
         myName = name;
         myLocation = location;
         myDescription = description;
         myStartTime=startTime;
         myEndTime=endTime;
         myInterval = new Interval(startTime,endTime);
+        myURL = URL;
     }
     
     public String toString(){
@@ -41,6 +43,9 @@ public class Event {
     }
     public Interval getInterval(){
     	return myInterval;
+    }
+    public String getURL() {
+        return myURL;
     }
     
 }
