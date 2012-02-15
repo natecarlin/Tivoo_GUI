@@ -22,9 +22,9 @@ import com.hp.gagawa.java.elements.Text;
  */
 public class htmlOutput {
     
-    public static File makeOutput(ArrayList<Event> processedEvents) throws IOException {
+    public static File makeOutput(ArrayList<Event> processedEvents, String path) throws IOException {
         //Create file for writing
-        String fileName = System.getProperty("user.home") + "/Desktop/TiVOOoutput.html";
+        String fileName = System.getProperty("user.home") + path;
         File out = new File(fileName);
         boolean exist = out.createNewFile();
         
@@ -61,8 +61,8 @@ public class htmlOutput {
     
     public static void main(String[] args) throws IOException {
         ArrayList<Event> allEvents = new ArrayList<Event>();
-        allEvents.add(new Event("Madonna", "Cat's Cradle", "Her Big Summer Show", new DateTime("021312"), new DateTime("021312")));
-        allEvents.add(new Event("Weezer", "Griffith", "blah blah blah...", new DateTime("041412"), new DateTime("041412")));
-        makeOutput(allEvents);
+        allEvents.add(new Event("Madonna", "Cat's Cradle", "Her Big Summer Show", new DateTime("021312"), new DateTime("021312"), "http://google.com"));
+        allEvents.add(new Event("Weezer", "Griffith", "blah blah blah...", new DateTime("041412"), new DateTime("041412"), "http://google.com"));
+        makeOutput(allEvents, "Desktop/TiVOOoutput.html");
     }
 }

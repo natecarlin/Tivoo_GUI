@@ -8,10 +8,9 @@ import Process.Event;
 public class Main {
 	
 	public static void main (String args[]) throws IOException {
-		ArrayList<Event> myEvents = xmlParse.parse("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml");
-		myEvents=new xmlProcess().process(myEvents);
-		htmlOutput.makeOutput(myEvents);
-		
-		System.out.println(myEvents.toString());
+		TivooSystem s = new TivooSystem();
+		s.loadFile("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml.xml");
+		s.filterByKeyword("Lemur");
+		s.outputSummaryAndDetailsPages("Desktop/TiVOOoutput.html", "output/details_dir");
 	}
 }
