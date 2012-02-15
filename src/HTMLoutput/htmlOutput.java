@@ -25,6 +25,7 @@ public class htmlOutput {
     public static File makeOutput(ArrayList<Event> processedEvents, String path) throws IOException {
         //Create file for writing
         String fileName = System.getProperty("user.home") + path;
+        System.out.println(fileName);
         File out = new File(fileName);
         boolean exist = out.createNewFile();
         
