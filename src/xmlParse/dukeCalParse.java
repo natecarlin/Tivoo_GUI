@@ -22,8 +22,8 @@ public class dukeCalParse extends xmlParse {
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
 			if (nEvent.getNodeType() == Node.ELEMENT_NODE){
-				DateTime start=TimeParser.createTime(nEvent, "start");
-				DateTime end=TimeParser.createTime(nEvent, "end");
+				DateTime start=new TimeParser().createTime(nEvent, "start");
+				DateTime end=new TimeParser().createTime(nEvent, "end");
 				toReturnEvents.add(new Event(extractNodeText(nEvent, "summary"), getLocation(nEvent), extractNodeText(nEvent, "description"), start, end, "")) ;
 			}
 			
