@@ -70,14 +70,16 @@ public class HTMLsummaryPage extends HTMLpage {
     
     public Html makeHTML() {
         //get first event, getDayOfWeek, getDate; use this info to fill in date labels in table
+        if (super.myEvents == null) System.out.println("myEvents is null!");
         DateTime firstEventStart = super.myEvents.get(0).getStartTime();
+        DateTime currentDT = firstEventStart;
         //create HTML page
         Html html = new Html();
         
         //H2 month title
         H2 month = new H2();
-        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            month.appendChild(new Text(firstEventStart.getMonthOfYear()));
+        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            month.appendChild(new Text(currentDT.monthOfYear().getAsText()));
         }
         html.appendChild(month);
         
@@ -88,8 +90,8 @@ public class HTMLsummaryPage extends HTMLpage {
         
         //Enter first day into table
         Td td = new Td();
-        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            td.appendChild(new Text(firstEventStart.getDayOfWeek() + "\n" + firstEventStart.getDayOfMonth()));
+        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            td.appendChild(new Text(currentDT.dayOfWeek().getAsText() + "</br>" + Integer.toString(currentDT.getDayOfMonth())));
         }
         tr.appendChild(td);
          
@@ -97,16 +99,16 @@ public class HTMLsummaryPage extends HTMLpage {
         for (int i=0; i<6; i++) {
             
             //currentDate ++
-            if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                firstEventStart.plusDays(1);
+            if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                currentDT = currentDT.plusDays(1);
             }
             
             //add dayOfWeek and dayOfMonth to table
             td = new Td();
             
             Text dayAndDate = null;
-            if (firstEventStart != null) { //THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                dayAndDate = new Text(Integer.toString(firstEventStart.getDayOfWeek()) + "/n" + Integer.toString(firstEventStart.getDayOfMonth()));
+            if (currentDT != null) { //THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                dayAndDate = new Text(currentDT.dayOfWeek().getAsText() + "</br>" + Integer.toString(currentDT.getDayOfMonth()));
                 td.appendChild(dayAndDate);
             }
             
@@ -115,9 +117,9 @@ public class HTMLsummaryPage extends HTMLpage {
             //add events to each day of week
             Div div = new Div(); //div contains events of the day
             for (Event e : super.myEvents) {
-                if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                    if (e.getStartTime().getDayOfMonth() == firstEventStart.getDayOfMonth()) {
-                        Text eDescription = new Text(e.getName() + "/n" + "Time: " + e.getStartTime() + "/n" + "/n");
+                if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                    if (e.getStartTime().getDayOfMonth() == currentDT.getDayOfMonth()) {
+                        Text eDescription = new Text(e.getName() + "</br>" + "Time: " + e.getStartTime() + "</br>" + "</br>");
                         div.appendChild(eDescription);
                     }
                 }
@@ -126,8 +128,8 @@ public class HTMLsummaryPage extends HTMLpage {
             tr.appendChild(td);
         }
         
-        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            firstEventStart.minusDays(6);
+        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            currentDT.minusDays(6);
         }
         calendarTable.appendChild(tr);
          

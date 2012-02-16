@@ -63,7 +63,10 @@ public class HTMLdetailPage extends HTMLpage {
      */
     private void createDetailPage(Event e) throws IOException {
         //Create file for writing
-        String fileName = myDetailDirPath + "/" + e.getName() + ".html";
+        String fileName = "";
+        if (e.getStartTime() != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            fileName = myDetailDirPath + "/" + e.getName() + e.getStartTime().toString() + ".html";
+        }
         System.out.println(fileName);
         File out = new File(fileName);
         boolean exist = out.createNewFile();

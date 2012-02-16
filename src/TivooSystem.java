@@ -50,7 +50,6 @@ public class TivooSystem {
 	    
 	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 
-        //NOTE: output cannot deal with multiple events of the same name as of yet.
-        //TODO: implement multiple events of same name/ask Hewner if this is necessary
+        //TODO: what if name of event contains char not able to use for filename? ask Hewner
 	}
 }
