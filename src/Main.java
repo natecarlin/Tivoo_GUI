@@ -6,6 +6,6 @@ public class Main {
 		s.loadGoogleCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
 		System.out.println(s.myEvents.toString());
 		s.filterByKeyword("meet with");
-		s.outputSummaryAndDetailsPages("/Desktop/TiVOOoutput.html", "/Desktop/details_dir");
+		s.outputSummaryAndDetailsPages("/Desktop");
 	}
 }

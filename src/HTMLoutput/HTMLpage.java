@@ -1,3 +1,7 @@
+/**
+ *  @author Antares Yee
+ */
+
 package HTMLoutput;
 
 import java.io.File;
@@ -18,7 +22,7 @@ public abstract class HTMLpage {
     /**
      * Creates an HTML page of specified subclass type.
      */
-    public abstract void createHTMLpage(ArrayList<Event> processedEvents, String path);
+    public abstract void createHTMLpage();
     
     
 }

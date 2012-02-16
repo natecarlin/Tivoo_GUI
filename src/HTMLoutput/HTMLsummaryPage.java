@@ -22,7 +22,7 @@ public class HTMLsummaryPage extends HTMLpage {
     }
 
     @Override
-    public void createHTMLpage(ArrayList<Event> processedEvents, String path) {
+    public void createHTMLpage() {
         // TODO: create 1 week calendar using table.  
         
         //Create file for writing

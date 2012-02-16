@@ -1,3 +1,7 @@
+/**
+ *  @author Antares Yee
+ */
+
 package HTMLoutput;
 
 import java.io.BufferedWriter;
@@ -5,6 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.joda.time.DateTime;
 
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
@@ -28,8 +34,7 @@ public class HTMLdetailPage extends HTMLpage {
      * Creates directory DetailDir and sub-files that are detail pages for each event.
      */
     @Override
-    public void createHTMLpage(ArrayList<Event> processedEvents, String path) {
-        
+    public void createHTMLpage() {
         //make dir for detail pages at path/DetailDir
         boolean exists = new File(myDetailDirPath).mkdir();
         
@@ -39,30 +44,33 @@ public class HTMLdetailPage extends HTMLpage {
         }
         
         //call createDetailpage() for each Event in myEvents
+        System.out.println(super.myEvents);
         for (Event e : super.myEvents) {
-            try {
-                createDetailpage(e);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+                System.out.println("got into for loop");
+                try {
+                    createDetailPage(e);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
         }
-        
-        
     }
+        
     
     /**
      * 
      * Creates HTML page for each event (name, start, end time, description) and put it into DetailDir
+     * @throws IOException 
      */
-    private void createDetailpage(Event e) throws IOException {
-        
+    private void createDetailPage(Event e) throws IOException {
+        System.out.println("got to createDetailpage");
         //Create file for writing
-        String fileName = myDetailDirPath + "/" + e.getName();
+        String fileName = myDetailDirPath + "/" + e.getName() + ".html";
         System.out.println(fileName);
         File out = new File(fileName);
         boolean exist = out.createNewFile();
-        
-        if (!exist) {
+       
+        if (! exist) {
         System.out.println("File already exists.");
         System.exit(0);
         }
@@ -104,5 +112,6 @@ public class HTMLdetailPage extends HTMLpage {
         
         return html;
     }
+   
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import xmlParse.dukeCalParse;
 import xmlParse.googleCalParse;
 
+import HTMLoutput.HTMLdetailPage;
+import HTMLoutput.HTMLsummaryPage;
 import HTMLoutput.htmlOutput;
 import Process.Event;
 
@@ -42,12 +44,8 @@ public class TivooSystem {
 		myEvents = new xmlProcess(myEvents).process(keyword);
 	}
 	
-	public void outputSummaryAndDetailsPages(String localPathSummary, String localPathDetails){
-		try {
-			htmlOutput.makeOutput(myEvents, localPathSummary);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void outputSummaryAndDetailsPages(String localPathSummary) {
+	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
+        detailPage.createHTMLpage();
 	}
 }
