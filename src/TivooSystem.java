@@ -45,7 +45,12 @@ public class TivooSystem {
 	}
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
+	    HTMLsummaryPage summaryPage = new HTMLsummaryPage(myEvents, localPathSummary);
+        summaryPage.createHTMLpage();
+	    
 	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
-        detailPage.createHTMLpage();
+        detailPage.createHTMLpage(); 
+        //NOTE: output cannot deal with multiple events of the same name as of yet.
+        //TODO: implement multiple events of same name/ask Hewner if this is necessary
 	}
 }

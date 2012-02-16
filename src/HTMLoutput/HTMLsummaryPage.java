@@ -3,9 +3,13 @@ package HTMLoutput;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import com.hp.gagawa.java.elements.Body;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Table;
@@ -28,7 +32,14 @@ public class HTMLsummaryPage extends HTMLpage {
         //Create file for writing
         String fileName = System.getProperty("user.home") + "/Desktop/TiVOOsummaryPage.html";
         File out = new File(fileName);
-        boolean exist = out.createNewFile();
+        boolean exist = false;
+        
+        try {
+            exist = out.createNewFile();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         
         if (!exist) {
         System.out.println("File already exists.");
@@ -36,60 +47,93 @@ public class HTMLsummaryPage extends HTMLpage {
         }
         
         //set up FileWriter and BufferedWriter
-        FileWriter fw = new FileWriter(out);
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(out);
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         BufferedWriter bw = new BufferedWriter(fw);
        
-        bw.write(html.write());
-        bw.close();
+        Html html = makeHTML();
         
+        //write to bw
+        try {
+            bw.write(html.write());
+            bw.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     public Html makeHTML() {
         //get first event, getDayOfWeek, getDate; use this info to fill in date labels in table
-        Event firstEvent = super.myEvents.get(0);
-        String startDayOfWeek = firstEvent.getStartDayOfWeek();
-        String startDayOfMonth = firstEvent.getStartDayOfMonth();
-        
+        DateTime firstEventStart = super.myEvents.get(0).getStartTime();
         //create HTML page
         Html html = new Html();
         
         //H2 month title
         H2 month = new H2();
-        month.appendChild(new Text(firstEvent.getStartMonth()));
+        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            month.appendChild(new Text(firstEventStart.getMonthOfYear()));
+        }
         html.appendChild(month);
         
         //add table (calendar)
-        Table t = new Table();
-        t.setBorder("1");
+        Table calendarTable = new Table();
+        calendarTable.setBorder("1");
         Tr tr = new Tr();
         
         //Enter first day into table
         Td td = new Td();
-        td.appendChild(new Text(startDayOfWeek + "\n" + startDayOfMonth));
+        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            td.appendChild(new Text(firstEventStart.getDayOfWeek() + "\n" + firstEventStart.getDayOfMonth()));
+        }
         tr.appendChild(td);
-        //TODO: read over each event and make table from this.  consider making from interval.
-        
+         
         //add remaining 6 days to table
         for (int i=0; i<6; i++) {
+            
+            //currentDate ++
+            if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                firstEventStart.plusDays(1);
+            }
+            
+            //add dayOfWeek and dayOfMonth to table
             td = new Td();
-            //TODO: update startDay and startDate from joda/otherwise
-            Text dayAndDate = new Text(startDay + "/n" + startDate);
-            td.appendChild(dayAndDate);
+            
+            Text dayAndDate = null;
+            if (firstEventStart != null) { //THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                dayAndDate = new Text(Integer.toString(firstEventStart.getDayOfWeek()) + "/n" + Integer.toString(firstEventStart.getDayOfMonth()));
+                td.appendChild(dayAndDate);
+            }
+            
+           
+            
+            //add events to each day of week
+            Div div = new Div(); //div contains events of the day
+            for (Event e : super.myEvents) {
+                if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+                    if (e.getStartTime().getDayOfMonth() == firstEventStart.getDayOfMonth()) {
+                        Text eDescription = new Text(e.getName() + "/n" + "Time: " + e.getStartTime() + "/n" + "/n");
+                        div.appendChild(eDescription);
+                    }
+                }
+            }
+            td.appendChild(div);
             tr.appendChild(td);
-            
-            
-            startDay++;
-            startDate++;
         }
-        t.appendChild(tr);
         
-        // TODO: append Title(link to detail), start, end time to table
+        if (firstEventStart != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
+            firstEventStart.minusDays(6);
+        }
+        calendarTable.appendChild(tr);
+         
+        html.appendChild(calendarTable);
         
-        
-        html.appendChild(t);
-        
-        return t;
-        
+        return html;
     }
 
 }

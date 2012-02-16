@@ -46,7 +46,6 @@ public class HTMLdetailPage extends HTMLpage {
         //call createDetailpage() for each Event in myEvents
         System.out.println(super.myEvents);
         for (Event e : super.myEvents) {
-                System.out.println("got into for loop");
                 try {
                     createDetailPage(e);
                 } catch (IOException e1) {
@@ -63,7 +62,6 @@ public class HTMLdetailPage extends HTMLpage {
      * @throws IOException 
      */
     private void createDetailPage(Event e) throws IOException {
-        System.out.println("got to createDetailpage");
         //Create file for writing
         String fileName = myDetailDirPath + "/" + e.getName() + ".html";
         System.out.println(fileName);
