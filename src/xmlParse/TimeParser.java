@@ -9,6 +9,10 @@ import org.w3c.dom.NodeList;
 
 import Process.Event;
 
+/*
+ * @author Gang Song
+ */
+
 public class TimeParser {
 	
 	HashMap<String, Integer> monthMap;
@@ -53,11 +57,11 @@ public class TimeParser {
 		
 		String[] sections=content.split(" ");
 		if(sections[0].equals("Recurring")){
-			DateTime dt=new DateTime(sections[5]+"T"+sections[6]);
+			DateTime dt=new DateTime(sections[4]+"T"+sections[5]);
 			if(period.equals("start"))
 				return dt;
 			else
-				return dt.plusSeconds(Integer.parseInt(sections[11]));							
+				return dt.plusSeconds(Integer.parseInt(sections[9]));							
 		}
 		else {
 			createMapOfMonth();
@@ -68,10 +72,12 @@ public class TimeParser {
 			myYear = Integer.parseInt(sections[4]);
 
 			if (period.equals("start")) {
-				createHourAndMinute(sections, 5);
+				
+				createHourAndMinute(sections[5]);
 				
 			} else {
-				createHourAndMinute(sections, 7);				
+				
+				createHourAndMinute(sections[7].substring(0, sections[7].length()-6));				
 			}
 			
 			return new DateTime(myYear,myMonth,myDay,myHour,myMinute);
@@ -79,10 +85,10 @@ public class TimeParser {
 		
 	}
 
-	private void createHourAndMinute(String[] sections, int position) {
-		String ampm = sections[position].substring(sections[position].length() - 2);
-		String hourandmin = sections[position].substring(0,
-				sections[position].length() - 2);
+	private void createHourAndMinute(String section) {
+		String ampm = section.substring(section.length() - 2);
+		String hourandmin = section.substring(0,
+				section.length() - 2);
 		if(hourandmin.contains(":")){
 			String[] handm = hourandmin.split(":");
 		    myHour = Integer.parseInt(handm[0]);
@@ -114,13 +120,13 @@ public class TimeParser {
 		monthMap.put("Dec", 12);
 	}
 	
-      public static void main (String[] args){
+      public static void main (String[] args) throws Exception{
 		
 		ArrayList<Event> test =new ArrayList<Event>();
 		test.add(new Event("meet with TA", "perkins", "talk about TiVOO", new DateTime(2011,8,30,11,45,2), new DateTime("2012-05-01T18:00:00"), ""));
 		test.add(new Event("talk with TA", "bbb", "cd", new DateTime("2011-11-16T13:30:00"), new DateTime("2012-05-01T18:00:00"), ""));
-		DateTime start=new TimeParser().getGoogleCalTime("Recurring Event<br /> First start: 2011-08-30 11:45:00 EDT <br /> Duration: 3600 <br />Event Status: confirmed", "start");
-		DateTime end=new TimeParser().getGoogleCalTime("Recurring Event<br /> First start: 2011-08-30 11:45:00 EDT <br /> Duration: 3600 <br />Event Status: confirmed", "end");
+		DateTime start=new TimeParser().getGoogleCalTime("When: Fri Sep 23, 2011 4:30pm to 5:30pm&nbsp; EDT<br> <br>Event Status: confirmed", "start");
+		DateTime end=new TimeParser().getGoogleCalTime("When: Fri Sep 23, 2011 4:30pm to 5:30pm&nbsp; EDT<br> <br>Event Status: confirmed", "end");
 		test.add(new Event("talk with TA", "bbb", "cd", start, end, ""));
 		//test=new xmlProcess().process(test);
 		
@@ -128,6 +134,11 @@ public class TimeParser {
 			System.out.println(m.toString());
 			System.out.println(m.getStartTime().toString("dd-MM-yyyy HH:mm:ss") + " to " + m.getEndTime().toString("dd-MM-yyyy HH:mm:ss"));
 		}
+		googleCalParse s=new googleCalParse("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
+		NodeList myEvents = s.myDocument.getElementsByTagName("entry");
+		Node nEvent = myEvents.item(1);
+		System.out.println(s.extractNodeText(nEvent, "summary"));
+		
 	}
     
 

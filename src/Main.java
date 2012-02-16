@@ -7,6 +7,8 @@ public class Main {
 		s.outputSummaryAndDetailsPages("/Desktop");
 		System.out.println(s.myEvents.toString());
 		s.filterByKeyword("meet with");
+		//DateTime dt=new DateTime("2011-11-16T13:30:00");
+		//s.filterByTime(dt);
 		//s.outputSummaryAndDetailsPages("/Desktop");
 	}
 }

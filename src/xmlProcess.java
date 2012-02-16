@@ -1,9 +1,13 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
 import Process.Event;
 
+/*
+ * @author Gang Song
+ */
 
 public class xmlProcess {
 	
@@ -29,6 +33,20 @@ public class xmlProcess {
 		}
 		return temp;
 
+	}
+	
+	/*
+	 * use time to filter events
+	 */
+	
+	public ArrayList<Event> timeFilter(DateTime time){
+		ArrayList<Event> searchresults = new ArrayList<Event>();
+		for(Event e : myEvents){
+			if(e.myInterval.contains(time)){
+				searchresults.add(e);
+			}
+		}
+		return searchresults;
 	}
 	
 	public static void main (String[] args){

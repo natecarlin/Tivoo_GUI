@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import xmlParse.dukeCalParse;
 import xmlParse.googleCalParse;
 
@@ -42,6 +44,9 @@ public class TivooSystem {
 	
 	public void filterByKeyword(String keyword){
 		myEvents = new xmlProcess(myEvents).process(keyword);
+	}
+	public void filterByTime(DateTime time){
+		myEvents = new xmlProcess(myEvents).timeFilter(time);
 	}
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
