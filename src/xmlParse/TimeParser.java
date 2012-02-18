@@ -55,13 +55,15 @@ public class TimeParser {
 	
 	public DateTime getGoogleCalTime(String content,String period){
 		
+		
+		
 		String[] sections=content.split(" ");
 		if(sections[0].equals("Recurring")){
-			DateTime dt=new DateTime(sections[4]+"T"+sections[5]);
+			DateTime dt=new DateTime(sections[3]+"T"+sections[4]);
 			if(period.equals("start"))
 				return dt;
 			else
-				return dt.plusSeconds(Integer.parseInt(sections[9]));							
+				return dt.plusSeconds(Integer.parseInt(sections[6].substring(0,4)));							
 		}
 		else {
 			createMapOfMonth();
@@ -69,6 +71,12 @@ public class TimeParser {
 			StringBuilder tempday = new StringBuilder(sections[3]);
 			myDay = Integer.parseInt(tempday.delete(tempday.length() - 1,
 					tempday.length()).toString());
+			myHour=0;
+			myMinute=0;
+			if(sections[4].contains("<")){
+				myYear = Integer.parseInt(sections[4].substring(0, sections[4].indexOf("<")));
+			     return new DateTime(myYear,myMonth,myDay,myHour,myMinute);
+			}
 			myYear = Integer.parseInt(sections[4]);
 
 			if (period.equals("start")) {
@@ -77,7 +85,7 @@ public class TimeParser {
 				
 			} else {
 				
-				createHourAndMinute(sections[7].substring(0, sections[7].length()-26));				
+				createHourAndMinute(sections[7].substring(0, sections[7].indexOf("&")));				
 			}
 			
 			return new DateTime(myYear,myMonth,myDay,myHour,myMinute);
@@ -89,9 +97,6 @@ public class TimeParser {
 		String ampm = section.substring(section.length() - 2);
 		String hourandmin = section.substring(0,
 				section.length() - 2);
-		
-		myHour=0;
-		myMinute=0;
 		if(hourandmin.contains(":")){
 			String[] handm = hourandmin.split(":");
 		    myHour = Integer.parseInt(handm[0]);
@@ -103,7 +108,7 @@ public class TimeParser {
 			myMinute=0;
 		}
 		
-		if (ampm.equals("pm"))
+		if (ampm.equals("pm")&&myHour<12)
 			myHour = myHour + 12;
 		
 	}
