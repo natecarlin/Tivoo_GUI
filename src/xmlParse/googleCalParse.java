@@ -1,6 +1,7 @@
 package xmlParse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.w3c.dom.Node;
@@ -14,9 +15,9 @@ public class googleCalParse extends xmlParse {
 		super(link);
 	}
 
-	public ArrayList<Event> parse ()  {
+	public List<Event> parse ()  {
 		// List of Events
-		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
+		List<Event> toReturnEvents = new ArrayList<Event>();
 		NodeList myEvents = myDocument.getElementsByTagName("entry");
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){

@@ -1,6 +1,7 @@
 package xmlParse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.w3c.dom.Node;
@@ -14,7 +15,7 @@ public class dukeCalParse extends xmlParse {
 		super(link);
 	}
 
-	public ArrayList<Event> parse ()  {
+	public List<Event> parse ()  {
 		// List of Events
 		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
 		NodeList myEvents = myDocument.getElementsByTagName("event");
