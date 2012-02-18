@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.joda.time.DateTime;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -13,7 +14,7 @@ import Process.Event;
  * @author Gang Song
  */
 
-public class TimeParser {
+public class TimeParser{
 	
 	HashMap<String, Integer> monthMap;
 	int myMonth;
@@ -50,7 +51,16 @@ public class TimeParser {
 	 * return an integer of specific time scale
 	 */
 	private int getIntOfTime(Node myTime, String scale) {
-		return Integer.parseInt(xmlParse.extractNodeText(myTime, scale));
+		return Integer.parseInt(extractNodeText(myTime, scale));
+	}
+	
+	protected String extractNodeText(Node node, String tag) {
+		Element n = (Element) node;
+		try {
+			return n.getElementsByTagName(tag).item(0).getTextContent();
+		} catch (NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public DateTime getGoogleCalTime(String content,String period){
