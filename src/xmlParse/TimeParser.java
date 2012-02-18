@@ -89,6 +89,9 @@ public class TimeParser {
 		String ampm = section.substring(section.length() - 2);
 		String hourandmin = section.substring(0,
 				section.length() - 2);
+		
+		myHour=0;
+		myMinute=0;
 		if(hourandmin.contains(":")){
 			String[] handm = hourandmin.split(":");
 		    myHour = Integer.parseInt(handm[0]);
