@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -8,7 +7,6 @@ import xmlParse.googleCalParse;
 
 import HTMLoutput.HTMLdetailPage;
 import HTMLoutput.HTMLsummaryPage;
-import HTMLoutput.htmlOutput;
 import Process.Event;
 
 

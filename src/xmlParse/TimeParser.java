@@ -145,7 +145,7 @@ public class TimeParser {
 		googleCalParse s=new googleCalParse("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
 		NodeList myEvents = s.myDocument.getElementsByTagName("entry");
 		Node nEvent = myEvents.item(1);
-		System.out.println(s.extractNodeText(nEvent, "summary"));
+		//System.out.println(s.extractNodeText(nEvent, "summary"));
 		
 	}
     
