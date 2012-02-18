@@ -21,9 +21,9 @@ public class googleCalParse extends xmlParse {
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
-			if (nEvent.getNodeType() == Node.ELEMENT_NODE){
-				DateTime start=null;//new TimeParser().getGoogleCalTime(extractNodeText(nEvent, "summary"), "start");
-				DateTime end=null;//new TimeParser().getGoogleCalTime(extractNodeText(nEvent, "summary"), "end");
+			if (nEvent.getNodeType() == Node.ELEMENT_NODE){//null;//null;
+				DateTime start=new TimeParser().getGoogleCalTime(extractNodeText(nEvent, "summary"), "start");
+				DateTime end=new TimeParser().getGoogleCalTime(extractNodeText(nEvent, "summary"), "end");
 				toReturnEvents.add(new Event(extractNodeText(nEvent, "title"), extractNodeText(nEvent, "Location"), extractNodeText(nEvent, "summary"), start, end, "")) ;
 			}
 			

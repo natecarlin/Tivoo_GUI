@@ -77,7 +77,7 @@ public class TimeParser {
 				
 			} else {
 				
-				createHourAndMinute(sections[7].substring(0, sections[7].length()-6));				
+				createHourAndMinute(sections[7].substring(0, sections[7].length()-26));				
 			}
 			
 			return new DateTime(myYear,myMonth,myDay,myHour,myMinute);
