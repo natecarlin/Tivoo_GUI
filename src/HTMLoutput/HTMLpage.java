@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.hp.gagawa.java.elements.Html;
 
@@ -23,7 +22,6 @@ import Process.Event;
 public abstract class HTMLpage {
     private List<Event> myEvents;
     private String myPath; //the path where you want the file created
-    private String myFileName;
     
     public HTMLpage(List<Event> events, String path) {
         myEvents = events;
@@ -68,6 +66,21 @@ public abstract class HTMLpage {
         catch (IOException e1) {
             e1.printStackTrace();
             System.out.println("File already exists at" + myPath);
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Create a directory given a directory name
+     */
+    public boolean makeDirFromPath(String dirName) {
+        String dirPath = System.getProperty("user.home") + myPath + dirName;
+        Boolean made = new File(dirPath).mkdir();
+        if (made)
+            System.out.println("MADE DETAILDIR");
+        else {
+            System.out.println("FAILED TO MAKE DETAILDIR");
             return false;
         }
         return true;

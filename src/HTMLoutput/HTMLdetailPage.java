@@ -18,9 +18,10 @@ public class HTMLdetailPage extends HTMLpage {
     private static final String myDetailDirPath = "/DetailDir";
     
     public HTMLdetailPage(ArrayList<Event> events, String path) {
-        super(events, path + myDetailDirPath);
+        super(events, path);
+        super.makeDirFromPath(myDetailDirPath);
     }
-    
+
     public static String getDetailDirPath() {
         return myDetailDirPath;
     }
@@ -29,9 +30,9 @@ public class HTMLdetailPage extends HTMLpage {
      * Returns fileName for an Event.
      * Removes unusable characters from fileName.
      */
-    public String makeFileName(Event e) {
+    public static String makeFileName(Event e) {
       //TODO: QUOTING URLS/ESCAPE URLS for fileNames
-        return e.getName() + e.getStartTime().toString() + ".html";
+        return myDetailDirPath + "/" + e.getName() + e.getStartTime().toString() + ".html";
     }
     
     
