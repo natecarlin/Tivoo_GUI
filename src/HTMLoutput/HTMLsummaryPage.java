@@ -46,17 +46,23 @@ public class HTMLsummaryPage extends HTMLpage {
     public Html makeHtmlObject() {
         Html html = new Html();
         Body body = new Body();
+        List<Event> sortedEvents = sortEventsByTime(); //make list of events sorted chronologically
         
-        //loop over all events (sorted by time), add event info to appropriate date in calendar.
-        List<Event> sortedEvents = sortEventsByTime();
+        
+        addDateH2(sortedEvents.get(0), body); //add first date H2.
+        
+        //loop over all events (sorted by time), add event info and date H2's.
         DateTime currentDate = sortedEvents.get(0).getStartTime();
-        for (Event e : sortedEvents) {
-            
+        DateTime lastCalendarDate = currentDate.plusDays(7); //last date to include in calendar
+        for (Event e : sortedEvents) { 
             if (e.getStartTime().dayOfMonth().equals(currentDate.dayOfMonth())) {
                 addEventInfo(e, body);
-                
             }
             else {
+                //if more than 7 days after first date on calendar, finished.
+                if (e.getStartTime().compareTo(lastCalendarDate) > 0) {
+                    break;  
+                }
                 currentDate = e.getStartTime(); //currentDate ++
                 addDateH2(e, body);
                 addEventInfo(e, body);
@@ -65,8 +71,8 @@ public class HTMLsummaryPage extends HTMLpage {
             
         html.appendChild(body);
         return html;
-        
     }
+    
     /**
      * Add H2 with current day of week and day of month to body.
      */
@@ -88,9 +94,6 @@ public class HTMLsummaryPage extends HTMLpage {
         addEventLink(e, body);
         body.appendChild(new Br()); //add </br>
         
-        addEventDescription(e, body);
-        body.appendChild(new Br());
-        
         addEventTime(e, body);
         body.appendChild(new Br());
         body.appendChild(new Br());
@@ -105,17 +108,8 @@ public class HTMLsummaryPage extends HTMLpage {
         Text endTime = new Text("Ends: " + e.getEndTime());
         
         body.appendChild(startTime);
+        body.appendChild(new Br());
         body.appendChild(endTime);
-        return true;
-    }
-
-    /**
-     * Add event description object to body
-     */
-    private boolean addEventDescription(Event e, Body body) {
-        Text eventDescription = new Text("Description: " + e.getEventDescription());
-        
-        body.appendChild(eventDescription);
         return true;
     }
 

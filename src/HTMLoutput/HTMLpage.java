@@ -76,14 +76,7 @@ public abstract class HTMLpage {
      */
     public boolean makeDirFromPath(String dirName) {
         String dirPath = System.getProperty("user.home") + myPath + dirName;
-        Boolean made = new File(dirPath).mkdir();
-        if (made)
-            System.out.println("MADE DETAILDIR");
-        else {
-            System.out.println("FAILED TO MAKE DETAILDIR");
-            return false;
-        }
-        return true;
+        return new File(dirPath).mkdir();
     }
 }
 
