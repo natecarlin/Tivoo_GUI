@@ -2,6 +2,9 @@ package Process;
 
 import java.util.Comparator;
 
+/**
+ *@author Antares Yee
+ */
 
 public class TimeComp implements Comparator<Event> {
     

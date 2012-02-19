@@ -1,14 +1,20 @@
 package HTMLoutput;
 
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTime.Property;
 
+import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Body;
+import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
@@ -18,124 +24,130 @@ import com.hp.gagawa.java.elements.Text;
 import com.hp.gagawa.java.elements.Tr;
 
 import Process.Event;
+import Process.TimeComp;
+
+/**
+ *@author Antares Yee
+ */
 
 public class HTMLsummaryPage extends HTMLpage {
 
-    public HTMLsummaryPage(ArrayList<Event> events, String path) {
+    public HTMLsummaryPage(List<Event> events, String path) {
         super(events, path);
     }
 
     @Override
-    public void createHTMLpage() {
-        // TODO: create 1 week calendar using table.  
-        
-        //Create file for writing
-        String fileName = System.getProperty("user.home") + "/Desktop/TiVOOsummaryPage.html";
-        File out = new File(fileName);
-        boolean exist = false;
-        
-        try {
-            exist = out.createNewFile();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        
-        if (!exist) {
-        System.out.println("File already exists.");
-        System.exit(0);
-        }
-        
-        //set up FileWriter and BufferedWriter
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(out);
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        BufferedWriter bw = new BufferedWriter(fw);
-       
-        Html html = makeHTML();
-        
-        //write to bw
-        try {
-            bw.write(html.write());
-            bw.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    /**
+     * Create summaryPage for 1 week of events.  
+     * The file is saved at super(myPath).
+     * 
+     */
+    public boolean createHTMLpage() {
+        Html html = makeHtmlObject();
+        return super.makeFile(html, "/TiVOOsummaryPage.html");
     }
     
-    public Html makeHTML() {
-        //get first event, getDayOfWeek, getDate; use this info to fill in date labels in table
-        if (super.myEvents == null) System.out.println("myEvents is null!");
-        DateTime firstEventStart = super.myEvents.get(0).getStartTime();
-        DateTime currentDT = firstEventStart;
-        //create HTML page
+    /**
+     * Create Html object with 1 week summary of events.  
+     * Html object contains list of days of week/day of month, 
+     * and their Events.  Each Event is hyperlinked to detail page.
+     * Includes Event start and end times.
+     */
+    public Html makeHtmlObject() {
         Html html = new Html();
+        Body body = new Body();
         
-        //H2 month title
-        H2 month = new H2();
-        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            month.appendChild(new Text(currentDT.monthOfYear().getAsText()));
-        }
-        html.appendChild(month);
-        
-        //add table (calendar)
-        Table calendarTable = new Table();
-        calendarTable.setBorder("1");
-        Tr tr = new Tr();
-        
-        //Enter first day into table
-        Td td = new Td();
-        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            td.appendChild(new Text(currentDT.dayOfWeek().getAsText() + "</br>" + Integer.toString(currentDT.getDayOfMonth())));
-        }
-        tr.appendChild(td);
-         
-        //add remaining 6 days to table
-        for (int i=0; i<6; i++) {
+        //loop over all events (sorted by time), add event info to appropriate date in calendar.
+        List<Event> sortedEvents = sortEventsByTime();
+        DateTime currentDate = sortedEvents.get(0).getStartTime();
+        for (Event e : sortedEvents) {
             
-            //currentDate ++
-            if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                currentDT = currentDT.plusDays(1);
+            if (e.getStartTime().dayOfMonth().equals(currentDate.dayOfMonth())) {
+                addEventInfo(e, body);
+                
             }
-            
-            //add dayOfWeek and dayOfMonth to table
-            td = new Td();
-            
-            Text dayAndDate = null;
-            if (currentDT != null) { //THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                dayAndDate = new Text(currentDT.dayOfWeek().getAsText() + "</br>" + Integer.toString(currentDT.getDayOfMonth()));
-                td.appendChild(dayAndDate);
+            else {
+                currentDate = e.getStartTime(); //currentDate ++
+                addDateH2(e, body);
+                addEventInfo(e, body);
             }
-            
-           
-            
-            //add events to each day of week
-            Div div = new Div(); //div contains events of the day
-            for (Event e : super.myEvents) {
-                if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-                    if (e.getStartTime().getDayOfMonth() == currentDT.getDayOfMonth()) {
-                        Text eDescription = new Text(e.getName() + "</br>" + "Time: " + e.getStartTime() + "</br>" + "</br>");
-                        div.appendChild(eDescription);
-                    }
-                }
-            }
-            td.appendChild(div);
-            tr.appendChild(td);
         }
-        
-        if (currentDT != null) {//THIS IS TEMPORARY: firstEventStart SHOULD NOT BE NULL!!
-            currentDT.minusDays(6);
-        }
-        calendarTable.appendChild(tr);
-         
-        html.appendChild(calendarTable);
-        
+            
+        html.appendChild(body);
         return html;
+        
+    }
+    /**
+     * Add H2 with current day of week and day of month to body.
+     */
+    private boolean addDateH2(Event e, Body body) {
+        H2 dateH2 = new H2();
+        Text dayOfWeekText = new Text(e.getStartTime().dayOfWeek().getAsText() + " ");
+        Text dayOfMonthText = new Text(e.getStartTime().dayOfMonth().getAsText());
+        
+        dateH2.appendChild(dayOfWeekText);
+        dateH2.appendChild(dayOfMonthText);
+        body.appendChild(dateH2);
+        return true;
     }
 
+    /**
+     * Add info of Event to body.
+     */
+    private boolean addEventInfo(Event e, Body body) {
+        addEventLink(e, body);
+        body.appendChild(new Br()); //add </br>
+        
+        addEventDescription(e, body);
+        body.appendChild(new Br());
+        
+        addEventTime(e, body);
+        body.appendChild(new Br());
+        body.appendChild(new Br());
+        return true;
+    }
+    
+    /**
+     * Add event start and end time to body
+     */
+    private boolean addEventTime(Event e, Body body) {
+        Text startTime = new Text("Starts: " + e.getStartTime());
+        Text endTime = new Text("Ends: " + e.getEndTime());
+        
+        body.appendChild(startTime);
+        body.appendChild(endTime);
+        return true;
+    }
+
+    /**
+     * Add event description object to body
+     */
+    private boolean addEventDescription(Event e, Body body) {
+        Text eventDescription = new Text("Description: " + e.getEventDescription());
+        
+        body.appendChild(eventDescription);
+        return true;
+    }
+
+    /**
+     * Add an A object to body
+     */
+    private boolean addEventLink(Event e, Body body) {
+        A eventNameLink = new A();
+        eventNameLink.setHref(super.getMyPath() + HTMLdetailPage.getDetailDirPath());
+        eventNameLink.appendChild(new Text(e.getName()));
+        
+        body.appendChild(eventNameLink);
+        return true;
+    }
+        
+    
+    /**
+     * Sort events chronologically with TimeComp
+     */
+    public List<Event> sortEventsByTime() {
+        List<Event> sortedEvents = new ArrayList<Event>(super.getMyEvents());
+        Collections.sort(sortedEvents, new TimeComp());
+        return sortedEvents;
+    }
 }
