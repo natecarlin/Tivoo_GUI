@@ -53,7 +53,7 @@ public abstract class HTMLpage {
      */
     public boolean makeFile(Html html, String fileName) {
         //Create file, FileWriter, BufferedWriter for writing
-        String filePath = System.getProperty("user.home") + myPath + fileName;
+        String filePath = myPath + fileName;
         File out = new File(filePath);
         
         try {
@@ -75,7 +75,7 @@ public abstract class HTMLpage {
      * Create a directory given a directory name
      */
     public boolean makeDirFromPath(String dirName) {
-        String dirPath = System.getProperty("user.home") + myPath + dirName;
+        String dirPath = myPath + dirName;
         return new File(dirPath).mkdir();
     }
 }

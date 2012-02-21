@@ -1,13 +1,12 @@
 
 package HTMLoutput;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
-
 import Process.Event;
 
 /**
@@ -15,36 +14,21 @@ import Process.Event;
  */
 
 public class HTMLdetailPage extends HTMLpage {
-    private static final String myDetailDirPath = "/DetailDir";
+    public static final String DETAIL_DIR_PATH = "/DetailDir";
     
-    public HTMLdetailPage(ArrayList<Event> events, String path) {
+    public HTMLdetailPage(List<Event> events, String path) {
         super(events, path);
-        super.makeDirFromPath(myDetailDirPath);
+        makeDirFromPath(DETAIL_DIR_PATH);
     }
-
-    public static String getDetailDirPath() {
-        return myDetailDirPath;
-    }
-    
-    /**
-     * Returns fileName for an Event.
-     * Removes unusable characters from fileName.
-     */
-    public static String makeFileName(Event e) {
-      //TODO: QUOTING URLS/ESCAPE URLS for fileNames
-        return myDetailDirPath + "/" + e.getName() + e.getStartTime().toString() + ".html";
-    }
-    
-    
     
     /**
      * Creates a .html detail page for each event in myDetailDirPath.
      */
     @Override
     public boolean createHTMLpage() {
-        for (Event e : super.getMyEvents()) {
+        for (Event e : getMyEvents()) {
             Html html = makeHtmlObject(e);
-            super.makeFile(html, makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + HTMLutility.makeFileName(e));
         }
         return true;
     }

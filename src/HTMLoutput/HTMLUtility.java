@@ -1,27 +1,15 @@
 package HTMLoutput;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import Process.Event;
 
-public class HTMLUtility {
-    ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"));
+public class HTMLutility {
     
     /**
-     * Input a day, returns next day
+     * Returns fileName for an Event.
+     * Removes unusable characters from fileName.
      */
-    public static String getNextDay(String s) {
-        s = s.trim().toLowerCase();
-        
-        for (String day : days) {
-            if (s.equals(day)) {
-                return day;
-            }
-        }
-        
-        System.out.println("Did not recognize input day: getNextDay()");
-        System.exit(0);
-        
-        return "";
-    
+    public static String makeFileName(Event e) {
+      //TODO: QUOTING URLS/ESCAPE URLS for fileNames
+        return "/" + e.getName() + e.getStartTime().toString() + ".html";
     }
 }

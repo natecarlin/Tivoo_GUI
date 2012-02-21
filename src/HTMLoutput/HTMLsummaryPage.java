@@ -29,12 +29,12 @@ public class HTMLsummaryPage extends HTMLpage {
     @Override
     /**
      * Create summaryPage for 1 week of events.  
-     * The file is saved at super(myPath).
+     * The file is saved at super.myPath.
      * 
      */
     public boolean createHTMLpage() {
         Html html = makeHtmlObject();
-        return super.makeFile(html, "/TiVOOsummaryPage.html");
+        return makeFile(html, "/TiVOOsummaryPage.html");
     }
     
     /**
@@ -118,7 +118,7 @@ public class HTMLsummaryPage extends HTMLpage {
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(System.getProperty("user.home") + super.getMyPath() + HTMLdetailPage.makeFileName(e));
+        eventNameLink.setHref(getMyPath() + HTMLdetailPage.DETAIL_DIR_PATH + HTMLutility.makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);
@@ -130,7 +130,7 @@ public class HTMLsummaryPage extends HTMLpage {
      * Sort events chronologically with TimeComp
      */
     public List<Event> sortEventsByTime() {
-        List<Event> sortedEvents = new ArrayList<Event>(super.getMyEvents());
+        List<Event> sortedEvents = new ArrayList<Event>(getMyEvents());
         Collections.sort(sortedEvents, new TimeComp());
         return sortedEvents;
     }
