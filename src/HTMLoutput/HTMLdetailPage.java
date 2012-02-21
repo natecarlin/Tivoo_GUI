@@ -1,4 +1,3 @@
-
 package HTMLoutput;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import com.hp.gagawa.java.elements.Text;
 import Process.Event;
 
 /**
- *@author Antares Yee
+ *  @author Antares Yee
  */
 
 public class HTMLdetailPage extends HTMLpage {

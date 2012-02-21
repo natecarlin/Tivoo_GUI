@@ -2,6 +2,10 @@ package HTMLoutput;
 
 import Process.Event;
 
+/**
+ *  @author Antares Yee
+ */
+
 public class HTMLutility {
     
     /**

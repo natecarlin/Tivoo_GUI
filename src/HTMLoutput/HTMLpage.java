@@ -1,7 +1,3 @@
-/**
- *  @author Antares Yee
- */
-
 package HTMLoutput;
 
 import java.util.List;
@@ -12,11 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.hp.gagawa.java.elements.Html;
-
 import Process.Event;
 
 /**
- *@author Antares Yee
+ *  @author Antares Yee
  */
 
 public abstract class HTMLpage {
