@@ -6,7 +6,7 @@ import Process.Event;
  *  @author Antares Yee
  */
 
-public class HTMLutility {
+public class HTMLUtility {
     
     /**
      * Returns fileName for an Event.

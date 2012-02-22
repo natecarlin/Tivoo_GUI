@@ -1,9 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
-import xmlParse.dukeCalParse;
-import xmlParse.googleCalParse;
+import xmlParse.XmlParser;
 
 import HTMLoutput.HTMLdetailPage;
 import HTMLoutput.HTMLsummaryPage;
@@ -12,32 +12,21 @@ import Process.Event;
 
 public class TivooSystem {
 	
-	ArrayList<Event> myEvents;
+	List<Event> myEvents;
 	
 	public TivooSystem(){
 		myEvents = new ArrayList<Event>();
 	}
 
 	/*
-	 * Loads a duke cal file into the Tivoo Systems
+	 * Loads a  cal file into the Tivoo Systems
 	 */
-	public void loadDukeCal(String link){
+	public void loadCal(String link){
 		try {
-			myEvents.addAll(new dukeCalParse(link).parse());
+			myEvents.addAll(XmlParser.loadAndParse(link));
 		} catch (Exception e) {
 			System.out.println("File \"" + link + "\" could not be loaded");
 		}
-	}
-	/*
-	 * Loads a duke cal file into the Tivoo Systems
-	 */
-	public void loadGoogleCal(String link){
-			try {
-				myEvents.addAll(new googleCalParse(link).parse());
-			} catch (Exception e) {
-				System.out.println("File \"" + link + "\" could not be loaded");
-			}
-
 	}
 	
 	public void filterByKeyword(String keyword){
@@ -49,7 +38,7 @@ public class TivooSystem {
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
 	    HTMLsummaryPage summaryPage = new HTMLsummaryPage(myEvents, localPathSummary);
-        summaryPage.createHTMLpage();
+	    summaryPage.createHTMLpage();
 	    
 	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 

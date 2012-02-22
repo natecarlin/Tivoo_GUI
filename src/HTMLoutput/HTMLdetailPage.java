@@ -7,6 +7,7 @@ import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 import Process.Event;
+import HTMLoutput.HTMLUtility;
 
 /**
  *  @author Antares Yee
@@ -27,7 +28,7 @@ public class HTMLdetailPage extends HTMLpage {
     public boolean createHTMLpage() {
         for (Event e : getMyEvents()) {
             Html html = makeHtmlObject(e);
-            makeFile(html, DETAIL_DIR_PATH + HTMLutility.makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
         }
         return true;
     }
