@@ -53,7 +53,8 @@ public class HTMLdetailPage extends HTMLpage {
      */
     private boolean addEventDescription(Event e, Body body) {
         Text eventDescription = new Text(e.getEventDescription());
-        
+        body.appendChild(new Text("Details:"));
+        body.appendChild(new Br());
         body.appendChild(eventDescription);
         body.appendChild(new Br());
         return true;
