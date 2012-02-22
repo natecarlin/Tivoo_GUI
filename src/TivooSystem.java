@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
@@ -11,7 +12,7 @@ import Process.Event;
 
 public class TivooSystem {
 	
-	ArrayList<Event> myEvents;
+	List<Event> myEvents;
 	
 	public TivooSystem(){
 		myEvents = new ArrayList<Event>();
