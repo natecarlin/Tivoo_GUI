@@ -15,6 +15,8 @@ import com.hp.gagawa.java.elements.Text;
 import Process.Event;
 import Process.TimeComp;
 
+import HTMLoutput.HTMLUtility;
+
 /**
  *@author Antares Yee
  */
@@ -117,7 +119,7 @@ public class HTMLsummaryPage extends HTMLpage {
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(getMyPath() + HTMLdetailPage.DETAIL_DIR_PATH + HTMLutility.makeFileName(e));
+        eventNameLink.setHref(getMyPath() + HTMLdetailPage.DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);

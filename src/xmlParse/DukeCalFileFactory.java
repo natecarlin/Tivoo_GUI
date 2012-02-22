@@ -13,7 +13,6 @@ import Process.Event;
 public class DukeCalFileFactory extends FileParseFactory {
 
 	public boolean isThisKindOfThing(Document doc) {
-		System.out.println(doc.toString());
 		return true;
 	}
 

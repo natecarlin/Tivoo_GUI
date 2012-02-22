@@ -2,7 +2,7 @@ public class Main {
 	
 	public static void main (String args[]) {
 		TivooSystem s = new TivooSystem();
-		//s.loadDukeCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml");
+		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml");
 		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
 		s.outputSummaryAndDetailsPages(System.getProperty("user.home") + "/Desktop");
 		//System.out.println(s.myEvents.toString());

@@ -38,7 +38,7 @@ public class TivooSystem {
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
 	    HTMLsummaryPage summaryPage = new HTMLsummaryPage(myEvents, localPathSummary);
-        summaryPage.createHTMLpage();
+	    summaryPage.createHTMLpage();
 	    
 	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 
