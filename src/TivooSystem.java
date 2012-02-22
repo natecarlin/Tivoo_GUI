@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import xmlParse.dukeCalParse;
-import xmlParse.googleCalParse;
+import xmlParse.XmlParser;
 
 import HTMLoutput.HTMLdetailPage;
 import HTMLoutput.HTMLsummaryPage;
@@ -19,25 +18,14 @@ public class TivooSystem {
 	}
 
 	/*
-	 * Loads a duke cal file into the Tivoo Systems
+	 * Loads a  cal file into the Tivoo Systems
 	 */
-	public void loadDukeCal(String link){
+	public void loadCal(String link){
 		try {
-			myEvents.addAll(new dukeCalParse(link).parse());
+			myEvents.addAll(XmlParser.loadAndParse(link));
 		} catch (Exception e) {
 			System.out.println("File \"" + link + "\" could not be loaded");
 		}
-	}
-	/*
-	 * Loads a duke cal file into the Tivoo Systems
-	 */
-	public void loadGoogleCal(String link){
-			try {
-				myEvents.addAll(new googleCalParse(link).parse());
-			} catch (Exception e) {
-				System.out.println("File \"" + link + "\" could not be loaded");
-			}
-
 	}
 	
 	public void filterByKeyword(String keyword){
