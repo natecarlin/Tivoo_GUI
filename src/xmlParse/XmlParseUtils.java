@@ -2,6 +2,10 @@ package xmlParse;
 
 import org.w3c.dom.*;
 
+/**
+ * @author Glenn Rivkees
+ */
+
 public abstract class XmlParseUtils {
 
 

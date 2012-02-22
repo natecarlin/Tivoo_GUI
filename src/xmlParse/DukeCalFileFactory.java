@@ -10,6 +10,10 @@ import org.w3c.dom.NodeList;
 
 import Process.Event;
 
+/**
+ * @author Glenn Rivkees
+ */
+
 public class DukeCalFileFactory extends FileParseFactory {
 
 	public boolean isThisKindOfThing(Document doc) {

@@ -6,6 +6,10 @@ import org.w3c.dom.Document;
 
 import Process.Event;
 
+/**
+ * @author Glenn Rivkees
+ */
+
 public abstract class FileParseFactory {
 	
 	public abstract boolean isThisKindOfThing(Document document);

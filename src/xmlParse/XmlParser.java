@@ -5,6 +5,10 @@ import java.util.List;
 
 import Process.Event;
 
+/**
+ * @author Glenn Rivkees
+ */
+
 public class XmlParser {
 
 	static public List<Event> loadAndParse(String url) {

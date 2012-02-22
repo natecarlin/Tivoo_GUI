@@ -10,6 +10,10 @@ import org.w3c.dom.NodeList;
 
 import Process.Event;
 
+/**
+ * @author Glenn Rivkees
+ */
+
 public class GoogleCalFileFactory extends FileParseFactory {
 	
 	public final String namespace = "http://schemas.google.com/gCal/2005";
