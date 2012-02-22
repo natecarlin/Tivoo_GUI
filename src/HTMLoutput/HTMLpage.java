@@ -60,7 +60,7 @@ public abstract class HTMLpage {
         } 
         catch (IOException e1) {
             e1.printStackTrace();
-            System.out.println("File already exists at" + myPath + fileName);
+            System.out.println("error creating file at " + myPath + fileName);
             return false;
         }
         return true;
