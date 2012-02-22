@@ -18,7 +18,7 @@ public class TimeParser {
 	 * 'start' or 'end') in an event (this method is used for parsing
 	 * DukeCalendar)
 	 */
-	public DateTime createTime(Node nEvent, String period) {
+	public DateTime getDukeCalTime(Node nEvent, String period) {
 		NodeList children = nEvent.getChildNodes();
 		Node myTime = null;
 		for (int j = 0; j < children.getLength(); j++) {
@@ -39,7 +39,7 @@ public class TimeParser {
 	 * Extract specific time from a node in Duke Calendar and return an int
 	 */
 
-	protected int getIntOfTime(Node node, String tag) {
+	private int getIntOfTime(Node node, String tag) {
 		Element n = (Element) node;
 		try {
 			return Integer.parseInt(n.getElementsByTagName(tag).item(0)

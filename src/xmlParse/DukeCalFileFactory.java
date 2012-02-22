@@ -48,8 +48,8 @@ public class DukeCalFileFactory extends FileParseFactory {
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
 			// This will be removed soon and replaced with other parsing
-			DateTime start=new TimeParser().createTime(nEvent, "start");
-			DateTime end=new TimeParser().createTime(nEvent, "end");
+			DateTime start=new TimeParser().getDukeCalTime(nEvent, "start");
+			DateTime end=new TimeParser().getDukeCalTime(nEvent, "end");
 			// run xpaths and make event
 			try {
 				toReturnEvents.add(new Event(title.evaluate(nEvent), location.evaluate(nEvent), description.evaluate(nEvent), start, end, "")) ;
