@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -148,12 +151,20 @@ public class TimeParser{
 		test.add(new Event("talk with TA", "bbb", "cd", start, end, ""));
 		//test=new xmlProcess().process(test);
 		
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("'When:' M dd, yyyy h:mm ");
+		DateTimeFormatter ft= new DateTimeFormatterBuilder().appendMonthOfYear(2).appendDayOfMonth(2).appendYear(4, 4).toFormatter();
+		DateTime t=fmt.parseDateTime("When: May 23, 2011 4:30 ");
+		DateTime s=ft.parseDateTime("09242011");
+
+		test.add(new Event("talk with TA", "bbb", "cd", t, s, ""));  
+		
 		for(Event m: test){
 			System.out.println(m.toString());
 			System.out.println(m.getStartTime().toString("dd-MM-yyyy HH:mm:ss") + " to " + m.getEndTime().toString("dd-MM-yyyy HH:mm:ss"));
 		}
-		googleCalParse s=new googleCalParse("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
-		NodeList myEvents = s.myDocument.getElementsByTagName("entry");
+		
+		googleCalParse s1 = new googleCalParse("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
+		NodeList myEvents = s1.myDocument.getElementsByTagName("entry");
 		Node nEvent = myEvents.item(1);
 		//System.out.println(s.extractNodeText(nEvent, "summary"));
 		
