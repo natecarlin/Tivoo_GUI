@@ -33,7 +33,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 		try {
 			XPathExpression events = xpath.compile("//event");
 			startTime = xpath.compile("./start/utcdate");
-			endTime = xpath.compile("./end/utcdate");
+			endTime = xpath.compile("./end/unformatted");
 			title = xpath.compile("./summary");
 			location = xpath.compile("./location/address");
 			description = xpath.compile("./description");
@@ -47,11 +47,10 @@ public class DukeCalFileFactory extends FileParseFactory {
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
-			// This will be removed soon and replaced with other parsing
-			DateTime start=new TimeParser().getDukeCalTime(nEvent, "start");
-			DateTime end=new TimeParser().getDukeCalTime(nEvent, "end");
 			// run xpaths and make event
 			try {
+				DateTime start=new TimeParser().getDukeCalTime(startTime.evaluate(nEvent), "start");
+				DateTime end=new TimeParser().getDukeCalTime(endTime.evaluate(nEvent), "end");
 				toReturnEvents.add(new Event(title.evaluate(nEvent), location.evaluate(nEvent), description.evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");

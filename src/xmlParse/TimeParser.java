@@ -13,6 +13,11 @@ import org.w3c.dom.NodeList;
 
 public class TimeParser {
 
+	public DateTime getDukeCalTime(String content, String period) {
+		//TODO: make joda parser
+		return null;
+	}
+	
 	/*
 	 * create Joda Time from a specific period (a subnode of an event like
 	 * 'start' or 'end') in an event (this method is used for parsing
