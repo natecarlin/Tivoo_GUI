@@ -14,6 +14,9 @@ public class HTMLUtility {
      */
     public static String makeFileName(Event e) {
       //TODO: QUOTING URLS/ESCAPE URLS for fileNames
-        return "/" + e.getName() + e.getStartTime().toString() + ".html";
+        // illegal:  / ? < > \ : * | Ó : ^ .
+        //return "/" + e.getName() + e.getStartTime().toString() + ".html";
+        String name = e.getName() + e.getStartTime().toString();
+        return Integer.toString(name.hashCode());
     }
 }
