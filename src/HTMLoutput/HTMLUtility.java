@@ -17,6 +17,6 @@ public class HTMLUtility {
         // illegal:  / ? < > \ : * | Ó : ^ .
         //return "/" + e.getName() + e.getStartTime().toString() + ".html";
         String name = e.getName() + e.getStartTime().toString();
-        return Integer.toString(name.hashCode());
+        return "/" + Integer.toString(name.hashCode()) + ".html";
     }
 }
