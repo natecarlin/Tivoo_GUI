@@ -11,6 +11,10 @@ public class EventCalendar {
 		myList = new ArrayList<Event>();
 	}
 	
+	public EventCalendar(List <Event> list){
+	    myList = list;
+	}
+	
 	public void addEvent(Event event){
 		myList.add(event);
 	}
@@ -18,7 +22,7 @@ public class EventCalendar {
 	public List<Event> searchCalendar(String keyword){
 		List<Event> searchresults = new ArrayList<Event>();
 		for (Event e : myList){
-			if(e.myName.contains(keyword)){
+			if(e.toString().contains(keyword)){
 				searchresults.add(e);
 			}
 		}

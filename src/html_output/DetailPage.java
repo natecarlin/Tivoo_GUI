@@ -1,4 +1,6 @@
-package HTMLoutput;
+package html_output;
+
+import html_output.Utility;
 
 import java.util.List;
 import com.hp.gagawa.java.elements.Body;
@@ -7,16 +9,15 @@ import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 import Process.Event;
-import HTMLoutput.HTMLUtility;
 
 /**
  *  @author Antares Yee
  */
 
-public class HTMLdetailPage extends HTMLpage {
+public class DetailPage extends HtmlPage {
     public static final String DETAIL_DIR_PATH = "DetailDir";
     
-    public HTMLdetailPage(List<Event> events, String path) {
+    public DetailPage(List<Event> events, String path) {
         super(events, path);
         makeDirFromPath(DETAIL_DIR_PATH);
     }
@@ -28,7 +29,7 @@ public class HTMLdetailPage extends HTMLpage {
     public boolean createHTMLpage() {
         for (Event e : getMyEvents()) {
             Html html = makeHtmlObject(e);
-            makeFile(html, DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + Utility.makeFileName(e));
         }
         return true;
     }

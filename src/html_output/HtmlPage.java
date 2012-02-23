@@ -1,4 +1,4 @@
-package HTMLoutput;
+package html_output;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ import Process.Event;
  *  @author Antares Yee
  */
 
-public abstract class HTMLpage {
+public abstract class HtmlPage {
     private List<Event> myEvents;
     private String myPath; //the path where you want the file created
     
-    public HTMLpage(List<Event> events, String path) {
+    public HtmlPage(List<Event> events, String path) {
         myEvents = events;
         myPath = path;
     }

@@ -1,3 +1,6 @@
+import html_output.DetailPage;
+import html_output.SummaryPage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,8 +9,6 @@ import org.joda.time.DateTime;
 import xmlParse.ParsingException;
 import xmlParse.XmlParser;
 
-import HTMLoutput.HTMLdetailPage;
-import HTMLoutput.HTMLsummaryPage;
 import Process.Event;
 
 
@@ -31,10 +32,10 @@ public class TivooSystem {
 	}
 	
 	public void filterByKeyword(String keyword){
-		myEvents = new xmlProcess(myEvents).process(keyword);
+		myEvents = new EventCalendar(myEvents).searchCalendar(keyword);
 	}
 	public void filterByTime(DateTime time){
-		myEvents = new xmlProcess(myEvents).timeFilter(time);
+		myEvents = new EventCalendar(myEvents).eventsAtTime(time);
 	}
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
@@ -42,10 +43,10 @@ public class TivooSystem {
 	        throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
 	    
-	    HTMLsummaryPage summaryPage = new HTMLsummaryPage(myEvents, localPathSummary);
+	    SummaryPage summaryPage = new SummaryPage(myEvents, localPathSummary);
 	    summaryPage.createHTMLpage();
 	    
-	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
+	    DetailPage detailPage = new DetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 
 	}
 }
