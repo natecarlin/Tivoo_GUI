@@ -3,57 +3,29 @@ package xmlParse;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /*
  * @author Gang Song
  */
 
 public class TimeParser {
-
-	public DateTime getDukeCalTime(String content, String period) {
-		//TODO: make joda parser
-		return null;
-	}
 	
 	/*
 	 * create Joda Time from a specific period (a subnode of an event like
 	 * 'start' or 'end') in an event (this method is used for parsing
 	 * DukeCalendar)
 	 */
-	public DateTime getDukeCalTime(Node nEvent, String period) {
-		NodeList children = nEvent.getChildNodes();
-		Node myTime = null;
-		for (int j = 0; j < children.getLength(); j++) {
-			Node child = children.item(j);
-			if (child.getNodeName().equals(period)) {
-				myTime = child;
-				break;
-			}
+	public DateTime getDukeCalTime(String content) {
+		
+		DateTimeFormatterBuilder myBuilder=new DateTimeFormatterBuilder().appendYear(4, 4).appendMonthOfYear(2).appendDayOfMonth(2);
+		if(content.length()==15){
+			myBuilder.appendLiteral('T').appendHourOfDay(2).appendMinuteOfHour(2).appendSecondOfMinute(2);
 		}
-		DateTime dt = null;
-		dt = new DateTime(getIntOfTime(myTime, "year"), getIntOfTime(myTime,
-				"month"), getIntOfTime(myTime, "day"), getIntOfTime(myTime,
-				"hour24"), getIntOfTime(myTime, "minute"), 0, 0);
-		return dt;
+		DateTimeFormatter myFormat=myBuilder.toFormatter();
+		DateTime myTime=myFormat.parseDateTime(content);
+		return myTime;
 	}
-
-	/*
-	 * Extract specific time from a node in Duke Calendar and return an int
-	 */
-
-	private int getIntOfTime(Node node, String tag) {
-		Element n = (Element) node;
-		try {
-			return Integer.parseInt(n.getElementsByTagName(tag).item(0)
-					.getTextContent());
-		} catch (NullPointerException e) {
-			return 0;
-		}
-	}
-
+	
 	/*
 	 * create a DateTime Object from a string in Google Calendar
 	 */
