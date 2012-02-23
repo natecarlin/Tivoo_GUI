@@ -119,7 +119,7 @@ public class HTMLsummaryPage extends HTMLpage {
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(getMyPath() + HTMLdetailPage.DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
+        eventNameLink.setHref(HTMLdetailPage.DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);
