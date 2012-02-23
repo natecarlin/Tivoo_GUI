@@ -1,7 +1,13 @@
 package xmlParse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
 import org.w3c.dom.Document;
@@ -17,24 +23,43 @@ import Process.Event;
 public class GoogleCalFileFactory extends FileParseFactory {
 	
 	public final String namespace = "http://schemas.google.com/gCal/2005";
+	
+	// Mappings for xpath expressions
+    private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();
+    static {
+    	myXpathExprStrings.put("events", "//entry");
+    	myXpathExprStrings.put("title", "./title");
+    	myXpathExprStrings.put("description", "./summary");
+    }
 
-	public boolean isThisKindOfThing(Document doc) {
+	public boolean isThisCal(Document doc) {
 		return doc.getDocumentElement().getAttribute("xmlns:gCal").equals(namespace);
 	}
 
 	public List<Event> parseEvents(Document doc) {
+		// Compile Xpath expressions and store in map
+		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
+		// get list of event nodes
+		NodeList myEvents;
+		try {
+			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			throw new RuntimeException("XPath expression failed to evaluate");
+		}
+		
 		// List of Events
 		List<Event> toReturnEvents = new ArrayList<Event>();
-		NodeList myEvents = doc.getElementsByTagName("entry");
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
-			if (nEvent.getNodeType() == Node.ELEMENT_NODE){//null;//null;
-				DateTime start=new TimeParser().getGoogleCalTime(XmlParseUtils.extractNodeText(nEvent, "summary"), "start");
-				DateTime end=new TimeParser().getGoogleCalTime(XmlParseUtils.extractNodeText(nEvent, "summary"), "end");
-				toReturnEvents.add(new Event(XmlParseUtils.extractNodeText(nEvent, "title"), XmlParseUtils.extractNodeText(nEvent, "Location"), XmlParseUtils.extractNodeText(nEvent, "summary"), start, end, "")) ;
-			}
-			
+			try {
+                // modified next two lines to parse time
+				DateTime start=new TimeParser().getGoogleCalTime(pathXpr.get("description").evaluate(nEvent), "start");
+				DateTime end=new TimeParser().getGoogleCalTime(pathXpr.get("description").evaluate(nEvent), "end");
+				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), null, pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
+			} catch (XPathExpressionException e) {
+				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
+			}	
 		}
 		return toReturnEvents;
 	}

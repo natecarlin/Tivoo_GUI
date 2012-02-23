@@ -1,7 +1,9 @@
 package xmlParse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.*;
 
@@ -17,28 +19,32 @@ import Process.Event;
  */
 
 public class DukeCalFileFactory extends FileParseFactory {
-
-	public boolean isThisKindOfThing(Document doc) {
+	
+	// Mappings for xpath expressions
+    private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();
+    static {
+    	myXpathExprStrings.put("events", "//event");
+    	myXpathExprStrings.put("startTime", "./start/unformatted");
+    	myXpathExprStrings.put("endTime", "./end/unformatted");
+    	myXpathExprStrings.put("title", "./summary");
+    	myXpathExprStrings.put("location", "./location/address");
+    	myXpathExprStrings.put("description", "./description");
+    }
+	
+	public boolean isThisCal(Document doc) {
 		// TODO: find way to distinguish a duke cal, right now this works because it is the last one.
 		return true;
 	}
 
 	public List<Event> parseEvents(Document doc) {
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		
-		// Xpath compilation
+		// Compile Xpath expressions and store in map
+		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
+		// get list of event nodes
 		NodeList myEvents;
-		XPathExpression startTime, endTime, title, location, description;
 		try {
-			XPathExpression events = xpath.compile("//event");
-			startTime = xpath.compile("./start/unformatted");//changed it from ./start/utcdate to ./start/unformatted  @Gang Song
-			endTime = xpath.compile("./end/unformatted");
-			title = xpath.compile("./summary");
-			location = xpath.compile("./location/address");
-			description = xpath.compile("./description");
-			myEvents = (NodeList) events.evaluate(doc, XPathConstants.NODESET);
+			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
-			throw new RuntimeException("XPath expression failed to compile and/or evaluate");
+			throw new RuntimeException("XPath expression failed to evaluate");
 		}
 		
 		// List of Events
@@ -49,9 +55,9 @@ public class DukeCalFileFactory extends FileParseFactory {
 			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
-				DateTime start=new TimeParser().getDukeCalTime(startTime.evaluate(nEvent));
-				DateTime end=new TimeParser().getDukeCalTime(endTime.evaluate(nEvent));				
-				toReturnEvents.add(new Event(title.evaluate(nEvent), location.evaluate(nEvent), description.evaluate(nEvent), start, end, "")) ;
+				DateTime start=new TimeParser().getDukeCalTime(pathXpr.get("startTime").evaluate(nEvent));
+				DateTime end=new TimeParser().getDukeCalTime(pathXpr.get("endTime").evaluate(nEvent));				
+				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
 			}

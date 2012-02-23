@@ -35,7 +35,7 @@ public class XmlParser {
 		kindsOfFiles.add(new DukeCalFileFactory());
 		// find expression type, and then call its parser
 		for (FileParseFactory expressionKind : kindsOfFiles) {
-			if (expressionKind.isThisKindOfThing(document))
+			if (expressionKind.isThisCal(document))
 				return expressionKind.parseEvents(document);
 		}
 		throw new RuntimeException("Filetype not recognized");
@@ -47,7 +47,7 @@ public class XmlParser {
 	public Document xmlFileFromUrl(String link) {
 		Document toRetDoc;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		dbFactory.setNamespaceAware(true);
+		dbFactory.setNamespaceAware(false);
 		DocumentBuilder dBuilder;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
