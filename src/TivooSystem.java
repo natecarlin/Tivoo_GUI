@@ -30,10 +30,10 @@ public class TivooSystem {
 	}
 	
 	public void filterByKeyword(String keyword){
-		myEvents = new xmlProcess(myEvents).process(keyword);
+		myEvents = new EventCalendar(myEvents).searchCalendar(keyword);
 	}
 	public void filterByTime(DateTime time){
-		myEvents = new xmlProcess(myEvents).timeFilter(time);
+		myEvents = new EventCalendar(myEvents).eventsAtTime(time);
 	}
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
