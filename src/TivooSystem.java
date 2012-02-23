@@ -37,11 +37,14 @@ public class TivooSystem {
 	}
 	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
+	    if (myEvents.isEmpty()) {
+	        throw new RuntimeException("Could not output html: the list myEvents is empty.");
+	    }
+	    
 	    HTMLsummaryPage summaryPage = new HTMLsummaryPage(myEvents, localPathSummary);
 	    summaryPage.createHTMLpage();
 	    
 	    HTMLdetailPage detailPage = new HTMLdetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 
-        //TODO: what if name of event contains char not able to use for filename? ask Hewner
 	}
 }

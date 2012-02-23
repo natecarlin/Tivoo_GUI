@@ -32,9 +32,6 @@ public class xmlProcess {
 				temp.add(current);
 			}			
 		}
-		if(temp.size()==0){
-			throw new ProcessException("no events match the keyword filter.");
-		}
 		return temp;
 
 	}
