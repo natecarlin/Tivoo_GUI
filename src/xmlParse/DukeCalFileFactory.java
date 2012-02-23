@@ -49,8 +49,9 @@ public class DukeCalFileFactory extends FileParseFactory {
 			Node nEvent = myEvents.item(i);
 			// run xpaths and make event
 			try {
+                // modified next two lines to parse time
 				DateTime start=new TimeParser().getDukeCalTime(startTime.evaluate(nEvent));
-				DateTime end=new TimeParser().getDukeCalTime(endTime.evaluate(nEvent));
+				DateTime end=new TimeParser().getDukeCalTime(endTime.evaluate(nEvent));				
 				toReturnEvents.add(new Event(title.evaluate(nEvent), location.evaluate(nEvent), description.evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
