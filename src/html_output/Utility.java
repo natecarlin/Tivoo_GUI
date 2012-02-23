@@ -1,4 +1,4 @@
-package HTMLoutput;
+package html_output;
 
 import Process.Event;
 
@@ -6,7 +6,7 @@ import Process.Event;
  *  @author Antares Yee
  */
 
-public class HTMLUtility {
+public class Utility {
     
     /**
      * Returns fileName for an Event.

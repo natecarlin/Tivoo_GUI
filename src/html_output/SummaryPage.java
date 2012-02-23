@@ -1,4 +1,6 @@
-package HTMLoutput;
+package html_output;
+
+import html_output.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,15 +17,14 @@ import com.hp.gagawa.java.elements.Text;
 import Process.Event;
 import Process.TimeComp;
 
-import HTMLoutput.HTMLUtility;
 
 /**
  *@author Antares Yee
  */
 
-public class HTMLsummaryPage extends HTMLpage {
+public class SummaryPage extends HtmlPage {
 
-    public HTMLsummaryPage(List<Event> events, String path) {
+    public SummaryPage(List<Event> events, String path) {
         super(events, path);
     }
 
@@ -119,7 +120,7 @@ public class HTMLsummaryPage extends HTMLpage {
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(HTMLdetailPage.DETAIL_DIR_PATH + HTMLUtility.makeFileName(e));
+        eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + Utility.makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);
