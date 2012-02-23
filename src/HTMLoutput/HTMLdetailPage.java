@@ -14,7 +14,7 @@ import HTMLoutput.HTMLUtility;
  */
 
 public class HTMLdetailPage extends HTMLpage {
-    public static final String DETAIL_DIR_PATH = "/DetailDir";
+    public static final String DETAIL_DIR_PATH = "DetailDir";
     
     public HTMLdetailPage(List<Event> events, String path) {
         super(events, path);
