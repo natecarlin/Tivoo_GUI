@@ -24,8 +24,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 	}
 
 	public List<Event> parseEvents(Document doc) {
-		XPathFactory factory = XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
+		XPath xpath = XPathFactory.newInstance().newXPath();
 		
 		// Xpath compilation
 		NodeList myEvents;

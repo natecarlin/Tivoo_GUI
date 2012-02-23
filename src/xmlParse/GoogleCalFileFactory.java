@@ -19,9 +19,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
 	public final String namespace = "http://schemas.google.com/gCal/2005";
 
 	public boolean isThisKindOfThing(Document doc) {
-		if (doc.getDocumentElement().getAttribute("xmlns:gCal").equals(namespace))
-			return true;
-		return false;
+		return doc.getDocumentElement().getAttribute("xmlns:gCal").equals(namespace);
 	}
 
 	public List<Event> parseEvents(Document doc) {

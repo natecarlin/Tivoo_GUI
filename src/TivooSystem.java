@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import xmlParse.ParsingException;
 import xmlParse.XmlParser;
 
 import HTMLoutput.HTMLdetailPage;
@@ -23,8 +24,8 @@ public class TivooSystem {
 	 */
 	public void loadCal(String link){
 		try {
-			myEvents.addAll(XmlParser.loadAndParse(link));
-		} catch (Exception e) {
+			myEvents.addAll(new XmlParser(link).loadAndParse());
+		} catch (ParsingException e) {
 			System.out.println("File \"" + link + "\" could not be loaded");
 		}
 	}
