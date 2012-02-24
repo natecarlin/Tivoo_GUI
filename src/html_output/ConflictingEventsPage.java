@@ -37,11 +37,24 @@ public class ConflictingEventsPage extends HtmlPage {
    
         HtmlUtility.addTitleH2("Conflicting Events", body);     
         for (Event e : getConflictingEvents()) {
-            HtmlUtility.addEventInfo(e,body);
+            addEventInfo(e,body);
         }
         html.appendChild(body);
         return html;
         
+    }
+    
+    /**
+     * Add info of Event to body.
+     */
+    private boolean addEventInfo(Event e, Body body) {
+        HtmlUtility.addEventH2(e, body);
+        body.appendChild(new Br()); //add </br>
+        
+        HtmlUtility.addEventTime(e, body);
+        body.appendChild(new Br());
+        body.appendChild(new Br());
+        return true;
     }
     
     /**

@@ -33,19 +33,6 @@ public class HtmlUtility {
     }
     
     /**
-     * Add info of Event to body.
-     */
-    public static boolean addEventInfo(Event e, Body body) {
-        addEventH2(e, body);
-        body.appendChild(new Br()); //add </br>
-        
-        addEventTime(e, body);
-        body.appendChild(new Br());
-        body.appendChild(new Br());
-        return true;
-    }
-    
-    /**
      * Add event start and end time to body
      */
     public static boolean addEventTime(Event e, Body body) {
@@ -55,6 +42,7 @@ public class HtmlUtility {
         body.appendChild(startTime);
         body.appendChild(new Br());
         body.appendChild(endTime);
+        body.appendChild(new Br());
         return true;
     }
     
@@ -65,8 +53,15 @@ public class HtmlUtility {
         H2 h2 = new H2();
         h2.appendChild(new Text(name));
         body.appendChild(h2);
-        body.appendChild(new Br());
         return true;
     }
     
+    /**
+     * Add event description of an event to body
+     */
+    public static boolean addEventDescription(Event e, Body body) {
+        body.appendChild(new Text("Details: " + e.getEventDescription()));
+        body.appendChild(new Br());
+        return true;
+    }
 }

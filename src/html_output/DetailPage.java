@@ -40,37 +40,18 @@ public class DetailPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
         
-        HtmlUtility.addTitleH2(e.getName(), body);
-        addEventTime(e, body);
-        addEventDescription(e, body);
- 
+        addEventInfo(e, body);
         html.appendChild(body);
         return html;
     }
     
     /**
-     * Add event description of an event to body
+     * Add info of Event to body.
      */
-    private boolean addEventDescription(Event e, Body body) {
-        Text eventDescription = new Text(e.getEventDescription());
-        body.appendChild(new Text("Details:"));
-        body.appendChild(new Br());
-        body.appendChild(eventDescription);
-        body.appendChild(new Br());
+    private boolean addEventInfo(Event e, Body body) {
+        HtmlUtility.addTitleH2(e.getName(), body);
+        HtmlUtility.addEventTime(e, body);
+        HtmlUtility.addEventDescription(e, body);
         return true;
     }
-    /**
-     * Add start and end time of an event to body.
-     */
-    private boolean addEventTime(Event e, Body body) {
-        Text startTime = new Text("Starts: " + e.getStartTime());
-        Text endTime = new Text("Ends: " + e.getEndTime());
-        
-        body.appendChild(startTime);
-        body.appendChild(new Br());
-        body.appendChild(endTime);
-        body.appendChild(new Br());
-        return true;
-    }
-    
 }
