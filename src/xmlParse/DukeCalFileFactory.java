@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.xml.xpath.*;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -55,8 +57,8 @@ public class DukeCalFileFactory extends FileParseFactory {
 			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
-				DateTime start=new TimeParser().getDukeCalTime(pathXpr.get("startTime").evaluate(nEvent));
-				DateTime end=new TimeParser().getDukeCalTime(pathXpr.get("endTime").evaluate(nEvent));				
+				DateTime start=getDukeCalTime(pathXpr.get("startTime").evaluate(nEvent));
+				DateTime end=getDukeCalTime(pathXpr.get("endTime").evaluate(nEvent));				
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
@@ -65,5 +67,22 @@ public class DukeCalFileFactory extends FileParseFactory {
 		}
 		return toReturnEvents;
 	}
-
+	
+	/**
+	 * create Joda Time from a specific period (a subnode of an event like
+	 * 'start' or 'end') in an event (this method is used for parsing
+	 * DukeCalendar)
+	 * @author Gang Song
+	 */
+	private DateTime getDukeCalTime(String content) {
+		
+		DateTimeFormatterBuilder myBuilder=new DateTimeFormatterBuilder().appendYear(4, 4).appendMonthOfYear(2).appendDayOfMonth(2);
+		if(content.length()==15){
+			myBuilder.appendLiteral('T').appendHourOfDay(2).appendMinuteOfHour(2).appendSecondOfMinute(2);
+		}
+		DateTimeFormatter myFormat=myBuilder.toFormatter();
+		DateTime myTime=myFormat.parseDateTime(content);
+		return myTime;
+	}
+	
 }
