@@ -1,13 +1,11 @@
 package html_output;
 
-import html_output.Utility;
+import html_output.HtmlUtility;
+
 
 import java.util.List;
 import com.hp.gagawa.java.elements.Body;
-import com.hp.gagawa.java.elements.Br;
-import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
-import com.hp.gagawa.java.elements.Text;
 import Process.Event;
 
 /**
@@ -29,7 +27,7 @@ public class DetailPage extends HtmlPage {
     public boolean createHTMLpage() {
         for (Event e : getMyEvents()) {
             Html html = makeHtmlObject(e);
-            makeFile(html, DETAIL_DIR_PATH + Utility.makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + HtmlUtility.makeFileName(e));
         }
         return true;
     }
@@ -41,47 +39,18 @@ public class DetailPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
         
-        addTitle(e, body);   
-        addStartEndTime(e, body);
-        addEventDescription(e, body);
- 
+        addEventInfo(e, body);
         html.appendChild(body);
         return html;
     }
     
     /**
-     * Add event description of an event to body
+     * Add info of Event to body.
      */
-    private boolean addEventDescription(Event e, Body body) {
-        Text eventDescription = new Text(e.getEventDescription());
-        body.appendChild(new Text("Details:"));
-        body.appendChild(new Br());
-        body.appendChild(eventDescription);
-        body.appendChild(new Br());
-        return true;
-    }
-    /**
-     * Add start and end time of an event to body.
-     */
-    private boolean addStartEndTime(Event e, Body body) {
-        Text startTime = new Text("Starts: " + e.getStartTime());
-        Text endTime = new Text("Ends: " + e.getEndTime());
-        
-        body.appendChild(startTime);
-        body.appendChild(new Br());
-        body.appendChild(endTime);
-        body.appendChild(new Br());
-        return true;
-    }
-    
-    /**
-     * Add H2 tag with name of event to body.
-     */
-    private boolean addTitle(Event e, Body body) {
-        H2 title = new H2();
-        title.appendChild(new Text(e.getName()));
-        
-        body.appendChild(title);
+    private boolean addEventInfo(Event e, Body body) {
+        HtmlUtility.addTitleH2(e.getName(), body);
+        HtmlUtility.addEventTime(e, body);
+        HtmlUtility.addEventDescription(e, body);
         return true;
     }
 }
