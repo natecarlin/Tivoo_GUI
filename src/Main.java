@@ -7,6 +7,7 @@ public class Main {
 		s.filterByKeyword("a");
 		//s.outputSummaryAndDetailsPages(System.getProperty("user.home") + "/Desktop/");
 		s.outputConflictingEventsPage(System.getProperty("user.home") + "/Desktop/");
+		s.outputSortedEventsPage(System.getProperty("user.home") + "/Desktop/");
 		//System.out.println(s.myEvents.toString());
 		//DateTime dt=new DateTime("2011-11-16T13:30:00");
 		//s.filterByTime(dt);

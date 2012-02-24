@@ -12,6 +12,10 @@ import com.hp.gagawa.java.elements.Text;
 
 import Process.Event;
 
+/**
+ * @author Antares Yee
+ *
+ */
 public class ConflictingEventsPage extends HtmlPage {
 
     public ConflictingEventsPage(List<Event> events, String path) {
@@ -31,60 +35,14 @@ public class ConflictingEventsPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
    
-        addTitleH2(body);     
+        HtmlUtility.addTitleH2("Conflicting Events", body);     
         for (Event e : getConflictingEvents()) {
-            addEventInfo(e,body);
+            HtmlUtility.addEventInfo(e,body);
         }
         html.appendChild(body);
         return html;
         
     }
-    
-    /**
-     * Add "Conflicting Events" H2 to body
-     */
-    public boolean addTitleH2(Body body) {
-        H2 h2 = new H2();
-        h2.appendChild(new Text("Conflicting Events"));
-        body.appendChild(h2);
-        body.appendChild(new Br());
-        return true;
-    }
-    
-    /**
-     * Add info of Event to body.
-     */
-    private boolean addEventInfo(Event e, Body body) {
-        addEventH2(e, body);
-        body.appendChild(new Br()); //add </br>
-        
-        addEventTime(e, body);
-        body.appendChild(new Br());
-        body.appendChild(new Br());
-        return true;
-    }
-    
-    private boolean addEventH2(Event e, Body body) {
-        H2 h2 = new H2();
-        h2.appendChild(new Text(e.getName()));
-        body.appendChild(h2);
-        return true;
-    }
-
-    /**
-     * Add event start and end time to body
-     */
-    protected boolean addEventTime(Event e, Body body) {
-        Text startTime = new Text("Starts: " + e.getStartTime());
-        Text endTime = new Text("Ends: " + e.getEndTime());
-        
-        body.appendChild(startTime);
-        body.appendChild(new Br());
-        body.appendChild(endTime);
-        return true;
-    }
-    
-    
     
     /**
      * Returns a list of conflicting events.

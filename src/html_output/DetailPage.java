@@ -5,7 +5,6 @@ import html_output.HtmlUtility;
 import java.util.List;
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
-import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 import Process.Event;
@@ -41,7 +40,7 @@ public class DetailPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
         
-        addTitle(e, body);   
+        HtmlUtility.addTitleH2(e.getName(), body);
         addEventTime(e, body);
         addEventDescription(e, body);
  
@@ -74,14 +73,4 @@ public class DetailPage extends HtmlPage {
         return true;
     }
     
-    /**
-     * Add H2 tag with name of event to body.
-     */
-    private boolean addTitle(Event e, Body body) {
-        H2 title = new H2();
-        title.appendChild(new Text(e.getName()));
-        
-        body.appendChild(title);
-        return true;
-    }
 }
