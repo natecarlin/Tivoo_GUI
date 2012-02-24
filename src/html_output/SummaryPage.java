@@ -2,20 +2,16 @@ package html_output;
 
 import html_output.HtmlUtility;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.joda.time.DateTime;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
-import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 
 import Process.Event;
-import Process.TimeComp;
 
 
 /**

@@ -2,11 +2,10 @@ package html_output;
 
 import html_output.HtmlUtility;
 
+
 import java.util.List;
 import com.hp.gagawa.java.elements.Body;
-import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
-import com.hp.gagawa.java.elements.Text;
 import Process.Event;
 
 /**
