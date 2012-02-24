@@ -6,7 +6,7 @@ import Process.Event;
  *  @author Antares Yee
  */
 
-public class Utility {
+public class HtmlUtility {
     
     /**
      * Returns fileName for an Event.
@@ -19,4 +19,5 @@ public class Utility {
         String name = e.getName() + e.getStartTime().toString();
         return "/" + Integer.toString(name.hashCode()) + ".html";
     }
+    
 }

@@ -1,6 +1,6 @@
 package html_output;
 
-import html_output.Utility;
+import html_output.HtmlUtility;
 
 import java.util.List;
 import com.hp.gagawa.java.elements.Body;
@@ -29,7 +29,7 @@ public class DetailPage extends HtmlPage {
     public boolean createHTMLpage() {
         for (Event e : getMyEvents()) {
             Html html = makeHtmlObject(e);
-            makeFile(html, DETAIL_DIR_PATH + Utility.makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + HtmlUtility.makeFileName(e));
         }
         return true;
     }
@@ -42,7 +42,7 @@ public class DetailPage extends HtmlPage {
         Body body = new Body();
         
         addTitle(e, body);   
-        addStartEndTime(e, body);
+        addEventTime(e, body);
         addEventDescription(e, body);
  
         html.appendChild(body);
@@ -63,7 +63,7 @@ public class DetailPage extends HtmlPage {
     /**
      * Add start and end time of an event to body.
      */
-    private boolean addStartEndTime(Event e, Body body) {
+    private boolean addEventTime(Event e, Body body) {
         Text startTime = new Text("Starts: " + e.getStartTime());
         Text endTime = new Text("Ends: " + e.getEndTime());
         

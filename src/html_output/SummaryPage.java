@@ -1,6 +1,6 @@
 package html_output;
 
-import html_output.Utility;
+import html_output.HtmlUtility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,7 +88,7 @@ public class SummaryPage extends HtmlPage {
         body.appendChild(dateH2);
         return true;
     }
-
+    
     /**
      * Add info of Event to body.
      */
@@ -105,7 +105,7 @@ public class SummaryPage extends HtmlPage {
     /**
      * Add event start and end time to body
      */
-    private boolean addEventTime(Event e, Body body) {
+    protected boolean addEventTime(Event e, Body body) {
         Text startTime = new Text("Starts: " + e.getStartTime());
         Text endTime = new Text("Ends: " + e.getEndTime());
         
@@ -114,26 +114,16 @@ public class SummaryPage extends HtmlPage {
         body.appendChild(endTime);
         return true;
     }
-
+    
     /**
      * Add an A object to body
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + Utility.makeFileName(e));
+        eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + HtmlUtility.makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);
         return true;
-    }
-        
-    
-    /**
-     * Sort events chronologically with TimeComp
-     */
-    public List<Event> sortEventsByTime() {
-        List<Event> sortedEvents = new ArrayList<Event>(getMyEvents());
-        Collections.sort(sortedEvents, new TimeComp());
-        return sortedEvents;
     }
 }

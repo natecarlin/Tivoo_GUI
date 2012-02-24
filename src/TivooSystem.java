@@ -1,4 +1,6 @@
+import html_output.ConflictingEventsPage;
 import html_output.DetailPage;
+import html_output.HtmlPage;
 import html_output.SummaryPage;
 
 import java.util.ArrayList;
@@ -42,10 +44,20 @@ public class TivooSystem {
 	        throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
 	    
-	    SummaryPage summaryPage = new SummaryPage(myEvents, localPathSummary);
+	    HtmlPage summaryPage = new SummaryPage(myEvents, localPathSummary);
 	    summaryPage.createHTMLpage();
 	    
 	    DetailPage detailPage = new DetailPage(myEvents, localPathSummary);
         detailPage.createHTMLpage(); 
+	}
+	
+	public void outputConflictingEventsPage(String localPathSummary) {
+	    if (myEvents.isEmpty()) {
+            throw new RuntimeException("Could not output html: the list myEvents is empty.");
+        }
+	    
+	    HtmlPage conflictingEventsPage = new ConflictingEventsPage(myEvents, localPathSummary);
+	    conflictingEventsPage.createHTMLpage();
+	    
 	}
 }

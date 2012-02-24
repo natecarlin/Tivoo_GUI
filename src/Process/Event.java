@@ -3,7 +3,7 @@ package Process;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-public class Event {
+public class Event implements Comparable<Event> {
 	public String myName;
 	public String myLocation;
 	public String myDescription;
@@ -103,5 +103,26 @@ public class Event {
 	public String getEndMinuteOfHour() {
 		return Integer.toString(myEndTime.getMinuteOfHour());
 	}
+
+    @Override
+    public int compareTo(Event other) {
+        if (myName == other.myName && myInterval == other.myInterval && myLocation == other.myLocation) {
+            return 0;
+        }
+        
+        //compare by time
+        if (getStartTime().compareTo(other.getStartTime()) < 0)
+            return -1;
+        else if (getStartTime().compareTo(other.getStartTime()) > 0)
+            return 1;
+        else {
+            if (getEndTime().compareTo(other.getEndTime()) < 0)
+                return -1;
+            else if (getEndTime().compareTo(other.getEndTime()) > 0)
+                return 1;
+        }
+        return 0;
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package html_output;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.io.BufferedWriter;
@@ -7,8 +9,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.hp.gagawa.java.elements.Body;
+import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
+import com.hp.gagawa.java.elements.Text;
+
 import Process.Event;
+import Process.TimeComp;
 
 /**
  *  @author Antares Yee
@@ -29,14 +36,6 @@ public abstract class HtmlPage {
     protected List<Event> getMyEvents() {
         return myEvents;
     }
-    
-    /**
-     * getter for field myPath
-     */
-    protected String getMyPath() {
-        return myPath;
-    }
-    
     
     /**
      * Creates an HTML page of specified subclass type.
@@ -72,6 +71,15 @@ public abstract class HtmlPage {
     public boolean makeDirFromPath(String dirName) {
         String dirPath = myPath + dirName;
         return new File(dirPath).mkdir();
+    }
+    
+    /**
+     * Sort events chronologically with TimeComp
+     */
+    public List<Event> sortEventsByTime() {
+        List<Event> sortedEvents = new ArrayList<Event>(getMyEvents());
+        Collections.sort(sortedEvents, new TimeComp());
+        return sortedEvents;
     }
 }
 
