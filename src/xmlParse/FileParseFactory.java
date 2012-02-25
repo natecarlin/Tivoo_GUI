@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import Process.Event;
 
@@ -39,6 +41,14 @@ public abstract class FileParseFactory {
 			throw new ParsingException("XPath expression failed to compile and/or evaluate", e);
 		}
 		return compiledExpressions;
+	}
+	
+	public NodeList getEventNodeList(String elementContainer, Document doc, Map<String, XPathExpression> pathXpr) {
+		try {
+			return (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			throw new ParsingException("XPath expression failed to evaluate", e);
+		}
 	}
 
 }

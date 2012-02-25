@@ -42,12 +42,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 		// Compile Xpath expressions and store in map
 		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
 		// get list of event nodes
-		NodeList myEvents;
-		try {
-			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
-		} catch (XPathExpressionException e) {
-			throw new ParsingException("XPath expression failed to evaluate", e);
-		}
+		NodeList myEvents = getEventNodeList("event", doc, pathXpr);
 		
 		// List of Events
 		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
@@ -57,8 +52,8 @@ public class DukeCalFileFactory extends FileParseFactory {
 			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
-				DateTime start=getDukeCalTime(pathXpr.get("startTime").evaluate(nEvent));
-				DateTime end=getDukeCalTime(pathXpr.get("endTime").evaluate(nEvent));				
+				DateTime start=getTime(pathXpr.get("startTime").evaluate(nEvent));
+				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent));				
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
@@ -74,7 +69,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 	 * DukeCalendar)
 	 * @author Gang Song
 	 */
-	private DateTime getDukeCalTime(String content) {
+	private DateTime getTime(String content) {
 		
 		DateTimeFormatterBuilder myBuilder=new DateTimeFormatterBuilder().appendYear(4, 4).appendMonthOfYear(2).appendDayOfMonth(2);
 		if(content.length()==15){

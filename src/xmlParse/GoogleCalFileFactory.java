@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
@@ -42,12 +41,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
 		// Compile Xpath expressions and store in map
 		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
 		// get list of event nodes
-		NodeList myEvents;
-		try {
-			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
-		} catch (XPathExpressionException e) {
-			throw new ParsingException("XPath expression failed to evaluate", e);
-		}
+		NodeList myEvents = getEventNodeList("event", doc, pathXpr);
 		
 		// List of Events
 		List<Event> toReturnEvents = new ArrayList<Event>();
@@ -56,8 +50,8 @@ public class GoogleCalFileFactory extends FileParseFactory {
 			Node nEvent = myEvents.item(i);
 			try {
                 // modified next two lines to parse time
-				DateTime start=getGoogleCalTime(pathXpr.get("description").evaluate(nEvent), "start");
-				DateTime end=getGoogleCalTime(pathXpr.get("description").evaluate(nEvent), "end");
+				DateTime start=getTime(pathXpr.get("description").evaluate(nEvent), "start");
+				DateTime end=getTime(pathXpr.get("description").evaluate(nEvent), "end");
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), null, pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
@@ -72,7 +66,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
 	 * @author Gang Song
 	 */
 
-	private DateTime getGoogleCalTime(String content, String period) {
+	private DateTime getTime(String content, String period) {
 
 		String[] sections = content.split(" ");
 
