@@ -1,3 +1,5 @@
+import html_output.MonthCalendarPage;
+
 import org.joda.time.DateTime;
 
 public class Main {
@@ -8,7 +10,7 @@ public class Main {
 		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
 		//s.filterByKeyword("a");
 		
-		s.outputMonthCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 8, 17, 0, 0));
+		s.outputCalendarPages(System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 9, 17, 0, 0));
 		//s.outputConflictingEventsPage(System.getProperty("user.home") + "/Desktop/");
 		//s.outputSortedEventsPage(System.getProperty("user.home") + "/Desktop/");
 		//s.outputSummaryAndDetailsPages(System.getProperty("user.home") + "/Desktop/");

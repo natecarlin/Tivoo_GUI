@@ -1,9 +1,11 @@
 import html_output.ConflictingEventsPage;
+import html_output.DayCalendarPage;
 import html_output.DetailPage;
 import html_output.HtmlPage;
 import html_output.MonthCalendarPage;
 import html_output.SortedEventsPage;
 import html_output.SummaryPage;
+import html_output.WeekCalendarPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,28 @@ public class TivooSystem {
 		myEvents = new EventCalendar(myEvents).eventsAtTime(time);
 	}
 	
+//	public void outputHtmlPage(HtmlPageFactory factory, String localPathSummary, DateTime startDate) {
+//	    if (myEvents.isEmpty()) {
+//            throw new RuntimeException("Could not output html: the list myEvents is empty.");
+//	    }
+//	    
+//	    List<HtmlPage> allHtmlPages = new ArrayList<HtmlPage>();
+//	    allHtmlPages.add(new SummaryPage(myEvents, localPathSummary));
+//	    allHtmlPages.add(new DetailPage(myEvents, localPathSummary));
+//	    allHtmlPages.add(new SortedEventsPage(myEvents, localPathSummary));
+//	    allHtmlPages.add(new ConflictingEventsPage(myEvents, localPathSummary));
+//	    allHtmlPages.add(new DayCalendarPage(myEvents, localPathSummary, startDate));
+//	    allHtmlPages.add(new WeekCalendarPage(myEvents, localPathSummary, startDate));
+//	    allHtmlPages.add(new MonthCalendarPage(myEvents, localPathSummary, startDate));
+//	    
+//	    for (HtmlPage page : allHtmlPages) {
+//	        if (factory.isMyTypeOfThing(page)) {
+//	            page.createHTMLpage();
+//	        }
+//	    }
+//	    
+//	}
+	
 	public void outputSummaryAndDetailsPages(String localPathSummary) {
 	    if (myEvents.isEmpty()) {
 	        throw new RuntimeException("Could not output html: the list myEvents is empty.");
@@ -72,11 +96,17 @@ public class TivooSystem {
         sortedEventsPage.createHTMLpage();
         }
 	
-	public void outputMonthCalendarPage(String localPathSummary, DateTime startDate) {
+	public void outputCalendarPages(String localPathSummary, DateTime startDate) {
 	    if (myEvents.isEmpty()) {
             throw new RuntimeException("Could not output html: the list myEvents is empty.");
         }
         HtmlPage monthCalendarPage = new MonthCalendarPage(myEvents, localPathSummary, startDate);
         monthCalendarPage.createHTMLpage();
+        
+        HtmlPage weekCalendarPage = new WeekCalendarPage(myEvents, localPathSummary, startDate);
+        weekCalendarPage.createHTMLpage();
+        
+        HtmlPage dayCalendarPage = new DayCalendarPage(myEvents, localPathSummary, startDate);
+        dayCalendarPage.createHTMLpage();
 	}
 }
