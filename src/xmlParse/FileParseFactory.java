@@ -19,8 +19,6 @@ import Process.Event;
 
 public abstract class FileParseFactory {
 	
-	protected static Map<String, String> myXpathExprStrings;
-	
 	public abstract boolean isThisCal(Document document);
 
 	public abstract List<Event> parseEvents(Document document);
@@ -38,7 +36,7 @@ public abstract class FileParseFactory {
 				compiledExpressions.put(element, xpath.compile(pathXpr.get(element)));
 			}
 		} catch (XPathExpressionException e) {
-			throw new RuntimeException("XPath expression failed to compile and/or evaluate");
+			throw new ParsingException("XPath expression failed to compile and/or evaluate", e);
 		}
 		return compiledExpressions;
 	}

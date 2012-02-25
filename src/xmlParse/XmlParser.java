@@ -38,7 +38,7 @@ public class XmlParser {
 			if (expressionKind.isThisCal(document))
 				return expressionKind.parseEvents(document);
 		}
-		throw new RuntimeException("Filetype not recognized");
+		throw new ParsingException("Filetype not recognized");
 	}
 	
 	/*
@@ -53,14 +53,11 @@ public class XmlParser {
 			dBuilder = dbFactory.newDocumentBuilder();
 			toRetDoc = dBuilder.parse(link);
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			throw new ParsingException("ParserConfigurationException");
+			throw new ParsingException("ParserConfigurationException", e);
 		} catch (SAXException e) {
-			e.printStackTrace();
-			throw new ParsingException("SAXException");
+			throw new ParsingException("SAXException", e);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new ParsingException("IOException");
+			throw new ParsingException("IOException", e);
 		}
 		toRetDoc.getDocumentElement().normalize();
 		return toRetDoc;

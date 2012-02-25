@@ -46,7 +46,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 		try {
 			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
-			throw new RuntimeException("XPath expression failed to evaluate");
+			throw new ParsingException("XPath expression failed to evaluate", e);
 		}
 		
 		// List of Events
@@ -61,7 +61,7 @@ public class DukeCalFileFactory extends FileParseFactory {
 				DateTime end=getDukeCalTime(pathXpr.get("endTime").evaluate(nEvent));				
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
-				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
+				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
 			}
 			
 		}

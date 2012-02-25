@@ -46,7 +46,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
 		try {
 			myEvents = (NodeList) pathXpr.get("events").evaluate(doc, XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
-			throw new RuntimeException("XPath expression failed to evaluate");
+			throw new ParsingException("XPath expression failed to evaluate", e);
 		}
 		
 		// List of Events
@@ -60,7 +60,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
 				DateTime end=getGoogleCalTime(pathXpr.get("description").evaluate(nEvent), "end");
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), null, pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
-				throw new RuntimeException("Event Xpath Parsing did not evaluate correctly");
+				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
 			}	
 		}
 		return toReturnEvents;
