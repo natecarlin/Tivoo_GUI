@@ -64,4 +64,16 @@ public class HtmlUtility {
         body.appendChild(new Br());
         return true;
     }
+    
+    /**
+     * Add info of Event to body.
+     */
+     public static boolean addEventInfo(Event e, Body body) {
+        HtmlUtility.addEventH2(e, body);
+        HtmlUtility.addEventTime(e, body);
+        HtmlUtility.addEventDescription(e, body);
+        body.appendChild(new Br());
+        return true;
+    }
+
 }

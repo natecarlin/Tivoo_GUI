@@ -39,18 +39,8 @@ public class DetailPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
         
-        addEventInfo(e, body);
+        HtmlUtility.addEventInfo(e, body);
         html.appendChild(body);
         return html;
-    }
-    
-    /**
-     * Add info of Event to body.
-     */
-    private boolean addEventInfo(Event e, Body body) {
-        HtmlUtility.addTitleH2(e.getName(), body);
-        HtmlUtility.addEventTime(e, body);
-        HtmlUtility.addEventDescription(e, body);
-        return true;
     }
 }

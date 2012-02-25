@@ -1,6 +1,7 @@
 import html_output.ConflictingEventsPage;
 import html_output.DetailPage;
 import html_output.HtmlPage;
+import html_output.MonthCalendarPage;
 import html_output.SortedEventsPage;
 import html_output.SummaryPage;
 
@@ -23,7 +24,7 @@ public class TivooSystem {
 		myEvents = new ArrayList<Event>();
 	}
 
-	/*
+	/**
 	 * Loads a  cal file into the Tivoo Systems
 	 */
 	public void loadCal(String link){
@@ -70,4 +71,12 @@ public class TivooSystem {
         HtmlPage sortedEventsPage = new SortedEventsPage(myEvents, localPathSummary);
         sortedEventsPage.createHTMLpage();
         }
+	
+	public void outputMonthCalendarPage(String localPathSummary, DateTime startDate) {
+	    if (myEvents.isEmpty()) {
+            throw new RuntimeException("Could not output html: the list myEvents is empty.");
+        }
+        HtmlPage monthCalendarPage = new MonthCalendarPage(myEvents, localPathSummary, startDate);
+        monthCalendarPage.createHTMLpage();
+	}
 }
