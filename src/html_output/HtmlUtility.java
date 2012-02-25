@@ -47,7 +47,7 @@ public class HtmlUtility {
     }
     
     /**
-     * Add "Conflicting Events" H2 to body
+     * Add A title H2 to body
      */
     public static boolean addTitleH2(String name, Body body) {
         H2 h2 = new H2();

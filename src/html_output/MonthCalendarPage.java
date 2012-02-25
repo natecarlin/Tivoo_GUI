@@ -31,12 +31,15 @@ public class MonthCalendarPage extends CalendarPage {
     public Html makeHtmlObject() {
         Html html = new Html();
         Body body = new Body();
+        
+        HtmlUtility.addTitleH2("MonthCalendarPage", body);
+        
+        //add events to calendar
         DateTime endDate = myStartDate.plusMonths(1);
         int numDays = Days.daysBetween(myStartDate, endDate).getDays(); 
-        
         super.addCalendarEvents(new DateTime(myStartDate), numDays, body);
-        html.appendChild(body);
         
+        html.appendChild(body);
         return html;
     }
 
