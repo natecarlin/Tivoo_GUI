@@ -1,6 +1,7 @@
 package html_output;
 
 import html_output.HtmlUtility;
+import html_output.DetailPage.DetailPageFactory;
 
 import java.util.List;
 import org.joda.time.DateTime;
@@ -33,6 +34,23 @@ public class SummaryPage extends HtmlPage {
     public boolean createHTMLpage() {
         Html html = makeHtmlObject();
         return makeFile(html, "/TiVOOsummaryPage.html");
+    }
+    
+    public static class SummaryPageFactory extends HtmlPageFactory {
+        
+        @Override
+        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
+            if (factory.getClass().equals(new SummaryPageFactory().getClass())) return true;
+            return false;
+        }
+        
+        /**
+         * Factory method
+         */
+        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
+            return new SummaryPage(events, localPathSummary);
+        }
+        
     }
     
     /**

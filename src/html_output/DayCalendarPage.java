@@ -17,6 +17,23 @@ public class DayCalendarPage extends CalendarPage {
         super(events, path);
         myStartDate = startDate;
     }
+    
+    public static class DayCalendarPageFactory extends HtmlPageFactory {
+      
+        @Override
+        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
+            if (factory.getClass().equals(new DayCalendarPageFactory().getClass())) return true;
+            return false;
+        }
+        
+        /**
+         * Factory method
+         */
+        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
+            return new DayCalendarPage(events, localPathSummary, startDate);
+        }
+        
+    }
 
     /**
      * Create a calendar view that lists events for one month starting from myStartDate

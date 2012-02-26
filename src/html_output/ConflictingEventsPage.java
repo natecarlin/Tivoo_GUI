@@ -1,8 +1,12 @@
 package html_output;
 
+import html_output.DetailPage.DetailPageFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+
+import org.joda.time.DateTime;
 
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
@@ -20,6 +24,23 @@ public class ConflictingEventsPage extends HtmlPage {
 
     public ConflictingEventsPage(List<Event> events, String path) {
         super(events, path);
+    }
+    
+    public static class ConflictingEventsPageFactory extends HtmlPageFactory {
+
+        @Override
+        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
+            if (factory.getClass().equals(new ConflictingEventsPageFactory().getClass())) return true;
+            return false;
+        }
+        
+        /**
+         * Factory method
+         */
+        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
+            return new ConflictingEventsPage(events, localPathSummary);
+        }
+        
     }
     
     /**

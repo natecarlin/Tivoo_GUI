@@ -1,6 +1,10 @@
 package html_output;
 
+import html_output.SummaryPage.SummaryPageFactory;
+
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
@@ -12,6 +16,23 @@ public class SortedEventsPage extends HtmlPage {
 
     public SortedEventsPage(List<Event> events, String path) {
         super(events, path);
+    }
+    
+ public static class SortedEventsPageFactory extends HtmlPageFactory {
+        
+        @Override
+        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
+            if (factory.getClass().equals(new SortedEventsPageFactory().getClass())) return true;
+            return false;
+        }
+        
+        /**
+         * Factory method
+         */
+        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
+            return new SortedEventsPage(events, localPathSummary);
+        }
+        
     }
     
     @Override
