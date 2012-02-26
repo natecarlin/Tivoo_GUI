@@ -32,6 +32,7 @@ public class XmlParser {
 		// initialize list of file types
 		List<FileParseFactory> kindsOfFiles = new ArrayList<FileParseFactory>();
 		kindsOfFiles.add(new GoogleCalFileFactory());
+		kindsOfFiles.add(new XMLTVCalFileFactory());
 		kindsOfFiles.add(new DukeCalFileFactory());
 		// find expression type, and then call its parser
 		for (FileParseFactory expressionKind : kindsOfFiles) {
@@ -57,6 +58,7 @@ public class XmlParser {
 		} catch (SAXException e) {
 			throw new ParsingException("SAXException", e);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new ParsingException("IOException", e);
 		}
 		toRetDoc.getDocumentElement().normalize();

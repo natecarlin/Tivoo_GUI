@@ -31,6 +31,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
     	myXpathExprStrings.put("events", "//entry");
     	myXpathExprStrings.put("title", "./title");
     	myXpathExprStrings.put("description", "./summary");
+    	myXpathExprStrings.put("link", "./link[@rel='alternate']");
     }
 
 	public boolean isThisCal(Document doc) {
@@ -52,7 +53,7 @@ public class GoogleCalFileFactory extends FileParseFactory {
                 // modified next two lines to parse time
 				DateTime start=getTime(pathXpr.get("description").evaluate(nEvent), "start");
 				DateTime end=getTime(pathXpr.get("description").evaluate(nEvent), "end");
-				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), null, pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
+				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), null, pathXpr.get("description").evaluate(nEvent), start, end, pathXpr.get("link").evaluate(nEvent))) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
 			}	

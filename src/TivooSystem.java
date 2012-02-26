@@ -42,7 +42,8 @@ public class TivooSystem {
 		try {
 			myEvents.addAll(new XmlParser(link).loadAndParse());
 		} catch (ParsingException e) {
-			System.out.println("File \"" + link + "\" could not be loaded");
+			System.err.println(e.getMessage());
+			System.err.println("File \"" + link + "\" could not be loaded");
 		}
 	}
 	
