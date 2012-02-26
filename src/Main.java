@@ -23,7 +23,8 @@ public class Main {
 		TivooSystem s = new TivooSystem();
 		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml");
 		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
-		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/DukeBasketBall.xml");
+		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/DukeBasketBall.xml");
+		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/NFL.xml");
 		//s.loadCal("tv.xml");
 		//s.filterByKeyword("a");
 		
