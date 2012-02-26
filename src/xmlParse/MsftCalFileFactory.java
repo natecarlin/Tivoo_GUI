@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -20,23 +21,25 @@ import Process.Event;
  * @author Glenn Rivkees
  */
 
-public class XMLTVCalFileFactory extends FileParseFactory {
+public class MsftCalFileFactory extends FileParseFactory {
+	
+	public final String namespace = "urn:schemas-microsoft-com:officedata";
 	
 	// Mappings for xpath expressions
     private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();
     static {
-    	myXpathExprStrings.put("events", "//programme");
-    	myXpathExprStrings.put("startTime", "./@start");
-    	myXpathExprStrings.put("endTime", "./@stop");
-    	myXpathExprStrings.put("title", "./title");
-    	myXpathExprStrings.put("location", "./channel");
-    	myXpathExprStrings.put("description", "./desc");
+    	myXpathExprStrings.put("events", "//Calendar");
+    	myXpathExprStrings.put("title", "./Subject");
+    	myXpathExprStrings.put("description", "./Description");
+    	myXpathExprStrings.put("startTime", "./@StartTime");
+    	myXpathExprStrings.put("startDate", "./@StartDate");
+    	myXpathExprStrings.put("endTime", "./@EndTime");
+    	myXpathExprStrings.put("endDate", "./@EndDate");
+    	myXpathExprStrings.put("location", "./Location");
     }
-	
+
 	public boolean isThisCal(Document doc) {
-		if (doc.getDoctype() != null)
-			return doc.getDoctype().getName().equals("tv");
-		else return false;
+		return doc.getDocumentElement().getAttribute("xmlns:od").equals(namespace);
 	}
 
 	public List<Event> parseEvents(Document doc) {
@@ -44,24 +47,24 @@ public class XMLTVCalFileFactory extends FileParseFactory {
 		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
 		// get list of event nodes
 		NodeList myEvents = getEventNodeList("event", doc, pathXpr);
+		
 		// List of Events
-		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
+		List<Event> toReturnEvents = new ArrayList<Event>();
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
-			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
-				DateTime start=getTime(pathXpr.get("startTime").evaluate(nEvent));
-				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent));				
-				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, pathXpr.get("location").evaluate(nEvent))) ;
+				DateTime start=getTime(pathXpr.get("startTime").evaluate(nEvent)+" "+pathXpr.get("startDate").evaluate(nEvent));
+				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent)+" "+pathXpr.get("endDate").evaluate(nEvent));
+				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
-			}
-			
+			}	
 		}
 		return toReturnEvents;
 	}
+	
 	
 	/**
 	 * create Joda Time from a specific period (a subnode of an event like
@@ -73,5 +76,5 @@ public class XMLTVCalFileFactory extends FileParseFactory {
 		//TODO: Implement time parse
 		return null;
 	}
-	
+
 }

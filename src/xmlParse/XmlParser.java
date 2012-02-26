@@ -33,6 +33,7 @@ public class XmlParser {
 		List<FileParseFactory> kindsOfFiles = new ArrayList<FileParseFactory>();
 		kindsOfFiles.add(new GoogleCalFileFactory());
 		kindsOfFiles.add(new XMLTVCalFileFactory());
+		kindsOfFiles.add(new MsftCalFileFactory());
 		kindsOfFiles.add(new DukeCalFileFactory());
 		// find expression type, and then call its parser
 		for (FileParseFactory expressionKind : kindsOfFiles) {
