@@ -30,11 +30,14 @@ public class XmlParser {
 		Document document = xmlFileFromUrl(myUrl); 
 		
 		// initialize list of file types
-		List<FileParseFactory> kindsOfFiles = new ArrayList<FileParseFactory>();
-		kindsOfFiles.add(new GoogleCalFileFactory());
-		kindsOfFiles.add(new DukeCalFileFactory());
+		List<AbstractFileParser> kindsOfFiles = new ArrayList<AbstractFileParser>();
+		kindsOfFiles.add(new GoogleCalFileParser());
+		kindsOfFiles.add(new XMLTVCalFileParser());
+		kindsOfFiles.add(new MsftCalFileParser());
+		kindsOfFiles.add(new CsvCalFileParser());
+		kindsOfFiles.add(new DukeCalFileParser());
 		// find expression type, and then call its parser
-		for (FileParseFactory expressionKind : kindsOfFiles) {
+		for (AbstractFileParser expressionKind : kindsOfFiles) {
 			if (expressionKind.isThisCal(document))
 				return expressionKind.parseEvents(document);
 		}
@@ -57,6 +60,7 @@ public class XmlParser {
 		} catch (SAXException e) {
 			throw new ParsingException("SAXException", e);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new ParsingException("IOException", e);
 		}
 		toRetDoc.getDocumentElement().normalize();

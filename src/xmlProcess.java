@@ -11,13 +11,13 @@ import Process.ProcessException;
  * deprecated class
  */
 
-public class xmlProcess {
+//public class xmlProcess {
 	
-	List<Event> myEvents;
+//	List<Event> myEvents;
 	
-	public xmlProcess (List<Event> inEvents){
-		myEvents = inEvents;
-	}
+	//public xmlProcess (List<Event> inEvents){
+	//	myEvents = inEvents;
+	//}
 
 //	public List<Event> process(String args){
 //		return keywordFilter(args);	
@@ -63,4 +63,4 @@ public class xmlProcess {
 //			System.out.println(m.getStartTime().toString("dd-MM-yyyy HH:mm:ss") + " to " + m.getEndTime().toString("dd-MM-yyyy HH:mm:ss"));
 //		}
 //	}
-}
+//}

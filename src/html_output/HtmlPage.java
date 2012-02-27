@@ -31,6 +31,7 @@ public abstract class HtmlPage {
      */
     public abstract boolean createHTMLpage(List<Event> events);
     
+    
     /**
      *Create file at designated path, write Html object to file.
      */

@@ -22,10 +22,10 @@ import Process.Event;
 
 public class TivooSystem {
 	
-	List<Event> myEvents;
+	private EventCalendar myEvents;
 	
 	public TivooSystem(){
-		myEvents = new ArrayList<Event>();
+		myEvents = new EventCalendar();
 	}
 
 	/**
@@ -35,22 +35,21 @@ public class TivooSystem {
 		try {
 			myEvents.addAll(new XmlParser(link).loadAndParse());
 		} catch (ParsingException e) {
-			System.out.println("File \"" + link + "\" could not be loaded");
+			System.err.println(e.getMessage());
+			System.err.println("File \"" + link + "\" could not be loaded");
 		}
 	}
 	
-	public void filterByKeyword(String keyword){
-		myEvents = new EventCalendar(myEvents).searchCalendar(keyword);
-	}
-	public void filterByTime(DateTime time){
-		myEvents = new EventCalendar(myEvents).eventsAtTime(time);
+	public EventCalendar getEventCalendar(){
+		return myEvents;
 	}
 	
+
 	public void outputHtmlPage(HtmlPage page) {
-	    if (myEvents.isEmpty()) {
+	    if (myEvents.getList().isEmpty()) {
             throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
-	    page.createHTMLpage(myEvents);
+	    page.createHTMLpage(myEvents.getList());
 	    
 	    //TODO: update sorting in HtmlPage to use EventCalendar.  Also make makeHtmlOutput() accept EventCalendar instead of List<Event> events.
 	}
