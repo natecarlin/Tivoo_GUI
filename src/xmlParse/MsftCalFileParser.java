@@ -1,20 +1,14 @@
 package xmlParse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import Process.Event;
 
@@ -26,46 +20,31 @@ public class MsftCalFileParser extends AbstractFileParser {
 	
 	public final String namespace = "urn:schemas-microsoft-com:officedata";
 	
-	// Mappings for xpath expressions
-    private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();
-    static {
-    	myXpathExprStrings.put("events", "//Calendar");
-    	myXpathExprStrings.put("title", "./Subject");
-    	myXpathExprStrings.put("description", "./Description");
-    	myXpathExprStrings.put("startTime", "./StartTime");
-    	myXpathExprStrings.put("startDate", "./StartDate");
-    	myXpathExprStrings.put("endTime", "./EndTime");
-    	myXpathExprStrings.put("endDate", "./EndDate");
-    	myXpathExprStrings.put("location", "./Location");
-    }
+	@SuppressWarnings("serial")
+	public MsftCalFileParser(){
+		// Mappings for xpath expressions
+		super(
+				new HashMap<String, String>(){{
+					put("events", "//Calendar");
+			    	put("title", "./Subject");
+			    	put("description", "./Description");
+			    	put("startTime", "./StartTime");
+			    	put("startDate", "./StartDate");
+			    	put("endTime", "./EndTime");
+			    	put("endDate", "./EndDate");
+			    	put("location", "./Location");}}
+		);
+	}
 
 	public boolean isThisCal(Document doc) {
 		return doc.getDocumentElement().getAttribute("xmlns:od").equals(namespace);
 	}
 
-	public List<Event> parseEvents(Document doc) {
-		// Compile Xpath expressions and store in map
-		Map<String, XPathExpression> pathXpr = compileXpath(myXpathExprStrings);
-		// get list of event nodes
-		NodeList myEvents = getEventNodeList("event", doc, pathXpr);
-		
-		// List of Events
-		List<Event> toReturnEvents = new ArrayList<Event>();
-		// Run through nodes labeled event, and add to arraylist
-		for (int i = 0; i < myEvents.getLength(); i++){
-			Node nEvent = myEvents.item(i);
-			try {
-                // modified next two lines to parse time
-				DateTime start=getTime(pathXpr.get("startDate").evaluate(nEvent)+" "+pathXpr.get("startTime").evaluate(nEvent));
-				DateTime end=getTime(pathXpr.get("endDate").evaluate(nEvent)+" "+pathXpr.get("endTime").evaluate(nEvent));
-				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
-			} catch (XPathExpressionException e) {
-				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
-			}	
-		}
-		return toReturnEvents;
+	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
+		DateTime start=getTime(myXPathXpr.get("startDate").evaluate(nEvent)+" "+myXPathXpr.get("startTime").evaluate(nEvent));
+		DateTime end=getTime(myXPathXpr.get("endDate").evaluate(nEvent)+" "+myXPathXpr.get("endTime").evaluate(nEvent));		
+		return new Event(myXPathXpr.get("title").evaluate(nEvent), myXPathXpr.get("location").evaluate(nEvent), myXPathXpr.get("description").evaluate(nEvent), start, end, "") ;
 	}
-	
 	
 	/**
 	 * create Joda Time from a specific period
