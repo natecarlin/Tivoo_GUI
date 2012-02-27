@@ -21,21 +21,8 @@ public class ConflictingEventsPage extends HtmlPage {
      */
     @Override
     public boolean createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject(events);
+        Html html = makeHtmlObject("Conflicting Events",events);
         return makeFile(html, "/TiVOOConflictingEventsPage.html");
-    }
-    
-    public Html makeHtmlObject(EventCalendar events) {
-        Html html = new Html();
-        Body body = new Body();
-   
-        addTitleH2("Conflicting Events", body);     
-        for (Event e : events.getConflictingEvents()) {
-            addEventInfo(e,body);
-        }
-        html.appendChild(body);
-        return html;
-        
     }
 
 }

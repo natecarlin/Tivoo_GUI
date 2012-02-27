@@ -30,6 +30,17 @@ public abstract class HtmlPage {
      */
     public abstract boolean createHTMLpage(EventCalendar events);
     
+    public Html makeHtmlObject(String title, EventCalendar events) {
+        Html html = new Html();
+        Body body = new Body();
+   
+        addTitleH2(title, body);     
+        for (Event e : events.getList()) {
+            addEventInfo(e,body);
+        }
+        html.appendChild(body);
+        return html;
+    }
     
     /**
      *Create file at designated path, write Html object to file.
