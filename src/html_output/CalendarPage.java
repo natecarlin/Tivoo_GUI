@@ -7,44 +7,45 @@ import org.joda.time.DateTime;
 import com.hp.gagawa.java.elements.Body;
 
 import Process.Event;
+import Process.EventCalendar;
 
 public abstract class CalendarPage extends HtmlPage {
 
-    public CalendarPage(List<Event> events, String path) {
-        super(events, path);
+    public CalendarPage(String path) {
+        super(path);
     }
     
     @Override
-    public abstract boolean createHTMLpage();
+    public abstract boolean createHTMLpage(EventCalendar events);
     
-    public boolean addCalendarEvents(DateTime startDate, int numDays, Body body) {
-        List<Event> sortedEvents = sortEventsByTime(); //make list of events sorted chronologically
-        int indexFirstEvent = getIndexFirstEvent(sortedEvents, startDate, numDays);
+    public boolean addCalendarEvents(EventCalendar events, DateTime startDate, int numDays, Body body) {
+        events.sortByStartTime();
+        int indexFirstEvent = getIndexFirstEvent(events.getList(), startDate, numDays);
         
         if (indexFirstEvent == -1) { //if no events in timeframe
             System.out.println("No events in this timeframe.");
             return false;
         }
        
-        HtmlUtility.addTitleH2((sortedEvents.get(indexFirstEvent).getStartTime().dayOfWeek().getAsText() + " " + sortedEvents.get(indexFirstEvent).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.
+        addTitleH2((events.getList().get(indexFirstEvent).getStartTime().dayOfWeek().getAsText() + " " + events.getList().get(indexFirstEvent).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.
         
         //loop over all events (sorted by time), add event info and date H2's.
-        DateTime currentDate = sortedEvents.get(indexFirstEvent).getStartTime();
+        DateTime currentDate = events.getList().get(indexFirstEvent).getStartTime();
         DateTime endDate = currentDate.plusDays(numDays); //last date to include in calendar
         
-        for (int i = indexFirstEvent; i<sortedEvents.size(); ++i) {
-            if (sortedEvents.get(i).getStartTime().dayOfMonth().equals(currentDate.dayOfMonth()) && sortedEvents.get(i).getStartTime().monthOfYear().equals(currentDate.monthOfYear())) {
-                HtmlUtility.addEventInfo(sortedEvents.get(i), body);
+        for (int i = indexFirstEvent; i<events.getList().size(); ++i) {
+            if (events.getList().get(i).getStartTime().dayOfMonth().equals(currentDate.dayOfMonth()) && events.getList().get(i).getStartTime().monthOfYear().equals(currentDate.monthOfYear())) {
+                addEventInfo(events.getList().get(i), body);
             }
             else {
                 //if more than numDays days after startDate, finished.
-                if (sortedEvents.get(i).getStartTime().compareTo(endDate) > 0) {
+                if (events.getList().get(i).getStartTime().compareTo(endDate) > 0) {
                     break;  
                 }
-                currentDate = sortedEvents.get(i).getStartTime(); //currentDate ++
+                currentDate = events.getList().get(i).getStartTime(); //currentDate ++
                 
-                HtmlUtility.addTitleH2(sortedEvents.get(i).getStartTime().dayOfWeek().getAsText() + " " + sortedEvents.get(i).getStartTime().dayOfMonth().getAsText(), body);
-                HtmlUtility.addEventInfo(sortedEvents.get(i), body);
+                addTitleH2(events.getList().get(i).getStartTime().dayOfWeek().getAsText() + " " + events.getList().get(i).getStartTime().dayOfMonth().getAsText(), body);
+                addEventInfo(events.getList().get(i), body);
             }
         }
         return true;

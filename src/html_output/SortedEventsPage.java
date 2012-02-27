@@ -1,7 +1,5 @@
 package html_output;
 
-import html_output.SummaryPage.SummaryPageFactory;
-
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -11,43 +9,27 @@ import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
 
 import Process.Event;
+import Process.EventCalendar;
 
 public class SortedEventsPage extends HtmlPage {
 
-    public SortedEventsPage(List<Event> events, String path) {
-        super(events, path);
-    }
-    
- public static class SortedEventsPageFactory extends HtmlPageFactory {
-        
-        @Override
-        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
-            if (factory.getClass().equals(new SortedEventsPageFactory().getClass())) return true;
-            return false;
-        }
-        
-        /**
-         * Factory method
-         */
-        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
-            return new SortedEventsPage(events, localPathSummary);
-        }
-        
+    public SortedEventsPage(String path) {
+        super(path);
     }
     
     @Override
-    public boolean createHTMLpage() {
-        Html html = makeHtmlObject();
+    public boolean createHTMLpage(EventCalendar events) {
+        Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOSortedEventsPage.html");
     }
 
-    private Html makeHtmlObject() {
+    private Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
    
-        HtmlUtility.addTitleH2("Sorted Events", body);     
-        for (Event e : getMyEvents()) {
-            HtmlUtility.addEventInfo(e,body);
+        addTitleH2("Sorted Events", body);     
+        for (Event e : events.getList()) {
+            addEventInfo(e,body);
         }
         html.appendChild(body);
         return html;

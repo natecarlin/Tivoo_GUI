@@ -1,8 +1,5 @@
 package html_output;
 
-import html_output.HtmlUtility;
-import html_output.DetailPage.DetailPageFactory;
-
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -13,6 +10,7 @@ import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 
 import Process.Event;
+import Process.EventCalendar;
 
 
 /**
@@ -21,8 +19,8 @@ import Process.Event;
 
 public class SummaryPage extends HtmlPage {
 
-    public SummaryPage(List<Event> events, String path) {
-        super(events, path);
+    public SummaryPage(String path) {
+        super(path);
     }
 
     @Override
@@ -31,26 +29,9 @@ public class SummaryPage extends HtmlPage {
      * The file is saved at super.myPath.
      * 
      */
-    public boolean createHTMLpage() {
-        Html html = makeHtmlObject();
+    public boolean createHTMLpage(EventCalendar events) {
+        Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOsummaryPage.html");
-    }
-    
-    public static class SummaryPageFactory extends HtmlPageFactory {
-        
-        @Override
-        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
-            if (factory.getClass().equals(new SummaryPageFactory().getClass())) return true;
-            return false;
-        }
-        
-        /**
-         * Factory method
-         */
-        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
-            return new SummaryPage(events, localPathSummary);
-        }
-        
     }
     
     /**
@@ -59,18 +40,18 @@ public class SummaryPage extends HtmlPage {
      * and their Events.  Each Event is hyperlinked to detail page.
      * Includes Event start and end times.
      */
-    public Html makeHtmlObject() {
+    public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
-        List<Event> sortedEvents = sortEventsByTime(); //make list of events sorted chronologically
+        events.sortByStartTime(); //sort events chronologically
         
         
-        HtmlUtility.addTitleH2((sortedEvents.get(0).getStartTime().dayOfWeek().getAsText() + " " + sortedEvents.get(0).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.
+        addTitleH2((events.getList().get(0).getStartTime().dayOfWeek().getAsText() + " " + events.getList().get(0).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.
         
         //loop over all events (sorted by time), add event info and date H2's.
-        DateTime currentDate = sortedEvents.get(0).getStartTime();
+        DateTime currentDate = events.getList().get(0).getStartTime();
         DateTime lastCalendarDate = currentDate.plusDays(7); //last date to include in calendar
-        for (Event e : sortedEvents) { 
+        for (Event e : events.getList()) { 
             if (e.getStartTime().dayOfMonth().equals(currentDate.dayOfMonth())) {
                 addEventInfo(e, body);
             }
@@ -81,7 +62,7 @@ public class SummaryPage extends HtmlPage {
                 }
                 currentDate = e.getStartTime(); //currentDate ++
                 
-                HtmlUtility.addTitleH2(e.getStartTime().dayOfWeek().getAsText() + " " + e.getStartTime().dayOfMonth().getAsText(), body);
+                addTitleH2(e.getStartTime().dayOfWeek().getAsText() + " " + e.getStartTime().dayOfMonth().getAsText(), body);
                 addEventInfo(e, body);
             }
         }
@@ -93,11 +74,11 @@ public class SummaryPage extends HtmlPage {
     /**
      * Add info of Event to body. Name of event is a hyperlink.
      */
-    private boolean addEventInfo(Event e, Body body) {
+    public boolean addEventInfo(Event e, Body body) {
         addEventLink(e, body);
         body.appendChild(new Br()); //add </br>
         
-        HtmlUtility.addEventTime(e, body);
+        addEventTime(e, body);
         body.appendChild(new Br());
         body.appendChild(new Br());
         return true;
@@ -108,7 +89,7 @@ public class SummaryPage extends HtmlPage {
      */
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
-        eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + HtmlUtility.makeFileName(e));
+        eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + makeFileName(e));
         eventNameLink.appendChild(new Text(e.getName()));
         
         body.appendChild(eventNameLink);
