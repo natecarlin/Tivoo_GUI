@@ -1,21 +1,14 @@
 import html_output.ConflictingEventsPage;
 
-import html_output.ConflictingEventsPage.ConflictingEventsPageFactory;
 import html_output.DayCalendarPage;
-import html_output.DayCalendarPage.DayCalendarPageFactory;
 import html_output.DetailPage;
-import html_output.DetailPage.DetailPageFactory;
 import html_output.HtmlPage;
 import html_output.HtmlPageFactory;
 import html_output.MonthCalendarPage;
-import html_output.MonthCalendarPage.MonthCalendarPageFactory;
 import html_output.SortedEventsPage;
-import html_output.SortedEventsPage.SortedEventsPageFactory;
-import html_output.SummaryPage;
-import html_output.SummaryPage.SummaryPageFactory;
-import html_output.WeekCalendarPage;
-import html_output.WeekCalendarPage.WeekCalendarPageFactory;
 
+import html_output.SummaryPage;
+import html_output.WeekCalendarPage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,71 +46,13 @@ public class TivooSystem {
 		myEvents = new EventCalendar(myEvents).eventsAtTime(time);
 	}
 	
-	public void outputHtmlPage(HtmlPageFactory factory, String localPathSummary, DateTime startDate) {
+	public void outputHtmlPage(HtmlPage page) {
 	    if (myEvents.isEmpty()) {
             throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
+	    page.createHTMLpage(myEvents);
 	    
-	    List<HtmlPageFactory> allHtmlPageFactories = new ArrayList<HtmlPageFactory>();
-	    allHtmlPageFactories.add(new SummaryPage.SummaryPageFactory());
-	    allHtmlPageFactories.add(new DetailPageFactory());
-	    allHtmlPageFactories.add(new SortedEventsPageFactory());
-	    allHtmlPageFactories.add(new ConflictingEventsPageFactory());
-	    allHtmlPageFactories.add(new DayCalendarPageFactory());
-	    allHtmlPageFactories.add(new WeekCalendarPageFactory());
-	    allHtmlPageFactories.add(new MonthCalendarPageFactory());
-	    
-	    for (HtmlPageFactory hpf : allHtmlPageFactories) {
-	        if (hpf.isThisTypeOfPage(factory)) {
-	            HtmlPage page = hpf.makePage(myEvents, localPathSummary, startDate);
-	            page.createHTMLpage();
-	            break;
-	        }
-	    }
-	    
+	    //TODO: update sorting in HtmlPage to use EventCalendar.  Also make makeHtmlOutput() accept EventCalendar instead of List<Event> events.
 	}
 	
-	public void outputSummaryAndDetailsPages(String localPathSummary) {
-	    if (myEvents.isEmpty()) {
-	        throw new RuntimeException("Could not output html: the list myEvents is empty.");
-	    }
-	    
-	    HtmlPage summaryPage = new SummaryPage(myEvents, localPathSummary);
-	    summaryPage.createHTMLpage();
-	    
-	    DetailPage detailPage = new DetailPage(myEvents, localPathSummary);
-        detailPage.createHTMLpage(); 
-	}
-	
-	public void outputConflictingEventsPage(String localPathSummary) {
-	    if (myEvents.isEmpty()) {
-            throw new RuntimeException("Could not output html: the list myEvents is empty.");
-        }
-	    
-	    HtmlPage conflictingEventsPage = new ConflictingEventsPage(myEvents, localPathSummary);
-	    conflictingEventsPage.createHTMLpage();
-	    
-	}
-	
-	public void outputSortedEventsPage(String localPathSummary) {
-        if (myEvents.isEmpty()) {
-            throw new RuntimeException("Could not output html: the list myEvents is empty.");
-        }
-        HtmlPage sortedEventsPage = new SortedEventsPage(myEvents, localPathSummary);
-        sortedEventsPage.createHTMLpage();
-        }
-	
-	public void outputCalendarPages(String localPathSummary, DateTime startDate) {
-	    if (myEvents.isEmpty()) {
-            throw new RuntimeException("Could not output html: the list myEvents is empty.");
-        }
-        HtmlPage monthCalendarPage = new MonthCalendarPage(myEvents, localPathSummary, startDate);
-        monthCalendarPage.createHTMLpage();
-        
-        HtmlPage weekCalendarPage = new WeekCalendarPage(myEvents, localPathSummary, startDate);
-        weekCalendarPage.createHTMLpage();
-        
-        HtmlPage dayCalendarPage = new DayCalendarPage(myEvents, localPathSummary, startDate);
-        dayCalendarPage.createHTMLpage();
-	}
 }

@@ -10,15 +10,15 @@ import Process.Event;
 
 public abstract class CalendarPage extends HtmlPage {
 
-    public CalendarPage(List<Event> events, String path) {
-        super(events, path);
+    public CalendarPage(String path) {
+        super(path);
     }
     
     @Override
-    public abstract boolean createHTMLpage();
+    public abstract boolean createHTMLpage(List<Event> events);
     
-    public boolean addCalendarEvents(DateTime startDate, int numDays, Body body) {
-        List<Event> sortedEvents = sortEventsByTime(); //make list of events sorted chronologically
+    public boolean addCalendarEvents(List<Event> events, DateTime startDate, int numDays, Body body) {
+        List<Event> sortedEvents = sortEventsByTime(events); //make list of events sorted chronologically
         int indexFirstEvent = getIndexFirstEvent(sortedEvents, startDate, numDays);
         
         if (indexFirstEvent == -1) { //if no events in timeframe

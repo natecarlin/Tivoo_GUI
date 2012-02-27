@@ -1,7 +1,6 @@
 package html_output;
 
 import html_output.HtmlUtility;
-import html_output.DetailPage.DetailPageFactory;
 
 import java.util.List;
 import org.joda.time.DateTime;
@@ -21,8 +20,8 @@ import Process.Event;
 
 public class SummaryPage extends HtmlPage {
 
-    public SummaryPage(List<Event> events, String path) {
-        super(events, path);
+    public SummaryPage(String path) {
+        super(path);
     }
 
     @Override
@@ -31,26 +30,9 @@ public class SummaryPage extends HtmlPage {
      * The file is saved at super.myPath.
      * 
      */
-    public boolean createHTMLpage() {
-        Html html = makeHtmlObject();
+    public boolean createHTMLpage(List<Event> events) {
+        Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOsummaryPage.html");
-    }
-    
-    public static class SummaryPageFactory extends HtmlPageFactory {
-        
-        @Override
-        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
-            if (factory.getClass().equals(new SummaryPageFactory().getClass())) return true;
-            return false;
-        }
-        
-        /**
-         * Factory method
-         */
-        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
-            return new SummaryPage(events, localPathSummary);
-        }
-        
     }
     
     /**
@@ -59,10 +41,10 @@ public class SummaryPage extends HtmlPage {
      * and their Events.  Each Event is hyperlinked to detail page.
      * Includes Event start and end times.
      */
-    public Html makeHtmlObject() {
+    public Html makeHtmlObject(List<Event> events) {
         Html html = new Html();
         Body body = new Body();
-        List<Event> sortedEvents = sortEventsByTime(); //make list of events sorted chronologically
+        List<Event> sortedEvents = sortEventsByTime(events); //make list of events sorted chronologically
         
         
         HtmlUtility.addTitleH2((sortedEvents.get(0).getStartTime().dayOfWeek().getAsText() + " " + sortedEvents.get(0).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.

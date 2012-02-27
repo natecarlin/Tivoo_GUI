@@ -20,25 +20,16 @@ import Process.TimeComp;
  */
 
 public abstract class HtmlPage {
-    private List<Event> myEvents;
     private String myPath; //the path where you want the file created
     
-    public HtmlPage(List<Event> events, String path) {
-        myEvents = events;
+    public HtmlPage(String path) {
         myPath = path;
-    }
-    
-    /**
-     * getter for field myEvents
-     */
-    protected List<Event> getMyEvents() {
-        return myEvents;
     }
     
     /**
      * Creates an HTML page of specified subclass type.
      */
-    public abstract boolean createHTMLpage();
+    public abstract boolean createHTMLpage(List<Event> events);
     
     /**
      *Create file at designated path, write Html object to file.
@@ -74,8 +65,8 @@ public abstract class HtmlPage {
     /**
      * Sort events chronologically with TimeComp
      */
-    public List<Event> sortEventsByTime() {
-        List<Event> sortedEvents = new ArrayList<Event>(getMyEvents());
+    public List<Event> sortEventsByTime(List<Event> events) {
+        List<Event> sortedEvents = new ArrayList<Event>(events);
         Collections.sort(sortedEvents, new TimeComp());
         return sortedEvents;
     }

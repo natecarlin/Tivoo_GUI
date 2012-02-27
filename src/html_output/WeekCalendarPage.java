@@ -1,7 +1,5 @@
 package html_output;
 
-import html_output.SummaryPage.SummaryPageFactory;
-
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -15,38 +13,21 @@ import Process.Event;
 public class WeekCalendarPage extends CalendarPage {
     DateTime myStartDate;
     
-    public WeekCalendarPage(List<Event> events, String path, DateTime startDate) {
-        super(events, path);
+    public WeekCalendarPage(String path, DateTime startDate) {
+        super(path);
         myStartDate = startDate;
-    }
-    
- public static class WeekCalendarPageFactory extends HtmlPageFactory {
-        
-        @Override
-        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
-            if (factory.getClass().equals(new WeekCalendarPageFactory().getClass())) return true;
-            return false;
-        }
-        
-        /**
-         * Factory method
-         */
-        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
-            return new WeekCalendarPage(events, localPathSummary, startDate);
-        }
-        
     }
 
     /**
      * Create a calendar view that lists events for one month starting from myStartDate
      */
     @Override
-    public boolean createHTMLpage() {
-        Html html = makeHtmlObject();
+    public boolean createHTMLpage(List<Event> events) {
+        Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOweekCalendarPage.html");
     }
     
-    public Html makeHtmlObject() {
+    public Html makeHtmlObject(List<Event> events) {
         Html html = new Html();
         Body body = new Body();
         
@@ -55,7 +36,7 @@ public class WeekCalendarPage extends CalendarPage {
         //add events to calendar
         DateTime endDate = myStartDate.plusWeeks(1);
         int numDays = Days.daysBetween(myStartDate, endDate).getDays(); 
-        super.addCalendarEvents(new DateTime(myStartDate), numDays, body);
+        super.addCalendarEvents(events, new DateTime(myStartDate), numDays, body);
         
         html.appendChild(body);
         return html;

@@ -13,38 +13,21 @@ import com.hp.gagawa.java.elements.Html;
 public class DayCalendarPage extends CalendarPage {
     DateTime myStartDate;
     
-    public DayCalendarPage(List<Event> events, String path, DateTime startDate) {
-        super(events, path);
+    public DayCalendarPage(String path, DateTime startDate) {
+        super(path);
         myStartDate = startDate;
-    }
-    
-    public static class DayCalendarPageFactory extends HtmlPageFactory {
-      
-        @Override
-        public boolean isThisTypeOfPage(HtmlPageFactory factory) {
-            if (factory.getClass().equals(new DayCalendarPageFactory().getClass())) return true;
-            return false;
-        }
-        
-        /**
-         * Factory method
-         */
-        public HtmlPage makePage(List<Event> events, String localPathSummary, DateTime startDate) {
-            return new DayCalendarPage(events, localPathSummary, startDate);
-        }
-        
     }
 
     /**
      * Create a calendar view that lists events for one month starting from myStartDate
      */
     @Override
-    public boolean createHTMLpage() {
-        Html html = makeHtmlObject();
+    public boolean createHTMLpage(List<Event> events) {
+        Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOdayCalendarPage.html");
     }
     
-    public Html makeHtmlObject() {
+    public Html makeHtmlObject(List<Event> events) {
         Html html = new Html();
         Body body = new Body();
         
@@ -53,7 +36,7 @@ public class DayCalendarPage extends CalendarPage {
         //add events to calendar
         DateTime endDate = myStartDate.plusDays(1);
         int numDays = Days.daysBetween(myStartDate, endDate).getDays(); 
-        super.addCalendarEvents(new DateTime(myStartDate), numDays, body);
+        super.addCalendarEvents(events, new DateTime(myStartDate), numDays, body);
         
         html.appendChild(body);
         return html;
