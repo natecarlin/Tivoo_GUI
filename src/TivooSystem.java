@@ -18,6 +18,7 @@ import xmlParse.ParsingException;
 import xmlParse.XmlParser;
 
 import Process.Event;
+import Process.EventCalendar;
 
 
 public class TivooSystem {
@@ -49,7 +50,7 @@ public class TivooSystem {
 	    if (myEvents.getList().isEmpty()) {
             throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
-	    page.createHTMLpage(myEvents.getList());
+	    page.createHTMLpage(myEvents);
 	    
 	    //TODO: update sorting in HtmlPage to use EventCalendar.  Also make makeHtmlOutput() accept EventCalendar instead of List<Event> events.
 	}

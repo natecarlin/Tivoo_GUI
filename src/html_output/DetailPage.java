@@ -1,8 +1,5 @@
 package html_output;
 
-import html_output.HtmlUtility;
-
-
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -10,6 +7,7 @@ import org.joda.time.DateTime;
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 import Process.Event;
+import Process.EventCalendar;
 
 /**
  *  @author Antares Yee
@@ -28,10 +26,10 @@ public class DetailPage extends HtmlPage {
      * Creates a .html detail page for each event in myDetailDirPath.
      */
     @Override
-    public boolean createHTMLpage(List<Event> events) {
-        for (Event e : events) {
+    public boolean createHTMLpage(EventCalendar events) {
+        for (Event e : events.getList()) {
             Html html = makeHtmlObject(e);
-            makeFile(html, DETAIL_DIR_PATH + HtmlUtility.makeFileName(e));
+            makeFile(html, DETAIL_DIR_PATH + makeFileName(e));
         }
         return true;
     }
@@ -43,7 +41,7 @@ public class DetailPage extends HtmlPage {
         Html html = new Html();
         Body body = new Body();
         
-        HtmlUtility.addEventInfo(e, body);
+        addEventInfo(e, body);
         html.appendChild(body);
         return html;
     }

@@ -1,19 +1,18 @@
 package html_output;
 
-import java.util.ArrayList;
-
-import java.util.Collections;
-import java.util.List;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.hp.gagawa.java.elements.Body;
+import com.hp.gagawa.java.elements.Br;
+import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
+import com.hp.gagawa.java.elements.Text;
 
 import Process.Event;
-import Process.TimeComp;
+import Process.EventCalendar;
 
 /**
  *  @author Antares Yee
@@ -29,7 +28,7 @@ public abstract class HtmlPage {
     /**
      * Creates an HTML page of specified subclass type.
      */
-    public abstract boolean createHTMLpage(List<Event> events);
+    public abstract boolean createHTMLpage(EventCalendar events);
     
     
     /**
@@ -64,12 +63,63 @@ public abstract class HtmlPage {
     }
     
     /**
-     * Sort events chronologically with TimeComp
+     * Returns fileName for an Event.
+     * Removes unusable characters from fileName.
      */
-    public List<Event> sortEventsByTime(List<Event> events) {
-        List<Event> sortedEvents = new ArrayList<Event>(events);
-        Collections.sort(sortedEvents, new TimeComp());
-        return sortedEvents;
+    public String makeFileName(Event e) {
+        String name = e.getName() + e.getStartTime().toString();
+        return "/" + Integer.toString(name.hashCode()) + ".html";
+    }
+    
+    public boolean addEventH2(Event e, Body body) {
+        H2 h2 = new H2();
+        h2.appendChild(new Text(e.getName()));
+        body.appendChild(h2);
+        return true;
+    }
+    
+    /**
+     * Add event start and end time to body
+     */
+    public boolean addEventTime(Event e, Body body) {
+        Text startTime = new Text("Starts: " + e.getStartTime());
+        Text endTime = new Text("Ends: " + e.getEndTime());
+        
+        body.appendChild(startTime);
+        body.appendChild(new Br());
+        body.appendChild(endTime);
+        body.appendChild(new Br());
+        return true;
+    }
+    
+    /**
+     * Add A title H2 to body
+     */
+    public boolean addTitleH2(String name, Body body) {
+        H2 h2 = new H2();
+        h2.appendChild(new Text(name));
+        body.appendChild(h2);
+        return true;
+    }
+    
+    /**
+     * Add event description of an event to body
+     */
+    public boolean addEventDescription(Event e, Body body) {
+        body.appendChild(new Text("Details: " + e.getEventDescription()));
+        body.appendChild(new Br());
+        return true;
+    }
+    
+    /**
+     * Add info of Event to body.
+     */
+     public boolean addEventInfo(Event e, Body body) {
+        addEventH2(e, body);
+        addEventTime(e, body);
+        addEventDescription(e, body);
+        body.appendChild(new Br());
+        return true;
     }
 }
 

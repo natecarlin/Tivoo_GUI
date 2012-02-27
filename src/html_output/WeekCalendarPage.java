@@ -9,6 +9,7 @@ import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 
 import Process.Event;
+import Process.EventCalendar;
 
 public class WeekCalendarPage extends CalendarPage {
     DateTime myStartDate;
@@ -22,16 +23,16 @@ public class WeekCalendarPage extends CalendarPage {
      * Create a calendar view that lists events for one month starting from myStartDate
      */
     @Override
-    public boolean createHTMLpage(List<Event> events) {
+    public boolean createHTMLpage(EventCalendar events) {
         Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOweekCalendarPage.html");
     }
     
-    public Html makeHtmlObject(List<Event> events) {
+    public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
         
-        HtmlUtility.addTitleH2("WeekCalendarPage", body);
+        addTitleH2("WeekCalendarPage", body);
         
         //add events to calendar
         DateTime endDate = myStartDate.plusWeeks(1);
