@@ -24,8 +24,8 @@ public class Main {
 		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/dukecal.xml");
 		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/googlecal.xml");
 		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/DukeBasketBall.xml");
-		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/NFL.xml");
-		//s.loadCal("tv.xml");
+		//s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/NFL.xml");
+		s.loadCal("tv.xml");
 		//s.filterByKeyword("a");
 		
 		s.outputHtmlPage(new SummaryPageFactory(), System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 9, 17, 0, 0));

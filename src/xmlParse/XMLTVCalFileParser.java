@@ -48,8 +48,10 @@ public class XMLTVCalFileParser extends AbstractFileParser {
 		// List of Events
 		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
 		// Run through nodes labeled event, and add to arraylist
+		int length = myEvents.getLength();
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
+			nEvent.getParentNode().removeChild(nEvent);
 			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
