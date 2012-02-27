@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.*;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
@@ -22,21 +20,22 @@ import Process.Event;
  * @author Glenn Rivkees
  */
 
-public class CsvCalFileFactory extends FileParseFactory {
+public class DukeCalFileParser extends AbstractFileParser {
 	
 	// Mappings for xpath expressions
     private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();
     static {
-    	myXpathExprStrings.put("events", "//row");
-    	myXpathExprStrings.put("title", "./Col1");
-    	myXpathExprStrings.put("description", "./Col2");
-    	myXpathExprStrings.put("startTime", "./Col8");
-    	myXpathExprStrings.put("endTime", "./Col9");
-    	myXpathExprStrings.put("location", "./Col15");
+    	myXpathExprStrings.put("events", "//event");
+    	myXpathExprStrings.put("startTime", "./start/unformatted");
+    	myXpathExprStrings.put("endTime", "./end/unformatted");
+    	myXpathExprStrings.put("title", "./summary");
+    	myXpathExprStrings.put("location", "./location/address");
+    	myXpathExprStrings.put("description", "./description");
     }
-
+	
 	public boolean isThisCal(Document doc) {
-		return doc.getDocumentElement().getChildNodes().item(1).getNodeName().equals("row");
+		// TODO: find way to distinguish a duke cal, right now this works because it is the last one.
+		return true;
 	}
 
 	public List<Event> parseEvents(Document doc) {
@@ -46,32 +45,39 @@ public class CsvCalFileFactory extends FileParseFactory {
 		NodeList myEvents = getEventNodeList("event", doc, pathXpr);
 		
 		// List of Events
-		List<Event> toReturnEvents = new ArrayList<Event>();
+		ArrayList<Event> toReturnEvents = new ArrayList<Event>();
 		// Run through nodes labeled event, and add to arraylist
 		for (int i = 0; i < myEvents.getLength(); i++){
 			Node nEvent = myEvents.item(i);
+			// run xpaths and make event
 			try {
                 // modified next two lines to parse time
 				DateTime start=getTime(pathXpr.get("startTime").evaluate(nEvent));
-				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent));
+				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent));				
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
-			}	
+			}
+			
 		}
 		return toReturnEvents;
 	}
 	
-	
 	/**
-	 * create Joda Time from a specific period in an event
+	 * create Joda Time from a specific period (a subnode of an event like
+	 * 'start' or 'end') in an event (this method is used for parsing
+	 * DukeCalendar)
 	 * @author Gang Song
 	 */
 	private DateTime getTime(String content) {
-		DateTimeFormatter format=DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-		DateTime time=format.parseDateTime(content);
-		//TODO: Implement time parse
-		return time;
+		
+		DateTimeFormatterBuilder myBuilder=new DateTimeFormatterBuilder().appendYear(4, 4).appendMonthOfYear(2).appendDayOfMonth(2);
+		if(content.length()==15){
+			myBuilder.appendLiteral('T').appendHourOfDay(2).appendMinuteOfHour(2).appendSecondOfMinute(2);
+		}
+		DateTimeFormatter myFormat=myBuilder.toFormatter();
+		DateTime myTime=myFormat.parseDateTime(content);
+		return myTime;
 	}
-
+	
 }

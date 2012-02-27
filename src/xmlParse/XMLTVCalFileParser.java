@@ -21,7 +21,7 @@ import Process.Event;
  * @author Glenn Rivkees
  */
 
-public class XMLTVCalFileFactory extends FileParseFactory {
+public class XMLTVCalFileParser extends AbstractFileParser {
 	
 	// Mappings for xpath expressions
     private static final Map<String, String> myXpathExprStrings = new HashMap<String, String>();

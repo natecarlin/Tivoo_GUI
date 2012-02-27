@@ -22,7 +22,7 @@ import Process.Event;
  * @author Glenn Rivkees
  */
 
-public class MsftCalFileFactory extends FileParseFactory {
+public class MsftCalFileParser extends AbstractFileParser {
 	
 	public final String namespace = "urn:schemas-microsoft-com:officedata";
 	

@@ -19,7 +19,7 @@ import Process.Event;
  * @author Glenn Rivkees
  */
 
-public abstract class FileParseFactory {
+public abstract class AbstractFileParser {
 	
 	public abstract boolean isThisCal(Document document);
 
