@@ -68,9 +68,7 @@ public class MsftCalFileFactory extends FileParseFactory {
 	
 	
 	/**
-	 * create Joda Time from a specific period (a subnode of an event like
-	 * 'start' or 'end') in an event (this method is used for parsing
-	 * DukeCalendar)
+	 * create Joda Time from a specific period
 	 * @author Gang Song
 	 */
 	private DateTime getTime(String content) {
