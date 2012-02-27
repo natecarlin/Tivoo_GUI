@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.xml.xpath.*;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
@@ -70,8 +71,10 @@ public class XMLTVCalFileFactory extends FileParseFactory {
 	 * @author Gang Song
 	 */
 	private DateTime getTime(String content) {
+		DateTimeFormatter format=DateTimeFormat.forPattern("yyyyMMddHHmmss Z");
+		DateTime time=format.parseDateTime(content);
 		//TODO: Implement time parse
-		return null;
+		return time;
 	}
 	
 }

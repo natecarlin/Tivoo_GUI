@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
@@ -31,10 +32,10 @@ public class MsftCalFileFactory extends FileParseFactory {
     	myXpathExprStrings.put("events", "//Calendar");
     	myXpathExprStrings.put("title", "./Subject");
     	myXpathExprStrings.put("description", "./Description");
-    	myXpathExprStrings.put("startTime", "./@StartTime");
-    	myXpathExprStrings.put("startDate", "./@StartDate");
-    	myXpathExprStrings.put("endTime", "./@EndTime");
-    	myXpathExprStrings.put("endDate", "./@EndDate");
+    	myXpathExprStrings.put("startTime", "./StartTime");
+    	myXpathExprStrings.put("startDate", "./StartDate");
+    	myXpathExprStrings.put("endTime", "./EndTime");
+    	myXpathExprStrings.put("endDate", "./EndDate");
     	myXpathExprStrings.put("location", "./Location");
     }
 
@@ -55,8 +56,8 @@ public class MsftCalFileFactory extends FileParseFactory {
 			Node nEvent = myEvents.item(i);
 			try {
                 // modified next two lines to parse time
-				DateTime start=getTime(pathXpr.get("startTime").evaluate(nEvent)+" "+pathXpr.get("startDate").evaluate(nEvent));
-				DateTime end=getTime(pathXpr.get("endTime").evaluate(nEvent)+" "+pathXpr.get("endDate").evaluate(nEvent));
+				DateTime start=getTime(pathXpr.get("startDate").evaluate(nEvent)+" "+pathXpr.get("startTime").evaluate(nEvent));
+				DateTime end=getTime(pathXpr.get("endDate").evaluate(nEvent)+" "+pathXpr.get("endTime").evaluate(nEvent));
 				toReturnEvents.add(new Event(pathXpr.get("title").evaluate(nEvent), pathXpr.get("location").evaluate(nEvent), pathXpr.get("description").evaluate(nEvent), start, end, "")) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
@@ -73,8 +74,10 @@ public class MsftCalFileFactory extends FileParseFactory {
 	 * @author Gang Song
 	 */
 	private DateTime getTime(String content) {
+		DateTimeFormatter format=DateTimeFormat.forPattern("MM/dd/yyyy hh:mm:ss aa");
+		DateTime time=format.parseDateTime(content);
 		//TODO: Implement time parse
-		return null;
+		return time;
 	}
 
 }

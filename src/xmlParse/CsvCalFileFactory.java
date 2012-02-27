@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.w3c.dom.Document;
@@ -29,8 +30,8 @@ public class CsvCalFileFactory extends FileParseFactory {
     	myXpathExprStrings.put("events", "//row");
     	myXpathExprStrings.put("title", "./Col1");
     	myXpathExprStrings.put("description", "./Col2");
-    	myXpathExprStrings.put("startTime", "./Col6");
-    	myXpathExprStrings.put("endTime", "./Col16");
+    	myXpathExprStrings.put("startTime", "./Col8");
+    	myXpathExprStrings.put("endTime", "./Col9");
     	myXpathExprStrings.put("location", "./Col15");
     }
 
@@ -69,8 +70,10 @@ public class CsvCalFileFactory extends FileParseFactory {
 	 * @author Gang Song
 	 */
 	private DateTime getTime(String content) {
+		DateTimeFormatter format=DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+		DateTime time=format.parseDateTime(content);
 		//TODO: Implement time parse
-		return null;
+		return time;
 	}
 
 }
