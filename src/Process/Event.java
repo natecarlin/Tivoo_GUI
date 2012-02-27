@@ -1,31 +1,39 @@
 package Process;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 public class Event implements Comparable<Event> {
-	public String myName;
-	public String myLocation;
-	public String myDescription;
-	public String myURL;
+	
+	private Map<String, ArrayList<String>> myMap;
+
 	public DateTime myStartTime;
 	public DateTime myEndTime;
 	public Interval myInterval;
 
-	public Event(String name, String location, String description,
-			DateTime startTime, DateTime endTime, String URL) {
-		myName = name;
-		myLocation = location;
-		myDescription = description;
-		myStartTime = startTime;
-		myEndTime = endTime;
-		myInterval = new Interval(startTime, endTime);
-		myURL = URL;
+	public void addFeature(String key, ArrayList<String> value){		
+		myMap.put(key, value);
+	}
+	public ArrayList<String> getFeature(String key){
+		return myMap.get(key);
 	}
 
 	public String toString() {
-		return "Event[" + myName + ", " + myLocation + ", " + myDescription
-				+ "]\n";
+		
+		StringBuilder myStrBuilder=new StringBuilder();
+		myStrBuilder.append("Event[ ");
+		for(String str: myMap.keySet()){
+			
+			ArrayList<String> list=myMap.get(str);
+			for(String s: list){
+				myStrBuilder.append(s+", ");
+			}	
+		}
+		myStrBuilder.append(" ]\n");
+		return myStrBuilder.toString();
 	}
 
 	public DateTime getStartTime() {
@@ -36,24 +44,8 @@ public class Event implements Comparable<Event> {
 		return myEndTime;
 	}
 
-	public String getEventDescription() {
-		return myDescription;
-	}
-
-	public String getLocation() {
-		return myLocation;
-	}
-
-	public String getName() {
-		return myName;
-	}
-
 	public Interval getInterval() {
 		return myInterval;
-	}
-
-	public String getURL() {
-		return myURL;
 	}
 
 	public String getStartYear() {
@@ -106,7 +98,7 @@ public class Event implements Comparable<Event> {
 
     @Override
     public int compareTo(Event other) {
-        if (myName == other.myName && myInterval == other.myInterval && myLocation == other.myLocation) {
+        if (myMap.get("myName").equals(other.myMap.get("myName"))&& myInterval.equals(other.myInterval) && myMap.get("myLocation").equals(other.myMap.get("myLocation"))) {
             return 0;
         }
         
