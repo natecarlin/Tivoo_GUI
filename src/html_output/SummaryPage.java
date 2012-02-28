@@ -90,7 +90,7 @@ public class SummaryPage extends HtmlPage {
     private boolean addEventLink(Event e, Body body) {
         A eventNameLink = new A();
         eventNameLink.setHref(DetailPage.DETAIL_DIR_PATH + makeFileName(e));
-        eventNameLink.appendChild(new Text(e.getName()));
+        eventNameLink.appendChild(new Text(e.getFeature("name").get(0)));
         
         body.appendChild(eventNameLink);
         return true;
