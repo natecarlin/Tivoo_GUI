@@ -1,6 +1,7 @@
 package Process;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -13,6 +14,14 @@ public class Event implements Comparable<Event> {
 	public DateTime myStartTime;
 	public DateTime myEndTime;
 	public Interval myInterval;
+	
+	/*
+	 * Initialize the map
+	 */
+	
+	public Event(){
+		myMap=new HashMap<String, ArrayList<String>>();
+	}
 
 	public void addFeature(String key, ArrayList<String> value){		
 		myMap.put(key, value);
