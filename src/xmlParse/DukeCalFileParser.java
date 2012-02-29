@@ -28,7 +28,8 @@ public class DukeCalFileParser extends AbstractFileParser {
 					put("endTime", "./end/unformatted");
 					put("title", "./summary");
 					put("location", "./location/address");
-					put("description", "./description");}}
+					put("description", "./description");
+					put("link", "./link");}}
 		);
 	}
 	
@@ -40,8 +41,13 @@ public class DukeCalFileParser extends AbstractFileParser {
 	
 	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
 		DateTime start=getTime(myXPathXpr.get("startTime").evaluate(nEvent));
-		DateTime end=getTime(myXPathXpr.get("endTime").evaluate(nEvent));				
-		return new Event(myXPathXpr.get("title").evaluate(nEvent), myXPathXpr.get("location").evaluate(nEvent), myXPathXpr.get("description").evaluate(nEvent), start, end, "") ;
+		DateTime end=getTime(myXPathXpr.get("endTime").evaluate(nEvent));	
+		Event toReturnEvent = new Event(start, end);
+		toReturnEvent.addFeature("title", myXPathXpr.get("title").evaluate(nEvent));
+		toReturnEvent.addFeature("description", myXPathXpr.get("description").evaluate(nEvent));
+		toReturnEvent.addFeature("location", myXPathXpr.get("location").evaluate(nEvent));
+		toReturnEvent.addFeature("link", myXPathXpr.get("link").evaluate(nEvent));
+		return toReturnEvent;
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package Process;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,16 +20,23 @@ public class Event implements Comparable<Event> {
 	 * Initialize the map
 	 */
 	
-	public Event(){
+	public Event(DateTime startTime, DateTime endTime) {
+		myStartTime = startTime;
+		myEndTime = endTime;
 		myMap=new HashMap<String, ArrayList<String>>();
 	}
 
 	public void addFeature(String key, ArrayList<String> value){		
 		myMap.put(key, value);
 	}
-	public ArrayList<String> getFeature(String key){
-		return myMap.get(key);
+	
+	public void addFeature(String key, String value){		
+		myMap.put(key, new ArrayList<String>(Arrays.asList(value)));
 	}
+	
+//	public ArrayList<String> getFeature(String key){
+//		return myMap.get(key);
+//	}
 
 	public String toString() {
 		
@@ -45,6 +53,23 @@ public class Event implements Comparable<Event> {
 		return myStrBuilder.toString();
 	}
 
+	// returns first item in title field
+	public String getName(){
+		return myMap.get("title").get(0);
+	}
+	
+	// returns first item in location field
+	public String getLocation(){
+		return myMap.get("location").get(0);
+	}
+	
+	// returns first item in description field
+	public String getEventDescription(){
+		if (myMap.get("description").get(0) != null)
+			return myMap.get("description").get(0);
+		return "(No additonal details)";
+	}
+	
 	public DateTime getStartTime() {
 		return myStartTime;
 	}

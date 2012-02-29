@@ -27,7 +27,7 @@ public class XMLTVCalFileParser extends AbstractFileParser {
 					put("startTime", "./@start");
 					put("endTime", "./@stop");
 					put("title", "./title");
-					put("location", "./channel");
+					put("channel", "./channel");
 					put("description", "./desc");}}
 		);
 	}
@@ -39,8 +39,13 @@ public class XMLTVCalFileParser extends AbstractFileParser {
 	
 	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
 		DateTime start=getTime(myXPathXpr.get("startTime").evaluate(nEvent));
-		DateTime end=getTime(myXPathXpr.get("endTime").evaluate(nEvent));				
-		return new Event(myXPathXpr.get("title").evaluate(nEvent), myXPathXpr.get("location").evaluate(nEvent), myXPathXpr.get("description").evaluate(nEvent), start, end, myXPathXpr.get("location").evaluate(nEvent)) ;
+		DateTime end=getTime(myXPathXpr.get("endTime").evaluate(nEvent));	
+		Event toReturnEvent = new Event(start, end);
+		toReturnEvent.addFeature("title", myXPathXpr.get("title").evaluate(nEvent));
+		toReturnEvent.addFeature("description", myXPathXpr.get("description").evaluate(nEvent));
+		toReturnEvent.addFeature("channel", myXPathXpr.get("channel").evaluate(nEvent));
+		toReturnEvent.addFeature("link", myXPathXpr.get("link").evaluate(nEvent));
+		return toReturnEvent;
 	}
 	
 	/**

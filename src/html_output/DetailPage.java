@@ -1,9 +1,5 @@
 package html_output;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 import Process.Event;

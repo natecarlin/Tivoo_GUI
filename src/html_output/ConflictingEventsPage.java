@@ -1,9 +1,7 @@
 package html_output;
 
-import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 
-import Process.Event;
 import Process.EventCalendar;
 
 /**

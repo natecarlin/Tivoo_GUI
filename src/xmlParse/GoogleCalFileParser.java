@@ -43,7 +43,7 @@ public class GoogleCalFileParser extends AbstractFileParser {
 			    	put("events", "//entry");
 			    	put("title", "./title");
 			    	put("description", "./content");
-			    	put("link", "./link[@rel='alternate']");}}
+			    	put("link", "./link[@rel='alternate']/@href");}}
 		);
 	}
 
@@ -53,8 +53,8 @@ public class GoogleCalFileParser extends AbstractFileParser {
 	
 	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
 		// modified next few lines to create a map which contains every information inside the 'content'
-		
 		Map<String, String> contentMap=getContentMap(myXPathXpr.get("description").evaluate(nEvent));
+		//System.out.println(contentMap.keySet().toString()+"\n");
 		DateTime[] times;
 		if(contentMap.containsKey("Recurring Event")){
 		    times=getRecurringTime(contentMap.get("\nFirst start"), contentMap.get("\nDuration"));
@@ -64,7 +64,13 @@ public class GoogleCalFileParser extends AbstractFileParser {
 		}
 		DateTime start=times[0];
 		DateTime end=times[1];
-		return new Event(myXPathXpr.get("title").evaluate(nEvent), null, myXPathXpr.get("description").evaluate(nEvent), start, end, myXPathXpr.get("link").evaluate(nEvent)) ;
+		// Create Event
+		Event toReturnEvent = new Event(start, end);
+		toReturnEvent.addFeature("title", myXPathXpr.get("title").evaluate(nEvent));
+		toReturnEvent.addFeature("description", contentMap.get("Event Description"));
+		toReturnEvent.addFeature("location", contentMap.get("Where"));
+		toReturnEvent.addFeature("link", myXPathXpr.get("link").evaluate(nEvent));
+		return toReturnEvent;
 	}
 	
 	/*

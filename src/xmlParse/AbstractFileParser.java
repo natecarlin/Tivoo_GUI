@@ -19,6 +19,12 @@ import Process.Event;
 
 /**
  * @author Glenn Rivkees
+ * 
+ * @info Default Map Names
+ * 		title
+ * 		description
+ * 		location
+ * 		link
  */
 
 public abstract class AbstractFileParser {

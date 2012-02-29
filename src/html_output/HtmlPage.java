@@ -78,13 +78,13 @@ public abstract class HtmlPage {
      * Removes unusable characters from fileName.
      */
     public String makeFileName(Event e) {
-        String name = e.getFeature("name").get(0) + e.getStartTime().toString();
+        String name = e.getName() + e.getStartTime().toString();
         return "/" + Integer.toString(name.hashCode()) + ".html";
     }
     
     public boolean addEventH2(Event e, Body body) {
         H2 h2 = new H2();
-        h2.appendChild(new Text(e.getFeature("name").get(0)));
+        h2.appendChild(new Text(e.getName()));
         body.appendChild(h2);
         return true;
     }
@@ -117,7 +117,7 @@ public abstract class HtmlPage {
      * Add event description of an event to body
      */
     public boolean addEventDescription(Event e, Body body) {
-        body.appendChild(new Text("Details: " + e.getFeature("description").get(0)));
+        body.appendChild(new Text("Details: " + e.getEventDescription()));
         body.appendChild(new Br());
         return true;
     }

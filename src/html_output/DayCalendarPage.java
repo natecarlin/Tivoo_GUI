@@ -1,11 +1,8 @@
 package html_output;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import Process.Event;
 import Process.EventCalendar;
 
 import com.hp.gagawa.java.elements.Body;

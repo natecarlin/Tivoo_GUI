@@ -1,14 +1,11 @@
 package html_output;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 
-import Process.Event;
 import Process.EventCalendar;
 
 public class MonthCalendarPage extends CalendarPage {
