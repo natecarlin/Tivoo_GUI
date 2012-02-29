@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -34,6 +35,14 @@ public class Event implements Comparable<Event> {
 		myMap.put(key, new ArrayList<String>(Arrays.asList(value)));
 	}
 	
+	public boolean hasFeature(String key){
+		return myMap.containsKey(key);
+	}
+	
+	public Set<String> getKeys(){
+		return myMap.keySet();
+	}
+	
 	public ArrayList<String> getFeature(String key){
 		return myMap.get(key);
 	}
@@ -58,10 +67,6 @@ public class Event implements Comparable<Event> {
 		return myMap.get("title").get(0);
 	}
 	
-	// returns first item in location field
-	public String getLocation(){
-		return myMap.get("location").get(0);
-	}
 	
 	// returns first item in description field
 	public String getEventDescription(){

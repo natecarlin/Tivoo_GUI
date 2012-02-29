@@ -23,76 +23,59 @@ public class EventCalendar {
 		myList.addAll(list);
 	}
 	
+	public void removeAll(List <Event> list){
+		myList.removeAll(list);
+	}
+	
 	public List <Event> getList(){
 		return myList;
 	}
 	
-	public void removeAllContaining(String keyword){
-		List <Event> searchresults = new ArrayList <Event>();
-		for (Event e : myList){
-			if(!e.toString().contains(keyword)){
-				searchresults.add(e);
-			}
-		}
-		myList = searchresults;
+	public EventCalendar removeAllContaining(String category, String keyword){
+		EventCalendar searchresults = new EventCalendar(myList);
+		EventCalendar toberemoved = searchresults.searchCalendar(category, keyword);
+		searchresults.removeAll(toberemoved.getList());
+		return searchresults;
 	}
 	
-	public void findAllContaining(String [] keywords){
-		List <Event> searchresults = new ArrayList <Event>();
+	public Set<String> findSearchableTerms(){
+		Set<String> returnset = new HashSet<String>();
 		for(Event e : myList){
-			for (String word : keywords){
-				if(e.toString().contains(word)){
-					searchresults.add(e);
+			returnset.addAll(e.getKeys());
+		}
+		return returnset;
+	}
+	
+	public EventCalendar findAllContaining(String category, String [] keywords){
+		EventCalendar searchresults = new EventCalendar();
+		for(String word : keywords){
+			searchresults.addAll(searchCalendar(category, word).getList());
+			}
+		return searchresults;
+	}
+	
+	public EventCalendar searchCalendar(String category, String keyword){
+		EventCalendar searchresults = new EventCalendar();
+		for (Event e : myList){
+			if(e.hasFeature(category)){
+				for(String s : e.getFeature(category)){
+					if(s.contains(keyword)){
+						searchresults.addEvent(e);
+					}
 				}
 			}
 		}
-		myList = searchresults;
+		return searchresults;
 	}
 	
-	public void searchCalendar(String keyword){
-		List<Event> searchresults = new ArrayList<Event>();
-		for (Event e : myList){
-			if(e.toString().contains(keyword)){
-				searchresults.add(e);
-			}
-		}
-		myList = searchresults;
+	public EventCalendar filterByName(String keyword){
+		return this.searchCalendar("title", keyword);
 	}
 	
 	public void eventsAtTime(DateTime time){
 		List<Event> searchresults = new ArrayList<Event>();
 		for(Event e : myList){
 			if(e.getInterval().contains(time)){
-				searchresults.add(e);
-			}
-		}
-		myList = searchresults;
-	}
-	
-	public void eventsWithDescription(String input){
-		List<Event> searchresults = new ArrayList<Event>();
-		for(Event e : myList){
-			if(e.getEventDescription().equals(input)){
-				searchresults.add(e);
-			}
-		}
-		myList = searchresults;
-	}
-	
-	public void eventsWithName(String input){
-		List<Event> searchresults = new ArrayList<Event>();
-		for(Event e : myList){
-			if(e.getName().equals(input)){
-				searchresults.add(e);
-			}
-		}
-		myList = searchresults;
-	}
-	
-	public void eventsAtLocation(String input){
-		List<Event> searchresults = new ArrayList<Event>();
-		for(Event e : myList){
-			if(e.getLocation().contains(input)){
 				searchresults.add(e);
 			}
 		}
