@@ -13,7 +13,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import Process.Event;
+import process.Event;
+
 
 /**
  * @author Glenn Rivkees

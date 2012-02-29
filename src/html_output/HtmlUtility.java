@@ -5,7 +5,7 @@ import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Text;
 
-import Process.Event;
+import process.Event;
 
 /**
  *  @author Antares Yee
@@ -19,7 +19,7 @@ public class HtmlUtility {
      */
     public static String makeFileName(Event e) {
       //TODO: QUOTING URLS/ESCAPE URLS for fileNames
-        // illegal:  / ? < > \ : * | Ó : ^ .
+        // illegal:  / ? < > \ : * | ï¿½ : ^ .
         //return "/" + e.getName() + e.getStartTime().toString() + ".html";
         String name = e.getName() + e.getStartTime().toString();
         return "/" + Integer.toString(name.hashCode()) + ".html";

@@ -2,14 +2,15 @@ package html_output;
 
 import org.joda.time.DateTime;
 
+import process.Event;
+import process.EventCalendar;
+
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 
-import Process.Event;
-import Process.EventCalendar;
 
 
 /**

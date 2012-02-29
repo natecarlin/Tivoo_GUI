@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import Process.Event;
+import process.Event;
 
 public abstract class HtmlPageFactory {
     public abstract boolean isThisTypeOfPage(HtmlPageFactory factory);

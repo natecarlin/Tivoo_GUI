@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import process.Event;
+import process.EventCalendar;
+
 import com.hp.gagawa.java.elements.Body;
 
-import Process.Event;
-import Process.EventCalendar;
 
 public abstract class CalendarPage extends HtmlPage {
 

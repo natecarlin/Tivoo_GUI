@@ -1,8 +1,9 @@
 package html_output;
 
+import process.EventCalendar;
+
 import com.hp.gagawa.java.elements.Html;
 
-import Process.EventCalendar;
 
 public class SortedEventsPage extends HtmlPage {
 
