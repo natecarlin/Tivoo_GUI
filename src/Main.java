@@ -21,7 +21,6 @@ public class Main {
 		s.loadCal("http://www.cs.duke.edu/courses/cps108/current/assign/02_tivoo/data/NFL.xml");
 		//s.loadCal("tv.xml");
 		//s.filterByKeyword("a");
-		
 		s.outputHtmlPage(new SummaryPage(System.getProperty("user.home") + "/Desktop/"));
 		s.outputHtmlPage(new DetailPage(System.getProperty("user.home") + "/Desktop/"));
 		s.outputHtmlPage(new SortedEventsPage(System.getProperty("user.home") + "/Desktop/"));
