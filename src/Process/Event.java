@@ -26,17 +26,17 @@ public class Event implements Comparable<Event> {
 		myMap=new HashMap<String, ArrayList<String>>();
 	}
 
-	public void addFeature(String key, ArrayList<String> value){		
-		myMap.put(key, value);
+	public void addFeature(String key, String[] value){		
+		myMap.put(key, new ArrayList<String>(Arrays.asList(value)));
 	}
 	
 	public void addFeature(String key, String value){		
 		myMap.put(key, new ArrayList<String>(Arrays.asList(value)));
 	}
 	
-//	public ArrayList<String> getFeature(String key){
-//		return myMap.get(key);
-//	}
+	public ArrayList<String> getFeature(String key){
+		return myMap.get(key);
+	}
 
 	public String toString() {
 		

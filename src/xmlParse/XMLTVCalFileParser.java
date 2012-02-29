@@ -28,7 +28,14 @@ public class XMLTVCalFileParser extends AbstractFileParser {
 					put("endTime", "./@stop");
 					put("title", "./title");
 					put("channel", "./channel");
-					put("description", "./desc");}}
+					put("description", "./desc");
+					put("actors", "./credits/actor");
+					put("directors", "./credits/director");
+					put("writers", "./credits/writer");
+					put("producers", "./credits/producer");
+					put("categories", "./credits/category");
+					put("rating", "./rating[@system='MPAA']/value");
+					put("stars", "./star-rating/value");}}
 		);
 	}
 	
@@ -44,7 +51,13 @@ public class XMLTVCalFileParser extends AbstractFileParser {
 		toReturnEvent.addFeature("title", myXPathXpr.get("title").evaluate(nEvent));
 		toReturnEvent.addFeature("description", myXPathXpr.get("description").evaluate(nEvent));
 		toReturnEvent.addFeature("channel", myXPathXpr.get("channel").evaluate(nEvent));
-		toReturnEvent.addFeature("link", myXPathXpr.get("link").evaluate(nEvent));
+		toReturnEvent.addFeature("rating", myXPathXpr.get("rating").evaluate(nEvent));
+		toReturnEvent.addFeature("stars", myXPathXpr.get("stars").evaluate(nEvent));
+		toReturnEvent.addFeature("actors", myXPathXpr.get("actors").evaluate(nEvent).split("\n"));
+		toReturnEvent.addFeature("directors", myXPathXpr.get("directors").evaluate(nEvent).split("\n"));
+		toReturnEvent.addFeature("writers", myXPathXpr.get("writers").evaluate(nEvent).split("\n"));
+		toReturnEvent.addFeature("producers", myXPathXpr.get("producers").evaluate(nEvent).split("\n"));
+		toReturnEvent.addFeature("categories", myXPathXpr.get("categories").evaluate(nEvent).split("\n"));
 		return toReturnEvent;
 	}
 	
