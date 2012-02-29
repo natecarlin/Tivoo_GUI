@@ -18,15 +18,6 @@ public class MonthCalendarPage extends CalendarPage {
         
     }
     
-    /**
-     * Create a calendar view that lists events for one month starting from myStartDate
-     */
-    @Override
-    public String createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject(events);
-        return makeFile(html, "/TiVOOmonthCalendarPage.html");
-    }
-    
     public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
@@ -40,6 +31,11 @@ public class MonthCalendarPage extends CalendarPage {
         
         html.appendChild(body);
         return html;
+    }
+
+    @Override
+    public String getMyFileName() {
+        return "/TiVOOmonthCalendarPage.html";
     }
 
 }

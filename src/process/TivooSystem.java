@@ -14,6 +14,10 @@ public class TivooSystem {
 		myEvents = new EventCalendar();
 	}
 
+	public void setMyEvents(EventCalendar ec) {
+	    myEvents = ec;
+	}
+	
 	/**
 	 * Loads a  cal file into the Tivoo Systems
 	 */

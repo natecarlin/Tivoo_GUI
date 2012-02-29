@@ -2,6 +2,7 @@ package process;
 import java.util.*;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 
 public class EventCalendar {
@@ -72,14 +73,25 @@ public class EventCalendar {
 		return this.searchCalendar("title", keyword);
 	}
 	
-	public void eventsAtTime(DateTime time){
-		List<Event> searchresults = new ArrayList<Event>();
+	public EventCalendar eventsAtTime(DateTime time){
+		EventCalendar searchresults = new EventCalendar();
 		for(Event e : myList){
 			if(e.getInterval().contains(time)){
-				searchresults.add(e);
+				searchresults.addEvent(e);
 			}
 		}
-		myList = searchresults;
+		return searchresults;
+	}
+	
+	public EventCalendar eventsBetweenTimes(DateTime begin, DateTime end){
+	    EventCalendar searchresults = new EventCalendar();
+	    Interval targetint = new Interval(begin, end);
+	    for(Event e : myList){
+	        if(targetint.contains(e.getStartTime()) || targetint.contains(e.getEndTime())){
+	            searchresults.addEvent(e);
+	        }
+	    }
+	    return searchresults;
 	}
 	
 	/**

@@ -42,4 +42,16 @@ public class DetailPage extends HtmlPage {
         html.appendChild(body);
         return html;
     }
+
+    @Override
+    public String getMyFileName() {
+        System.out.println("getMyFileName() shouldn't be called in DetailPage.");
+        return null;
+    }
+
+    @Override
+    public Html makeHtmlObject(EventCalendar events) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

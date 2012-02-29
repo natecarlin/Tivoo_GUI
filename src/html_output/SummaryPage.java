@@ -23,16 +23,6 @@ public class SummaryPage extends HtmlPage {
         super(path);
     }
 
-    @Override
-    /**
-     * Create summaryPage for 1 week of events.  
-     * The file is saved at super.myPath.
-     * 
-     */
-    public String createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject(events);
-        return makeFile(html, "/TiVOOsummaryPage.html");
-    }
     
     /**
      * Create Html object with 1 week summary of events.  
@@ -94,5 +84,12 @@ public class SummaryPage extends HtmlPage {
         
         body.appendChild(eventNameLink);
         return true;
+    }
+
+
+    @Override
+    public String getMyFileName() {
+        
+        return "/TiVOOSummaryPage.html";
     }
 }

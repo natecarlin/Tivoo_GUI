@@ -16,21 +16,12 @@ public class WeekCalendarPage extends CalendarPage {
         super(path);
         myStartDate = startDate;
     }
-
-    /**
-     * Create a calendar view that lists events for one month starting from myStartDate
-     */
-    @Override
-    public String createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject(events);
-        return makeFile(html, "/TiVOOweekCalendarPage.html");
-    }
     
     public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
         
-        addTitleH2("WeekCalendarPage", body);
+        addTitleH2("Week Calendar Page", body);
         
         //add events to calendar
         DateTime endDate = myStartDate.plusWeeks(1);
@@ -39,6 +30,11 @@ public class WeekCalendarPage extends CalendarPage {
         
         html.appendChild(body);
         return html;
+    }
+
+    @Override
+    public String getMyFileName() {
+        return "/TiVOOweekCalendarPage.html";
     }
 
 }

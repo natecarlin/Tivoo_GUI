@@ -41,4 +41,9 @@ public class DayCalendarPage extends CalendarPage {
         return html;
     }
 
+    @Override
+    public String getMyFileName() {
+        return "/TiVOOdayCalendarPage.html";
+    }
+
 }

@@ -29,19 +29,14 @@ public abstract class HtmlPage {
     /**
      * Creates an HTML page of specified subclass type.
      */
-    public abstract String createHTMLpage(EventCalendar events);
-    
-    public Html makeHtmlObject(String title, EventCalendar events) {
-        Html html = new Html();
-        Body body = new Body();
-   
-        addTitleH2(title, body);     
-        for (Event e : events.getList()) {
-            addEventInfo(e,body);
-        }
-        html.appendChild(body);
-        return html;
+    public String createHTMLpage(EventCalendar events) {
+        Html html = makeHtmlObject(events);
+        return makeFile(html, getMyFileName());
     }
+    
+    public abstract String getMyFileName();
+    
+    public abstract Html makeHtmlObject(EventCalendar events);
     
     /**
      *Create file at designated path, write Html object to file.

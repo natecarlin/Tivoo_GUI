@@ -1,7 +1,9 @@
 package html_output;
 
+import process.Event;
 import process.EventCalendar;
 
+import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 
 
@@ -15,13 +17,21 @@ public class ConflictingEventsPage extends HtmlPage {
         super(path);
     }
     
-    /**
-     * Creates an html page that lists conflicting events and their times. 
-     */
+    public Html makeHtmlObject(EventCalendar events) {
+        Html html = new Html();
+        Body body = new Body();
+   
+        addTitleH2("Conflicting Events", body);     
+        for (Event e : events.getList()) {
+            addEventInfo(e,body);
+        }
+        html.appendChild(body);
+        return html;
+    }
+
     @Override
-    public String createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject("Conflicting Events",events);
-        return makeFile(html, "/TiVOOConflictingEventsPage.html");
+    public String getMyFileName() {
+        return "/TiVOOConflictingEventsPage.html";
     }
 
 }
