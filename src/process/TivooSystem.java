@@ -1,9 +1,9 @@
+package process;
 import html_output.HtmlPage;
 
 import xmlParse.ParsingException;
 import xmlParse.XmlParser;
 
-import Process.EventCalendar;
 
 
 public class TivooSystem {

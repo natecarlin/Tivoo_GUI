@@ -5,14 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import process.Event;
+import process.EventCalendar;
+
 import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.H2;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.Text;
 
-import Process.Event;
-import Process.EventCalendar;
 
 /**
  *  @author Antares Yee

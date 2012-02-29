@@ -1,4 +1,4 @@
-package Process;
+package process;
 
 @SuppressWarnings("serial")
 public class ProcessException extends RuntimeException{
