@@ -17,7 +17,7 @@ public abstract class CalendarPage extends HtmlPage {
     }
     
     @Override
-    public abstract boolean createHTMLpage(EventCalendar events);
+    public abstract String createHTMLpage(EventCalendar events);
     
     public boolean addCalendarEvents(EventCalendar events, DateTime startDate, int numDays, Body body) {
         events.sortByStartTime();

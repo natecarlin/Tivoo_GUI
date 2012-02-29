@@ -23,12 +23,12 @@ public class DetailPage extends HtmlPage {
      * Creates a .html detail page for each event in myDetailDirPath.
      */
     @Override
-    public boolean createHTMLpage(EventCalendar events) {
+    public String createHTMLpage(EventCalendar events) {
         for (Event e : events.getList()) {
             Html html = makeHtmlObject(e);
             makeFile(html, DETAIL_DIR_PATH + makeFileName(e));
         }
-        return true;
+        return "Detail Pages Made Sucessfully";
     }
     
     /**

@@ -12,7 +12,7 @@ public class SortedEventsPage extends HtmlPage {
     }
     
     @Override
-    public boolean createHTMLpage(EventCalendar events) {
+    public String createHTMLpage(EventCalendar events) {
         Html html = makeHtmlObject("Sorted Events", events);
         return makeFile(html, "/TiVOOSortedEventsPage.html");
     }

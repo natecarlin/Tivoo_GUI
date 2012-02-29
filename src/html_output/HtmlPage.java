@@ -29,7 +29,7 @@ public abstract class HtmlPage {
     /**
      * Creates an HTML page of specified subclass type.
      */
-    public abstract boolean createHTMLpage(EventCalendar events);
+    public abstract String createHTMLpage(EventCalendar events);
     
     public Html makeHtmlObject(String title, EventCalendar events) {
         Html html = new Html();
@@ -46,7 +46,7 @@ public abstract class HtmlPage {
     /**
      *Create file at designated path, write Html object to file.
      */
-    public boolean makeFile(Html html, String fileName) {
+    public String makeFile(Html html, String fileName) {
         //Create file, FileWriter, BufferedWriter for writing
         String filePath = myPath + fileName;
         File out = new File(filePath);
@@ -61,9 +61,9 @@ public abstract class HtmlPage {
         catch (IOException e1) {
             e1.printStackTrace();
             System.out.println("error creating file at " + myPath + fileName);
-            return false;
+            return "Error";
         }
-        return true;
+        return filePath;
     }
     
     /**

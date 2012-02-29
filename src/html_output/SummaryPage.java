@@ -29,7 +29,7 @@ public class SummaryPage extends HtmlPage {
      * The file is saved at super.myPath.
      * 
      */
-    public boolean createHTMLpage(EventCalendar events) {
+    public String createHTMLpage(EventCalendar events) {
         Html html = makeHtmlObject(events);
         return makeFile(html, "/TiVOOsummaryPage.html");
     }

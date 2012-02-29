@@ -31,11 +31,11 @@ public class TivooSystem {
 	}
 	
 
-	public void outputHtmlPage(HtmlPage page) {
+	public String outputHtmlPage(HtmlPage page) {
 	    if (myEvents.getList().isEmpty()) {
             throw new RuntimeException("Could not output html: the list myEvents is empty.");
 	    }
-	    page.createHTMLpage(myEvents);
+	    return page.createHTMLpage(myEvents);
 	    
 	    //TODO: update sorting in HtmlPage to use EventCalendar.  Also make makeHtmlOutput() accept EventCalendar instead of List<Event> events.
 	}
