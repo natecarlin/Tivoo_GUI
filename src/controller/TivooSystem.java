@@ -1,4 +1,5 @@
-package process;
+package controller;
+import process.EventCalendar;
 import html_output.HtmlPage;
 
 import xmlParse.ParsingException;
