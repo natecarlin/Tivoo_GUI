@@ -23,14 +23,13 @@ public class Main {
 		//s.loadCal("tv.xml");
 		s.loadCal("file:/Users/antaresyee/Desktop/all.xml");
 		//s.setMyEvents(s.getEventCalendar().filterByName("Jets"));
-		s.outputHtmlPage(new SummaryPage(System.getProperty("user.home") + "/Desktop/"));
-		s.outputHtmlPage(new DetailPage(System.getProperty("user.home") + "/Desktop/"));
-		s.outputHtmlPage(new SortedEventsPage(System.getProperty("user.home") + "/Desktop/"));
+		//s.outputHtmlPage(new SummaryPage(System.getProperty("user.home") + "/Desktop/"));
+		//s.outputHtmlPage(new DetailPage(System.getProperty("user.home") + "/Desktop/"));
+		//s.outputHtmlPage(new SortedEventsPage(System.getProperty("user.home") + "/Desktop/"));
 		//s.outputHtmlPage(new ConflictingEventsPage(System.getProperty("user.home") + "/Desktop/"));
-		s.outputHtmlPage(new DayCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 9, 17, 0, 0)));
-		//s.outputHtmlPage(new WeekCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 9, 17, 0, 0)));
-		//s.outputHtmlPage(new MonthCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2011, 9, 17, 0, 0)));
-        
+		s.outputHtmlPage(new DayCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2012, 1, 16, 0, 0)));
+		s.outputHtmlPage(new WeekCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2012, 1, 16, 0, 0)));
+		s.outputHtmlPage(new MonthCalendarPage(System.getProperty("user.home") + "/Desktop/", new DateTime(2012, 1, 16, 0, 0)));
 		//new DateTime(2011, 9, 17, 0, 0)
 		//System.out.println(s.myEvents.toString());
 		//DateTime dt=new DateTime("2011-11-16T13:30:00");

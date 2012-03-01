@@ -10,11 +10,10 @@ import com.hp.gagawa.java.elements.Body;
 import com.hp.gagawa.java.elements.Html;
 
 public class DayCalendarPage extends CalendarPage {
-    DateTime myStartDate;
+    public static final String PAGE_TITLE = "Day Calendar Page";
     
     public DayCalendarPage(String path, DateTime startDate) {
-        super(path);
-        myStartDate = startDate;
+        super(path, startDate, startDate.plusDays(1));
     }
 
     /**
@@ -22,28 +21,18 @@ public class DayCalendarPage extends CalendarPage {
      */
     @Override
     public String createHTMLpage(EventCalendar events) {
-        Html html = makeHtmlObject(events);
+        Html html = makeHtmlObject(PAGE_TITLE, events);
         return makeFile(html, "/TiVOOdayCalendarPage.html");
-    }
-    
-    public Html makeHtmlObject(EventCalendar events) {
-        Html html = new Html();
-        Body body = new Body();
-        
-        addTitleH2("DayCalendarPage", body);
-        
-        //add events to calendar
-        DateTime endDate = myStartDate.plusDays(1);
-        int numDays = Days.daysBetween(myStartDate, endDate).getDays(); 
-        addCalendarEvents(events, new DateTime(myStartDate), numDays, body);
-        
-        html.appendChild(body);
-        return html;
     }
 
     @Override
     public String getMyFileName() {
         return "/TiVOOdayCalendarPage.html";
+    }
+
+    @Override
+    public Html makeHtmlObject(EventCalendar events) {
+        return super.makeHtmlObject(PAGE_TITLE, events);
     }
 
 }
