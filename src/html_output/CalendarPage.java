@@ -14,18 +14,20 @@ import com.hp.gagawa.java.elements.Html;
 public abstract class CalendarPage extends HtmlPage {
     DateTime myStartDate;
     DateTime myEndDate;
+    String myPageTitle;
     
-    public CalendarPage(String path, DateTime startDate, DateTime endDate) {
+    public CalendarPage(String path, String pageTitle, DateTime startDate, DateTime endDate) {
         super(path);
         myStartDate = startDate;
         myEndDate = endDate;
+        myPageTitle = pageTitle;
     }
     
-    public Html makeHtmlObject(String title, EventCalendar events) {
+    public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
         
-        addTitleH2(title, body);
+        addTitleH2(myPageTitle, body);
         
         //add events to calendar
         addCalendarEvents(events, body);
@@ -68,6 +70,11 @@ public abstract class CalendarPage extends HtmlPage {
             }
         }
         return true;
+    }
+
+    @Override
+    public String getMyFileName() {
+        return "/TiVOOCalendarPage.html";
     }
 
 }

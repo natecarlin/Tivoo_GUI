@@ -34,7 +34,7 @@ public class DetailPage extends HtmlPage {
     /**
      * Returns Html object for detail page for one Event e
      */
-    private Html makeHtmlObject(Event e) {
+    public Html makeHtmlObject(Event e) {
         Html html = new Html();
         Body body = new Body();
         
