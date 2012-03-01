@@ -9,8 +9,9 @@ import html_output.WeekCalendarPage;
 
 import org.joda.time.DateTime;
 
+import controller.TivooSystem;
+
 import process.EventCalendar;
-import process.TivooSystem;
 
 public class Main {
 	

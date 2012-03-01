@@ -1,6 +1,7 @@
 package xmlParse;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.xpath.*;
 
@@ -40,7 +41,7 @@ public class DukeCalFileParser extends AbstractFileParser {
 	}
 
 	
-	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
+	public Event evaluateXpath(Node nEvent, Map<String, XPathExpression> myXPathXpr) throws XPathExpressionException {
 		DateTime start=getTime(myXPathXpr.get("startTime").evaluate(nEvent));
 		DateTime end=getTime(myXPathXpr.get("endTime").evaluate(nEvent));	
 		Event toReturnEvent = new Event(start, end);

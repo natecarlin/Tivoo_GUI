@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
@@ -52,7 +53,7 @@ public class GoogleCalFileParser extends AbstractFileParser {
 		return doc.getDocumentElement().getAttribute("xmlns:gCal").equals(namespace);
 	}
 	
-	public Event evaluateXpath(Node nEvent) throws XPathExpressionException {
+	public Event evaluateXpath(Node nEvent, Map<String, XPathExpression> myXPathXpr) throws XPathExpressionException {
 		// modified next few lines to create a map which contains every information inside the 'content'
 		Map<String, String> contentMap=getContentMap(myXPathXpr.get("description").evaluate(nEvent));
 		//System.out.println(contentMap.keySet().toString()+"\n");

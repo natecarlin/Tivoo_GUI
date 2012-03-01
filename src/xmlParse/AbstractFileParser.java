@@ -31,7 +31,7 @@ import process.Event;
 public abstract class AbstractFileParser {
 	
 	private final Map<String, String> myXpathExprStrings;
-	protected Map<String, XPathExpression> myXPathXpr;
+	private Map<String, XPathExpression> myXPathXpr;
 	
 	public AbstractFileParser(Map<String, String> inXpathExprStrings){
 		myXpathExprStrings = inXpathExprStrings;
@@ -78,7 +78,7 @@ public abstract class AbstractFileParser {
 			nEvent.getParentNode().removeChild(nEvent);
 			// run xpaths and make event
 			try {			
-				toReturnEvents.add(evaluateXpath(nEvent)) ;
+				toReturnEvents.add(evaluateXpath(nEvent, myXPathXpr)) ;
 			} catch (XPathExpressionException e) {
 				throw new ParsingException("Event Xpath Parsing did not evaluate correctly", e);
 			}
@@ -87,6 +87,6 @@ public abstract class AbstractFileParser {
 		return toReturnEvents;
 	}
 	
-	public abstract Event evaluateXpath(Node nEvent) throws XPathExpressionException;
+	public abstract Event evaluateXpath(Node nEvent, Map<String, XPathExpression> myXPathXpr) throws XPathExpressionException;
 	
 }
