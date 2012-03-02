@@ -20,7 +20,7 @@ import process.Event;
 
 public class XmlParser {
 	
-	String myUrl;
+	private String myUrl;
 	
 	public XmlParser(String url){
 		myUrl = url;
