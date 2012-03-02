@@ -105,7 +105,7 @@ public class FilterTest {
 	@Test
 	public void testTimeFilter(){
 		ArrayList<Event> list=new ArrayList<Event>();
-
+		
 		list.add(myEvent1);
 		
 		runTimeTest(list);
@@ -113,8 +113,7 @@ public class FilterTest {
 	
 	private void runTimeTest(ArrayList<Event> expected) {
 		DateTime time=new DateTime(2012, 1, 10, 10, 50, 0);
-		myCal.eventsAtTime(time);
-		List<Event> actual=myCal.getList();
+		List<Event> actual=myCal.eventsAtTime(time).getList();
 		assertTrue(actual.equals(expected));
 	}
 
