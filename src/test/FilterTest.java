@@ -141,9 +141,6 @@ public class FilterTest {
 
 	private void runNameTest(ArrayList<Event> expectedEvents, String keyword) {
 		
-		ArrayList<Event> results=new ArrayList<Event>();
-		
-		//for(String feature: myCal.getList())
 		EventCalendar newCal=myCal.filterByName(keyword);		
 		assertTrue(newCal.getList().equals(expectedEvents));
 		
