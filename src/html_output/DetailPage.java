@@ -4,7 +4,9 @@ import process.Event;
 import process.EventCalendar;
 
 import com.hp.gagawa.java.elements.Body;
+import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
+import com.hp.gagawa.java.elements.Text;
 
 /**
  *  @author Antares Yee
@@ -53,5 +55,15 @@ public class DetailPage extends HtmlPage {
     public Html makeHtmlObject(EventCalendar events) {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    @Override
+    public boolean addEventDescription(Event e, Body body) {
+        for (String key: e.getKeys()) {
+        	if (key.equalsIgnoreCase("title")) continue;
+        	body.appendChild(new Text(key+": " + e.getFeature(key)));
+            body.appendChild(new Br());
+        }
+        return true;
     }
 }
