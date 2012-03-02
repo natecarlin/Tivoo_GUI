@@ -24,6 +24,7 @@ public class Event implements Comparable<Event> {
 	public Event(DateTime startTime, DateTime endTime) {
 		myStartTime = startTime;
 		myEndTime = endTime;
+		myInterval=new Interval(startTime,endTime);
 		myMap=new HashMap<String, ArrayList<String>>();
 	}
 

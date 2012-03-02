@@ -79,7 +79,7 @@ public class FilterTest {
 		list.add(myEvent2);
 		list.add(myEvent3);
 		list.add(myEvent1);		
-		runStartTimeTest(list);
+		runSortByStartTimeTest(list);
 	}
 	
 	@Test
@@ -89,22 +89,53 @@ public class FilterTest {
 		list.add(myEvent2);
 		list.add(myEvent3);
 		list.add(myEvent1);		
-		runStartEndTest(list);
+		runSortByEndTimeTest(list);
+	}
+	
+	@Test
+	public void testRemoveFilter(){
+		ArrayList<Event> list=new ArrayList<Event>();
+
+		list.add(myEvent1);
+		list.add(myEvent2);
+		
+		runRemoveTest(list);
+	}
+	
+	@Test
+	public void testTimeFilter(){
+		ArrayList<Event> list=new ArrayList<Event>();
+
+		list.add(myEvent1);
+		
+		runTimeTest(list);
+	}
+	
+	private void runTimeTest(ArrayList<Event> expected) {
+		DateTime time=new DateTime(2012, 1, 10, 10, 50, 0);
+		myCal.eventsAtTime(time);
+		List<Event> actual=myCal.getList();
+		assertTrue(actual.equals(expected));
 	}
 
 
-	private void runStartTimeTest(ArrayList<Event> expected) {
+	private void runRemoveTest(ArrayList<Event> expected) {
+		myCal.removeAllContaining("description", "Nasher");
+		List<Event> actual=myCal.getList();
+		assertTrue(actual.equals(expected));
+	}
+
+
+	private void runSortByStartTimeTest(ArrayList<Event> expected) {
 		myCal.sortByStartTime();
 		List<Event> actual=myCal.getList();
 		assertTrue(actual.equals(expected));		
-		// TODO Auto-generated method stub
 	}
 	
-	private void runStartEndTest(ArrayList<Event> expected) {
+	private void runSortByEndTimeTest(ArrayList<Event> expected) {
 		myCal.sortByEndTime();
 		List<Event> actual=myCal.getList();
 		assertTrue(actual.equals(expected));		
-		// TODO Auto-generated method stub
 	}
 
 
@@ -114,11 +145,8 @@ public class FilterTest {
 		ArrayList<Event> results=new ArrayList<Event>();
 		
 		//for(String feature: myCal.getList())
-		
-		EventCalendar newCal=myCal.filterByName(keyword);
-		
+		EventCalendar newCal=myCal.filterByName(keyword);		
 		assertTrue(newCal.getList().equals(expectedEvents));
-		// TODO Auto-generated method stub
 		
 	}
 	 
