@@ -33,7 +33,7 @@ public class SummaryPage extends HtmlPage {
     public Html makeHtmlObject(EventCalendar events) {
         Html html = new Html();
         Body body = new Body();
-        events.sortByStartTime(); //sort events chronologically
+        events = events.sortByStartTime(); //sort events chronologically
         
         
         addTitleH2((events.getList().get(0).getStartTime().dayOfWeek().getAsText() + " " + events.getList().get(0).getStartTime().dayOfMonth().getAsText()), body); //add first date H2.

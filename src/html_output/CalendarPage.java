@@ -37,8 +37,7 @@ public abstract class CalendarPage extends HtmlPage {
     }
     
     public boolean addCalendarEvents(EventCalendar events, Body body) {
-        events.sortByStartTime();
-        EventCalendar sortedEvents = events.eventsBetweenTimes(myStartDate, myEndDate);
+        EventCalendar sortedEvents = events.sortByStartTime().eventsBetweenTimes(myStartDate, myEndDate);
        
         if (sortedEvents.getList().size() == 0) { //if no events in timeframe
             System.out.println("No events in this timeframe.");

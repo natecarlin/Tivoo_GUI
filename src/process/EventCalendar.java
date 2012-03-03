@@ -2,7 +2,7 @@ package process;
 import java.util.*;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
+
 
 
 public class EventCalendar {
@@ -32,6 +32,16 @@ public class EventCalendar {
 		return myList;
 	}
 	
+	public EventCalendar filter(CalendarFilter filter){
+		EventCalendar searchresults = new EventCalendar();
+		for(Event e : myList){
+			if(filter.filter(e)){
+				searchresults.addEvent(e);
+			}
+		}
+		return searchresults;
+	}
+	
 	public EventCalendar removeAllContaining(String category, String keyword){
 		EventCalendar searchresults = new EventCalendar(myList);
 		EventCalendar toberemoved = searchresults.searchCalendar(category, keyword);
@@ -56,42 +66,20 @@ public class EventCalendar {
 	}
 	
 	public EventCalendar searchCalendar(String category, String keyword){
-		EventCalendar searchresults = new EventCalendar();
-		for (Event e : myList){
-			if(e.hasFeature(category)){
-				for(String s : e.getFeature(category)){
-					if(s.contains(keyword)){
-						searchresults.addEvent(e);
-					}
-				}
-			}
-		}
-		return searchresults;
+		return filter(new KeyWordFilter(category, keyword));
 	}
+	
 	
 	public EventCalendar filterByName(String keyword){
 		return this.searchCalendar("title", keyword);
 	}
 	
 	public EventCalendar eventsAtTime(DateTime time){
-		EventCalendar searchresults = new EventCalendar();
-		for(Event e : myList){
-			if(e.getInterval().contains(time)){
-				searchresults.addEvent(e);
-			}
-		}
-		return searchresults;
+		return filter(new TimeFilter(time));
 	}
 	
 	public EventCalendar eventsBetweenTimes(DateTime begin, DateTime end){
-	    EventCalendar searchresults = new EventCalendar();
-	    Interval targetint = new Interval(begin, end);
-	    for(Event e : myList){
-	        if(targetint.contains(e.getStartTime()) || targetint.contains(e.getEndTime())){
-	            searchresults.addEvent(e);
-	        }
-	    }
-	    return searchresults;
+	    return filter(new EventsWithinTimeFilter(begin, end));
 	}
 	
 	/**
@@ -120,20 +108,28 @@ public class EventCalendar {
         return conflicting;
     }
 	
-	public void sortByStartTime(){
-		Collections.sort(myList, new TimeComp());
+	public EventCalendar sortByStartTime(){
+		EventCalendar sortedevents = new EventCalendar(myList);
+		Collections.sort(sortedevents.getList(), new TimeComp());
+		return sortedevents;
 	}
 	
-	public void sortByEndTime(){
-		Collections.sort(myList, new EndTimeComp());
+	public EventCalendar sortByEndTime(){
+		EventCalendar sortedevents = new EventCalendar(myList);
+		Collections.sort(sortedevents.getList(), new EndTimeComp());
+		return sortedevents;
 	}
 	
-	public void sortByName(){
-		Collections.sort(myList, new NameComp());
+	public EventCalendar sortByName(){
+		EventCalendar sortedevents = new EventCalendar(myList);
+		Collections.sort(sortedevents.getList(), new NameComp());
+		return sortedevents;
 	}
 	
-	public void reverse(){
-		Collections.reverse(myList);
+	public EventCalendar reverse(){
+		EventCalendar sortedevents = new EventCalendar(myList);
+		Collections.reverse(sortedevents.getList());
+		return sortedevents;
 	}
 
 }
