@@ -5,8 +5,10 @@ package view;
 import html_output.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -16,11 +18,13 @@ import controller.TivooSystem;
 
 @SuppressWarnings("serial")
 public class TivooView extends JPanel{
-	private JButton myOutputButton;
+	private JFileChooser myFileChooser;
+	private JButton myPreviewButton;
+	//private JButton myOutputButton;
 	private JButton myLoadButton;
 	private JButton mySortButton;
 	private JButton myFilterButton;
-	private JTextField myXmlUrl;
+	//private JTextField myXmlUrl;
 	private JTextField myOutputDestination;
 	private JTextField myYearField;
 	private JTextField myMonthField;
@@ -45,9 +49,18 @@ public class TivooView extends JPanel{
 	public TivooView(TivooSystem s){
 		myTivooSystem = s;
 		add(makeProcessGui(), BorderLayout.CENTER);
-		add(makeLoadGui(), BorderLayout.WEST);
 		add(makeOutputGui(), BorderLayout.EAST);
+		add(makeFileChooser(), BorderLayout.WEST);
 		
+	}
+	
+	private JComponent makeFileChooser(){
+		JPanel panel = new JPanel();
+		myFileChooser = new JFileChooser();
+		myFileChooser.setControlButtonsAreShown(false);
+		panel.add(myFileChooser, BorderLayout.CENTER);
+		panel.add(makeLoadGui(), BorderLayout.SOUTH);
+		return panel;
 	}
 	
 	private JComponent makeProcessGui(){
@@ -92,9 +105,9 @@ public class TivooView extends JPanel{
 		JPanel panel = new JPanel(new BorderLayout());
 		myLoadButton = new JButton ("load");
 		myLoadButton.addActionListener(new LoadActionListener());
-		myXmlUrl = new JTextField("load url", 50);
+		//myXmlUrl = new JTextField("load url", 50);
 		panel.add(myLoadButton, BorderLayout.WEST);
-		panel.add(myXmlUrl,BorderLayout.EAST);
+		//panel.add(myXmlUrl,BorderLayout.EAST);
 		return panel;
 	}
 	
@@ -103,11 +116,12 @@ public class TivooView extends JPanel{
 		myYearField = new JTextField("year", 6);
 		myMonthField = new JTextField("month", 4);
 		myDayField = new JTextField("day", 4);
-		myOutputButton = new JButton("output");
-		myOutputButton.addActionListener(new OutputListener());
+		myPreviewButton = new JButton("preview");
+		//myOutputButton = new JButton("output");
+		//myOutputButton.addActionListener(new OutputListener());
 		myOutputDestination = new JTextField("output destination", 50);
 		String [] pagetypes = new String[7];
-		pagetypes[0] = "conlicting events";
+		pagetypes[0] = "conflicting events";
 		pagetypes[1] = "day calendar";
 		pagetypes[2] = "detail";
 		pagetypes[3] = "month calendar";
@@ -116,9 +130,11 @@ public class TivooView extends JPanel{
 		pagetypes[6] = "week calendar";
 		myOutputType = new JComboBox(pagetypes);
 		myOutputType.addActionListener(new OutputSelectionListener());
-		panel.add(myOutputButton, BorderLayout.EAST);
+		myPreviewButton.addActionListener(new PreviewListener());
+		//panel.add(myOutputButton, BorderLayout.EAST);
 		panel.add(myOutputType, BorderLayout.CENTER);
 		panel.add(myOutputDestination, BorderLayout.WEST);
+		panel.add(myPreviewButton, BorderLayout.EAST);
 		return panel;
 	}
 	
@@ -126,44 +142,7 @@ public class TivooView extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			myTivooSystem.loadCal(myXmlUrl.getText());
-			
-		}
-		
-	}
-	
-	private class OutputListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String destination = myOutputDestination.getText();
-			if(myOutputType.getSelectedItem().equals("conflicting events")){
-			myTivooSystem.outputHtmlPage(new ConflictingEventsPage(destination));	
-			}
-			if(myOutputType.getSelectedItem().equals( "day calendar")){
-				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
-						Integer.parseInt(myDayField.getText()),0,0);
-				myTivooSystem.outputHtmlPage(new DayCalendarPage(destination, time));
-			}
-			if(myOutputType.getSelectedItem().equals( "detail")){
-				myTivooSystem.outputHtmlPage(new DetailPage(destination));
-			}
-			if(myOutputType.getSelectedItem().equals( "month calendar")){
-				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
-						Integer.parseInt(myDayField.getText()),0,0);
-				myTivooSystem.outputHtmlPage(new MonthCalendarPage(destination, time));
-			}
-			if(myOutputType.getSelectedItem().equals( "sorted events")){
-				myTivooSystem.outputHtmlPage(new SortedEventsPage(destination));
-			}
-			if(myOutputType.getSelectedItem().equals( "summary")){
-				myTivooSystem.outputHtmlPage(new SummaryPage(destination));
-			}
-			if(myOutputType.getSelectedItem().equals( "week calendar")){
-				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
-						Integer.parseInt(myDayField.getText()),0,0);
-				myTivooSystem.outputHtmlPage(new WeekCalendarPage(destination, time));
-			}
+			myTivooSystem.loadCal(myFileChooser.getSelectedFile().getPath());
 			
 		}
 		
@@ -312,4 +291,80 @@ public class TivooView extends JPanel{
 			}
 		}
 	}
+	
+	private class PreviewListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			JFrame frame = new JFrame("preview");
+			JEditorPane pane = new JEditorPane();
+			pane.setEditable(false);
+			pane.setPreferredSize(new Dimension(800, 600));
+			frame.getContentPane().add(pane);
+			String destination = myOutputDestination.getText();
+			if(myOutputType.getSelectedItem().equals("conflicting events")){
+			myTivooSystem.outputHtmlPage(new ConflictingEventsPage(destination));
+			try {
+				pane.setPage("file:" + destination + "/TiVOOConflictingEventsPage.html");
+			} catch (IOException e) {
+				System.out.println("bad destination");
+			}
+			}
+			if(myOutputType.getSelectedItem().equals( "day calendar")){
+				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
+						Integer.parseInt(myDayField.getText()),0,0);
+				myTivooSystem.outputHtmlPage(new DayCalendarPage(destination, time));
+				try {
+					pane.setPage("file:" + destination + "/TiVOOdayCalendarPage.html");
+				} catch (IOException e) {
+					//
+					System.out.println("bad destination");
+				}
+			}
+			if(myOutputType.getSelectedItem().equals( "detail")){
+				myTivooSystem.outputHtmlPage(new DetailPage(destination));
+			}
+			if(myOutputType.getSelectedItem().equals( "month calendar")){
+				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
+						Integer.parseInt(myDayField.getText()),0,0);
+				myTivooSystem.outputHtmlPage(new MonthCalendarPage(destination, time));
+				try {
+					pane.setPage("file:" + destination + "/TiVOOmonthCalendarPage.html");
+				} catch (IOException e) {
+					System.out.println("bad destination");
+				}
+			}
+			if(myOutputType.getSelectedItem().equals( "sorted events")){
+				myTivooSystem.outputHtmlPage(new SortedEventsPage(destination));
+				try {
+					pane.setPage("file:" + destination + "/TiVOOSortedEventsPage.html");
+				} catch (IOException e) {
+					System.out.println("bad destination");
+				}
+			}
+			if(myOutputType.getSelectedItem().equals( "summary")){
+				myTivooSystem.outputHtmlPage(new SummaryPage(destination));
+				try {
+					pane.setPage("file:" + destination + "/TiVOOSummaryPage.html");
+				} catch (IOException e) {
+					System.out.println("bad destination");
+				}
+			}
+			if(myOutputType.getSelectedItem().equals( "week calendar")){
+				DateTime time = new DateTime(Integer.parseInt(myYearField.getText()),Integer.parseInt(myMonthField.getText()),
+						Integer.parseInt(myDayField.getText()),0,0);
+				myTivooSystem.outputHtmlPage(new WeekCalendarPage(destination, time));
+				try {
+					pane.setPage("file:" + destination + "/TiVOOweekCalendarPage.html");
+				} catch (IOException e) {
+					System.out.println("bad destination");
+				}
+			
+		}
+			frame.pack();
+		frame.setVisible(true);
+	}
 }
+	
+}
+

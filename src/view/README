@@ -1,0 +1,5 @@
+To use this GUI:
+find the path for your xml file and click "load"
+select any filter or sort you would like. A dialog box may open with categories like "day" "month" "year" or "keyword" "category." fill in the appropriate fields.
+fill in the output destination field. This is where the html file will be printed to. select an output type. Again you may be prompted to fill in fields. Click 'preview';
+a dialog box will open with your chosen output, and it will be saved to the output destination you chose.
